@@ -1,9 +1,5 @@
-# one day can have several meals and cooks
-# meals can have one of several cooks
-# meals can have several recipes (i.e. "breakfast" contains coffe, club sandwich and boiled eggs)
-# a recipe can have several ingredients (i.e. "club sandwich" has ham, bacon, bread. One class for ingredientes and another for preparation)
+#order: The system creates one day at the time. I doesn't require we fill it up, just the date. then we create one meal (breakfast, lunch or dinner) and set it up with dishes(recipes) and cooks. and add it to the day.
 
-#RESEARCH INHERINTANCE.
 class Day:  #The program would create an array of days, each one containing
     def __init__(self, date:str):  # creates day but it can add meals and cooks later. Date is required
         self.__meal = []# list of meals objects
@@ -19,6 +15,8 @@ class Day:  #The program would create an array of days, each one containing
         for i in self.__meal:
             print(i.get_meal())
         return self.__meal
+
+    def get_specific_meal():
 
 class Meal:
 
