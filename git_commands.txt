@@ -1,0 +1,22 @@
+- create branch:
+git checkout -b <name of new branch>
+i.e. "git checkout -b antonio"  -> creates a new branch named antonio
+
+- check which branch you got and which one you are currently at.
+git branch
+
+- push files to your branch
+make sure you are in your branch and then add, commit and push
+but first time pushing it may ask you to do in  different way with "git push --set-upstream origin <name of the branch you wanna push"
+#Only first time, after that, files can be pushed normally, as long as you are in the active branch.
+
+- switch branch
+git checkout <name of the branch you want to switch>
+i.e "git checkout main" -> switch to main
+
+- delete branch:
+"you must be in a branch other than the one you want to delete"
+First locally (in your computer) with "git branch -d <name of the branch to delete>"
+then remotely (in the github) with "git push origin --delete <name of the branch to delete remotely>
+
+- push just one files:
