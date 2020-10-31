@@ -1,0 +1,19 @@
+10/30/20 Notes
+
+data persistence (MongoDB, JSON?)
+hosting/server (Flask, Heroku)
+backend
+front end layout (html, css, javascript (Jinja))
+
+
+Antonio: continue with backend
+Lindsay: front end, continue with backend
+Maxine: continue with backend
+Bria: Flask
+
+For the next week:
+Antonio: learn about MongoDB, JSON, etc. and how to integrate with backend, with help from Maxine
+Lindsay and Maxine: continue to flesh out backend, classes
+Bria: get /something/ running on a server - Once a webpage is up, Lindsay start tricking it out
+
+For now, let's not worry about multiple users (passwords, login, etc.) - just do the website for one person for now
