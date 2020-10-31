@@ -20,3 +20,19 @@ First locally (in your computer) with "git branch -d <name of the branch to dele
 then remotely (in the github) with "git push origin --delete <name of the branch to delete remotely>
 
 - push just one files:
+first, push the file in your branch
+then change to the branch you want to push the file from your branch (i.e main). Then
+"git checkout <name of your branch> -- <name of the file from your branch you want to push into another branch i.e. main>""
+Then "git commit -m <message> and finally "git push"
+
+If the following message shows up,
+'''
+Note: you may get the following message.
+error: failed to push some refs to 'git@github.com:lednesday/MealPlanner.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+'''
+Try from the branch you want to push your file (i.e main) make a "git pull" and try "git push" again
