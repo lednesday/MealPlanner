@@ -1,0 +1,42 @@
+ks:
+
+Meal plan owner makes a meal planning template (dinners for 7 days)	(Antonio)
+	Python function: (num_days) -> list of Day objects
+
+Day object instance variables: dict of Meal objects (default 3), cooks, menu items 
+
+Cooks sign up for certain meals (Tuesday dinner, Wednesday breakfast)	(Lindsay)
+
+	def add_cook (cook_id) -> list of Days now has cook_id added to Meals
+
+Cooks input menu items (Salad: bean salad   Main course: Macaroni and cheese)	(Maxine)
+
+	def input_meal (Meal) -> 
+
+	Recipe object(s) (ingredients, quantities)
+
+
+Cooks input actual recipes 
+Cooks include ingredients lists 
+
+Program compiles ingredients into master shopping list
+
+
+Bonus features: Adjust ingredient quantities for number of people eating
+
+
+
+What do Day and Meal objects look like? (how is the data structured?)
+Create a web app
+Flask: Web interface asks a simple query e.g. how many days?
+Repo: Lindsay will set up 
+
+
+	Invite Bria, inform Michal  - Maxine will check with Michal right away
+	Meeting times: Monday, (Fridays) afternoon (4:30-5:30)
+
+
+Screen shot of sketch of data arrangement:
+
+
+
