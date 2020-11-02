@@ -38,7 +38,8 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 Try from the branch you want to push your file (i.e main) make a "git pull" and try "git push" again
 
 - remove file:
-from the branch you want to delete. You want to remove a file named "alg.txt"
+from the branch you want to delete.
+
 git rm <name of the file>
 git commit -m "m"
 git push
