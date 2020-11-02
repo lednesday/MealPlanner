@@ -2,15 +2,15 @@
 git checkout -b <name of new branch>
 i.e. "git checkout -b antonio"  -> creates a new branch named antonio
 
-- check which branch you got in the repo and which one you are currently at.
+- check which branch you got in the repo and which one you are currently at:
 git branch
 
-- push files to your branch
+- push files to your branch:
 make sure you are in your branch and then add, commit and push
 but first time pushing it may ask you to do in  different way with "git push --set-upstream origin <name of the branch you wanna push"
 #Only first time, after that, files can be pushed normally, as long as you are in the active branch.
 
-- switch branch
+- switch branch:
 git checkout <name of the branch you want to switch>
 i.e "git checkout main" -> switch to main
 
@@ -37,8 +37,13 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 '''
 Try from the branch you want to push your file (i.e main) make a "git pull" and try "git push" again
 
-- remove file
+- remove file:
 from the branch you want to delete. You want to remove a file named "alg.txt"
 git rm <name of the file>
 git commit -m "m"
 git push
+
+- pull all files in main/master to our branch:
+git checkout <your branch>      # gets you "on branch dmgr2"
+git fetch origin        # gets you up to date with origin
+git merge origin/<name of main>
