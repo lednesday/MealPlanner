@@ -10,6 +10,6 @@ Antonio will look more into database structure, with Max to help. Bria will be m
 
 Over the weekend I felt stuck on the backend until we figure out how we're storing and access persistent data, so I started working through the awesome tutorials that Antonio recommended: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-iv-database
 
-I also made base.html and index.html (the idea for base.html comes from the above tutorial), put them in a templates directory, and figured out how to push just those items to our main branch. 
+I also made base.html and index.html (the idea for base.html comes from the above tutorial), put them in a templates directory, and figured out how to push just those items to our main branch. I also made a virtual environment on my machine that should come in handy when we host on Heroku.
 
 
