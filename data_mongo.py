@@ -7,6 +7,13 @@ client.drop_database("antonio_test")
 db = client["antonio_test"] # create database
 mealplanner = db.mealplanner # create
 
+'''
+FUNCTIONS
+
+Diverse functions added that will add, modify and delete days and entries.
+No more classes, everything is done exclusively with mongodb.
+It should be not that difficult to extend to add recipes and cooks information
+'''
 #add new day
 def new_day(collection, date: str):
     collection.insert_one({"date": date, "Meals": {}})
@@ -52,6 +59,17 @@ def print_collection(col):
     for day in col.find():
         print(day)
         print()
+
+'''
+TESTING
+
+Testing adding new days and filling it up with meals and dishes.
+No using classes.
+It can be extended to add more specific data.
+
+People working in flask should suggest what kind of inputs and outputs would be good to have to communicate Flask with Mongodb. (i.e input a list?, a variable?. Return a list? a variable? a dict?)
+
+'''
 
 #DAY 1
 day1 = "11-11-20"
@@ -109,16 +127,25 @@ add_dish(mealplanner, day1 , meal1, "Fish and pasta")
 add_cook(mealplanner, day1 , meal1, "Mario")
 add_cook(mealplanner, day1 , meal1, "Ana")
 
-print("\nAfter adding 2 days:\n")
+print("\n--- After adding 2 days:\n")
 print_collection(mealplanner)
+
+print("Different types of retrieves")
+
 
 #testing retrieving information from database
 print("Dishes for Lunch 11-12-20", retrieve_data_dishes(mealplanner, "11-12-20", "Lunch"))
 print("Dishes for Breakfast 11-11-20", retrieve_data_dishes(mealplanner, "11-11-20", "Breakfast"))
 print("Cooks for Breakfast 11-11-20", retrieve_data_cooks(mealplanner, "11-11-20", "Breakfast"))
-print("List of meals in a day: ", retrieve_meals(mealplanner, "11-11-20"))
+print("List of meals in one day: ", retrieve_meals(mealplanner, "11-11-20"))
 
-print("\nAfter delete:\n")
+#retrieving just one element
+lista_dishes = retrieve_data_dishes(mealplanner, "11-11-20", "Breakfast")
+
+print(lista_dishes[1])
+
+print("\n--- After delete: 11-11-20")
+
 #delete entire day
 delete_entry_mongo(mealplanner, "11-11-20")
 #delete one dish from specific day and meal
@@ -127,4 +154,5 @@ delete_dish(mealplanner, "11-12-20", "Lunch", "FriedFish")
 #delete one cook from specific day and meal
 delete_cook(mealplanner, "11-12-20", "Lunch", "Alejandro")
 
+print("--- After modify a dish and a cook in Lunch of 11-12-20\n")
 print_collection(mealplanner)
