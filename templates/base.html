@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="MealPlanner web app">
+    <!-- need meta for display -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>MealPlanner</title>
+    {% endif %}
+    <!-- This is a magical incantation for a font set -->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:500|Open+Sans&display=swap" rel="stylesheet">
+    <!-- relative link to css styles -->
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <!-- <script src="../static/js/togglehide.js"></script> -->
+</head>
+
+<body>
+    <main>
+        <header>
+            <div class="nav">
+                <ul>
+                    <li><a href="index.html">Return to home</a></li>
+                    <li><a href="newplan.html">Create a new meal plan</a></li>
+                </ul>
+            </div>
+            {% block header %} {% endblock %}
+        </header>
+        {% block content %} {% endblock %}
+    </main>
+</body>
+
+</html>

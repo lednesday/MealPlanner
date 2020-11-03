@@ -1,0 +1,59 @@
+{% extends base.html %}
+
+{% block header %}
+<h1>Simple form for manually adding event info</h1>
+{% endblock %}
+
+{% block content %}
+<!-- action should be location (URL) where the form's collected data should be sent when it is submitted -->
+<!-- default when action="" is the current URL -->
+<form action="" method="post">
+    <!-- SECRET_KEY variable must be defined in the Flask configuration for next line to work -->
+    <!-- {{ form.hidden_tag() }} -->
+    <ul>
+        <li>
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date">
+        </li>
+        <li>
+            <label for="meal1">Meal 1:</label>
+            <input type="text" id="meal1" name="meal1">
+        </li>
+        <li>
+            <label for="cook1">Cook:</label>
+            <input type="text" id="cook1" name="cook1">
+        </li>
+        <li>
+            <label for="dish1-1">Dish 1:</label>
+            <input type="text" id="dish1-1" name="dish1-1">
+        </li>
+        <li>
+            <label for="dish1-2">Dish 2:</label>
+            <input type="text" id="dish1-2" name="dish1-2">
+        </li>
+        <li>
+            <label for="meal1">Meal 2:</label>
+            <input type="text" id="meal2" name="meal2">
+        </li>
+        <li>
+            <label for="cook1">Cook:</label>
+            <input type="text" id="cook2" name="cook2">
+        </li>
+        <li>
+            <label for="dish1-1">Dish 1:</label>
+            <input type="text" id="dish2-1" name="dish2-1">
+        </li>
+        <li>
+            <label for="dish1-2">Dish 2:</label>
+            <input type="text" id="dish2-2" name="dish2-2">
+        </li>
+        <li class="button">
+            <button type="submit">Add day</button>
+        </li>
+        <li class="button">
+            <!-- Mozilla says this is bad UX practice -->
+            <button type="reset">Clear form</button>
+        </li>
+    </ul>
+</form>
+{% endblock %}
