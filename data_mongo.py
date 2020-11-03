@@ -14,30 +14,46 @@ Diverse functions added that will add, modify and delete days and entries.
 No more classes, everything is done exclusively with mongodb.
 It should be not that difficult to extend to add recipes and cooks information
 '''
-#add new day
+
+
+'''
+add new day
+'''
 def new_day(collection, date: str):
     collection.insert_one({"date": date, "Meals": {}})
-
-#add meals (breakfast, lunch, dinner)
+'''
+add meals (breakfast, lunch, dinner) inside a day (use date to indicate where)
+'''
 def add_meals(collection, date: str, meals: str):
     collection.update_one({"date":date}, {'$set': {"Meals."+meals:{"dishes":[], "cooks":[]}}})
-
-#add dish (in a date, meals represent in what meals the dish will go)
+'''
+add dish (in a date, meals represent in what meals the dish will go)
+'''
 def add_dish(collection, date: str, meals: str, dish: str):
     collection.update_one({"date":date}, {'$push': {"Meals."+meals+".dishes": dish}})
-
-#add dish (in a date, meals represent in what meals the cook will work)
+'''
+add_cook (in a date, meals represent in what meals the cook will work)
+'''
 def add_cook(collection, date: str, meal: str, cook: str):
     collection.update_one({"date":date}, {'$push': {"Meals."+meal+".cooks": cook}})
 
+'''
+return a list of dishes of certian day and meal (breakfast, lunch, etc)
+'''
 def retrieve_data_dishes(collection, date: str, meal: str):
     result = collection.find({"date":date}) #
     return result[0]["Meals"][meal]["dishes"]
 
+'''
+return a list of cooks of certian day and meal (breakfast, lunch, etc)
+'''
 def retrieve_data_cooks(collection, date: str, meal: str):
     result = collection.find({"date":date}) #
     return result[0]["Meals"][meal]["cooks"]
 
+'''
+return a list of meals(breakfast, lunch, etc)of certain day.
+'''
 def retrieve_meals(collection, date: str):
     result = collection.find({"date":date}) #
     list = []
@@ -45,13 +61,22 @@ def retrieve_meals(collection, date: str):
         list.append(i)
     return list
 
+'''
+delete an entire day, provided the date.
+'''
 def delete_entry_mongo(collection, date_delete: str):
     myquery = { "date": date_delete }
     collection.delete_one(myquery)
 
+'''
+delete a dish, needs a date, a meal(breakfast, dinner, lunch, etc) and the dish we wish to delete
+'''
 def delete_dish(collection, date: str, meal: str, dish_delete:str):
     collection.update_one({"date":date}, { "$pull": { "Meals." + meal + ".dishes" : dish_delete }})
 
+'''
+delete a cook, needs a date, a meal(breakfast, dinner, lunch, etc) and the cook we wish to delete
+'''
 def delete_cook(collection, date: str, meal: str, cook_delete:str):
     collection.update_one({"date":date}, { "$pull": { "Meals." + meal + ".cooks" : cook_delete }})
 
@@ -73,10 +98,10 @@ People working in flask should suggest what kind of inputs and outputs would be 
 
 #DAY 1
 day1 = "11-11-20"
-new_day(mealplanner,day1)
+new_day(mealplanner,day1) # enter first a day with a date
 meal1 ="Breakfast"
-add_meals(mealplanner,day1,meal1)
-add_dish(mealplanner, day1 , meal1, "Soup")
+add_meals(mealplanner,day1,meal1) #then add a meal
+add_dish(mealplanner, day1 , meal1, "Soup") # then add the dishes and cooks
 add_dish(mealplanner, day1 , meal1, "Lemon")
 add_dish(mealplanner, day1 , meal1, "Tomato")
 add_dish(mealplanner, day1 , meal1, "Egg")
@@ -139,9 +164,8 @@ print("Dishes for Breakfast 11-11-20", retrieve_data_dishes(mealplanner, "11-11-
 print("Cooks for Breakfast 11-11-20", retrieve_data_cooks(mealplanner, "11-11-20", "Breakfast"))
 print("List of meals in one day: ", retrieve_meals(mealplanner, "11-11-20"))
 
-#retrieving just one element
+#retrieving a list of Breakfasts from the 11-11-20
 lista_dishes = retrieve_data_dishes(mealplanner, "11-11-20", "Breakfast")
-
 print(lista_dishes[1])
 
 print("\n--- After delete: 11-11-20")
