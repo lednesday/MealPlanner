@@ -1,4 +1,4 @@
-{% extends base.html %}
+{% extends "base.html" %}
 
 {% block header %}
 <h1>Create a new meal plan</h1>
@@ -14,6 +14,7 @@
         <legend>Select the dates for your meal plan</legend>
         <p>
             <label for="start date">Start date:</label>
+            <!-- Note: may have to use JS instead https://flatlogic.com/blog/best-javascript-date-picker-libraries/ -->
             <input type="date" id="start_date" name="start_date">
         </p>
         <p>
