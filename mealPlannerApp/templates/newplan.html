@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block header %}
 <h1>Create a new meal plan</h1>
@@ -7,14 +7,17 @@
 {% block content %}
 <form action="" method="post">
     <!-- SECRET_KEY variable must be defined in the Flask configuration for next line to work -->
+<<<<<<< HEAD
     <!-- cbcb form.hidden_tag() cbcb -->
+=======
+
+>>>>>>> a2f5a827b39045ebf8a4cafc2fca99f25c466301
     <label for="plan name">Meal plan name</label>
     <input type="text" id="plan_name" name="plan_name" maxlength="50">
     <fieldset>
         <legend>Select the dates for your meal plan</legend>
         <p>
             <label for="start date">Start date:</label>
-            <!-- Note: may have to use JS instead https://flatlogic.com/blog/best-javascript-date-picker-libraries/ -->
             <input type="date" id="start_date" name="start_date">
         </p>
         <p>
