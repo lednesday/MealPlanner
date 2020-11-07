@@ -9,7 +9,7 @@ clean previous content of database
 '''
 db = client["Project2"] # create database
 mealplanner = db['Mealplanner']
-# mealplanner.drop()
+mealplanner.drop()
 
 """Defines all of the routes for the App"""
 
@@ -36,27 +36,21 @@ def index():
             dish2_2 = request.form.get("dish2_2")
 
         day1 = create_day(str(date))
-        cooks1 =[]
-        cooks1.append(str(cook1))
-        dishes1 =[]
-        dishes1.append(str(dish1_1))
-        dishes1.append(str(dish1_2))
-        add_meal_to_day(day1, meal1, cooks1, dishes1)
-        cooks2 = []
-        cooks2.append(str(cook2))
-        dishes2 = []
-        dishes2.append(str(dish2_1))
-        dishes2.append(str(dish2_2))
 
-        print(cooks1)
-        print(cooks2)
-        print(dishes1)
-        print(dishes2)
+        dish1 = Dish(dish1_1)
+        dish2 = Dish(dish1_2)
+        dishes1 =[dish1,dish2]
+        cook1 = Cook(cook1)
+        cooks1 =[cook1]
+        add_meal_to_day(day1, meal1, cooks1, dishes1)
+
+        cooks2 = [Cook(cook2)]
+        dishes2 = [Dish(dish2_1),Dish(dish2_1)]
 
         add_meal_to_day(day1, meal2, cooks2, dishes2)
-        day1.get_dictionary()
-        # insert_entry_mongo(day1, mealplanner, "date")
-        # print_database(mealplanner) # print content so far
+
+        insert_entry_mongo(day1, mealplanner, "date")
+        print_database(mealplanner) # print content so far
 
     return render_template("testentry.html")
 
