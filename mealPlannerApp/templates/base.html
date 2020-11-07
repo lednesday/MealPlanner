@@ -21,7 +21,16 @@
 <body>
     <main>
         <header>
-            {% block header %} {% endblock %}
+            <div class="nav">
+                <ul>
+                    <li><a href="index.html">Return to home</a></li>
+                    <li><a href="newplan.html">Create or edit a meal plan</a></li>
+                    <li><a href="signup.html">Sign up on a meal plan</a></li>
+                    <!-- <li><a href="recipebrowser.html">Browse recipes</a></li> -->
+                </ul>
+            </div>
+            {% block header %}
+            {% endblock %}
         </header>
         {% block content %} {% endblock %}
     </main>

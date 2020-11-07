@@ -7,7 +7,7 @@
 {% block content %}
 <form action="" method="post">
     <!-- SECRET_KEY variable must be defined in the Flask configuration for next line to work -->
-    <!-- {{ form.hidden_tag() }} -->
+    <!-- cbcb form.hidden_tag() cbcb -->
     <label for="plan name">Meal plan name</label>
     <input type="text" id="plan_name" name="plan_name" maxlength="50">
     <fieldset>
@@ -24,7 +24,7 @@
     </fieldset>
     <fieldset>
         <legend>Select the meals you'll be sharing</legend>
-        <ul>
+        <ul class="checkboxes">
             <li>
                 <label for="breakfast">breakfast</label>
                 <input type="checkbox" id="breakfast" name="meal" value="breakfast">
