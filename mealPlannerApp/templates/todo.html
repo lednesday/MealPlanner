@@ -16,21 +16,13 @@
 <body>
 <h1 align="center"> Data: </h1>
 
-{% for a in items %}
-  <tr style="text-align:center">
-    {% for key, value in a.items() %}
-      {{ key }} : {{ value }}
+    {% for result in items %}
+        <tr>
+            <td>{{ result }}</td>
+            <br>
+        </tr>
     {% endfor %}
-  </tr>
-{% endfor %}
 
-
-
-
-
-
-
-</table>
 </body>
 </html>
 

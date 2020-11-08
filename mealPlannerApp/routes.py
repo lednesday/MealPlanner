@@ -9,7 +9,7 @@ clean previous content of database
 '''
 db = client["Project2"] # create database
 mealplanner = db['Mealplanner']
-mealplanner.drop()
+# mealplanner.drop()
 cook_database = db["cook"]
 recipe_database = db["Recipe"]
 
@@ -23,16 +23,18 @@ mealPlanner.config["TEXT_IMPORT"] = "./static/uploads"
 
 @mealPlanner.route('/display', methods=['POST'])
 def todo():
-    items = mealplanner.find()
-    # items = [item for item in _items]
-    lista = []
-    for doc in items:
-        lista.append(doc)
+    # items = mealplanner.find()
+    # array = list(mealplanner.find())
+    list_result = []
+    for day in mealplanner.find({},{"_id": 0, "date": 1, "meals": 1} ):
+        list_result.append("Date: " + str(day['date']) + " Meals:" + str(day['meals']))
 
-    if len(lista) == 0:#
+    print(list_result)
+
+    if len(list_result) == 0:#
         return render_template('vacio.html')#if no items, show vacio
     else:
-        return render_template('todo.html', items=lista)
+        return render_template('todo.html', items=list_result)
 
 
 @mealPlanner.route("/", methods=["POST", "GET"])
