@@ -9,7 +9,8 @@ clean previous content of database
 '''
 db = client["Project2"] # create database
 mealplanner = db['Mealplanner']
-mealplanner.drop()
+# mealplanner.drop()
+list_recipe = db['recipe']
 
 """Defines all of the routes for the App"""
 
@@ -18,6 +19,20 @@ from flask import render_template, request
 import os
 
 mealPlanner.config["TEXT_IMPORT"] = "./static/uploads"
+
+@mealPlanner.route('/display', methods=['POST'])
+def todo():
+    items = mealplanner.find()
+    # items = [item for item in _items]
+    lista = []
+    print(items[0])
+    for doc in items:
+        lista.append(doc)
+
+    if len(lista) == 0:#
+        return render_template('vacio.html')#if no items, show vacio
+    else:
+        return render_template('todo.html', items=lista)
 
 
 @mealPlanner.route("/", methods=["POST", "GET"])
@@ -46,11 +61,9 @@ def index():
 
         cooks2 = [Cook(cook2)]
         dishes2 = [Dish(dish2_1),Dish(dish2_1)]
-
         add_meal_to_day(day1, meal2, cooks2, dishes2)
 
         insert_entry_mongo(day1, mealplanner, "date")
-        print_database(mealplanner) # print content so far
 
     return render_template("testentry.html")
 

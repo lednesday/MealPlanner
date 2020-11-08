@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Results </title>
+<style>
+  table{
+     margin-left:auto;
+     margin-right:auto;
+     border-collapse: collapse;
+   }
+  table, th, td {
+    border: 1px solid black;
+  }
+</style>
+</head>
+<body>
+<h1 align="center"> Contenido </h1>
+
+{% for a in items %}
+  <tr style="text-align:center">
+    {% for key, value in a.items() %}
+      {{ key }} : {{ value }}
+    {% endfor %}
+  </tr>
+{% endfor %}
+
+
+
+
+
+
+
+</table>
+</body>
+</html>
+
+
+
+
+
+
+</table>
+
+
+<p><a href="{{ url_for("index") }}">Main page</a></p>
