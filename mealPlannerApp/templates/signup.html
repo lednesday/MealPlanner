@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>Sign up to cook</h1>
+<h2>{{plantitle}}</h2>
+{% endblock %}
+
+{% block content %}
+<div class="days">
+    {% for day in days %}
+    <div class="oneday">
+        <div class="dateheading">{{date}}</div>
+        {% for meal in meals %}
+        <div class="mealheading">{{mealname}}</div>
+        <div class="cooks">
+            {% if cook %}
+            <div class="cookheading">Cooks<button type="editcooks">Edit</button></div>
+            {% for cook in cooks %}
+            {{cook}}
+            {% endfor %}
+            {% else %}
+            <button type="submit">Sign up</button>
+            {% endif %}
+        </div>
+        <div class="dishes">
+            {% if dish %}
+            <div class="menuheading">Menu<button type="submit">Edit</button></div>
+            {% for dish in dishes %}
+            {{dish}}
+            {% endfor %}
+            {% else %}
+            <button type="submit">Add menu</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
