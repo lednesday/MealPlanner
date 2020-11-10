@@ -37,11 +37,10 @@ class Day:
 
 class Dish:
     '''
-    Multiple dishes make up a meal, and each dish consists of its name, a list
+        Multiple dishes make up a meal, and each dish consists of its name, a list
     of ingredients, and a recipe.
     '''
-
-    def __init__(self, name:str):
+    def __init__(self, name:str ):
         '''
         creates day but it can add meals and cooks later. Date is required
         '''

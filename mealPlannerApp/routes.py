@@ -1,7 +1,7 @@
-from entry import *
-from helpers import *
 import pymongo # modules
 from pymongo import MongoClient
+from entry import *
+from helpers import *
 
 client = MongoClient("localhost", 27017) # connect to engine.
 '''
@@ -15,7 +15,7 @@ recipe_database = db["Recipe"]
 
 """Defines all of the routes for the App"""
 
-from mealPlannerApp import mealPlanner
+from mealPlannerApp import *
 from flask import render_template, request
 import os
 
