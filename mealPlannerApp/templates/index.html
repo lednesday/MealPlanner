@@ -2,8 +2,28 @@
 
 {% block header %}
 <h1>MealPlanner Home</h1>
+<h3>The MealPlanner is your online resources for planning shared meals.
+    Perfect for river trips, getaways at a beach house, or communal living.
+</h3>
 {% endblock %}
 
 {% block content %}
-<div class="instructions">Here's some stuff you can do</div>
+<div class="instructions">
+    <ul>
+        <li>Step 1: The planner <a href="newplan.html">sets up a new mealplan using our template.</a></li>
+        <li>Step 2: The cooks <a href="signup.html">sign up for the meals they'll be responsible for,</a> and indicate
+            what they'll be cooking.</li>
+        <li>Coming soon: Browse recipes, adjust ingredients for group size, and generate shopping lists and recipe
+            sheets.</li>
+    </ul>
+</div>
+<footer class="about">
+    About us:
+    <p>We are Max Aguirre, Bria Gray, Lindsay Marean, and Antonio Silva Pauca.
+        We created this tool as a project for CIS 422, Software Methodology 1,
+        taught in fall 2020 by Michal Young at the University of Oregon.
+    </p>
+    <p>You can access oru project repository at <a
+            href="https://github.com/lednesday/MealPlanner">https://github.com/lednesday/MealPlanner</a>.</p>
+</footer>
 {% endblock %}
