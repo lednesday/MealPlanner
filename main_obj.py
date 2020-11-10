@@ -220,7 +220,7 @@ Delete entry from the 11-5-20
 '''
 print("\n--- Delete 2nd day\n")
 date_delete ="11-5-20"
-delete_entry_mongo(mealplanner, date_delete)
+delete_day_entry_mongo(mealplanner, date_delete)
 print_database(mealplanner) # print content so far
 
 '''

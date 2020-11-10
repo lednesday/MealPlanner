@@ -46,7 +46,6 @@ def index():
     print(list_dishes)
     if request.method == "POST":
         if request.form.get:
-
             date = request.form.get("date")
             meal1 = request.form.get("meal1")
             cook1 = request.form.get("cook1")
