@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>Testing display</h1>
+<h2>Meal plan title: {{ plantitle }}</h2>
+{% endblock %}
+
+{% block content %}
+<div class="date">Date: {{ date }}</div>
+<div class="meal">Meal 1: {{ meal1 }}</div>
+<div class="cook">Cook: {{ cook1 }}</div>
+<div class="dish">Dish 1: {{ dish1_1 }}</div>
+<div class="dish">Dish 2: {{ dish1_2 }}</div>
+<div class="meal">Meal 2: {{ meal2 }}</div>
+<div class="cook">Cook: {{ cook2 }}</div>
+<div class="dish">Dish 1: {{ dish2_1 }}</div>
+<div class="dish">Dish 2: {{ dish2_2 }}</div>
+{% endblock %}

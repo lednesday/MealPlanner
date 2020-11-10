@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Datebase information </title>
+<style>
+  table{
+     margin-left:auto;
+     margin-right:auto;
+     border-collapse: collapse;
+   }
+  table, th, td {
+    border: 1px solid black;
+  }
+</style>
+</head>
+<body>
+<h1 align="center"> Data: </h1>
+
+    {% for result in items %}
+        <tr>
+            <td>{{ result }}</td>
+            <br>
+        </tr>
+    {% endfor %}
+
+</body>
+</html>
+
+
+
+
+
+
+</table>
+
+
+<p><a href="{{ url_for("index") }}">Main page</a></p>

@@ -33,18 +33,21 @@ extract the info inside the day object and convert it to dictionary, which is co
 def insert_entry_mongo(object, collection, type:str): # enter and object (Day(), Dish(), Cook() and a type (date, Name, Title)
     if collection.count_documents({type: object.get_index() }, limit = 1) != 0:
         print("Record exists") #if the date already exists, it doesn't do anything
-        temp = 1
+        temp = 0
     else:
         temp = collection.insert_one(object.get_dictionary())
-    return temp #id returned (may need it later) returns 1 if exists
+    return temp #id returned (may need it later)
 
 
 '''
 deletes entry according to the date
 input: mongo collection
 output: delete by date
+
+# TODO:
+change the function to make it compatible with day(), dish(), cook()
 '''
-def delete_day_entry_mongo(collection, date_to_delete: str): # delete one day in mongodb
+def delete_entry_mongo(collection, date_to_delete: str): # delete one day in mongodb
     myquery = { "date": date_to_delete } # makes query to check record.
     collection.delete_one(myquery)
 
@@ -61,7 +64,7 @@ def add_cook_mongo(collection, add_cook_to_date: str, meal: str, cook: str): #ad
     collection.update_one({"date":add_cook_to_date}, {'$push': {"Meals."+meal+".cooks": cook}})
 
 '''
-delete a dish, cook, needs a date, a meal(breakfast, dinner, lunch, etc) and the dish we wish to delete  -  EXCLUSIVE FOR mongodb MEALPLANNER
+delete a dish, cook, needs a date, a meal(breakfast, dinner, lunch, etc) and the dish we wish to delete  -  EXCLUSIVE FOR DAY() MEALPLANNER
 '''
 def delete_dish(collection, date: str, meal: str, dish_delete:str):
     collection.update_one({"date":date}, { "$pull": { "Meals." + meal + ".dishes" : dish_delete}})
@@ -76,8 +79,7 @@ def add_cooks(collection, date: str, meal:str, cooks: list):
     collection.update_one({"date":date},{"$set":{"Meals."+ meal +".cooks":cooks}})
 
 '''
-Add meals
-TODO
+Modify meals
 '''
 def add_dishes(collection, date: str, meal:str, dishes: list):
     collection.update_one({"date":date},{"$set":{"Meals."+ meal +".dishes":dishes}})
@@ -86,20 +88,20 @@ def add_dishes(collection, date: str, meal:str, dishes: list):
 '''
 Retrieve names, titles, dishes as a list to be use later (maybe for a drop down list?)
 '''
-def retrieve_data_meals(collection, date: str): #return the meals present in the database
+def retrieve_data_meals(collection, date: str):
     result = collection.find({"date":date}) #
     temp = []
     for i in result[0]['meals'].keys():
         temp.append(i)
     return temp
 
-def retrieve_data_index_list(collection, type): #return a list with index of tables ("date" for days, "title" for recipes and "name" for cooks)
+def retrieve_data_index_list(collection, type):
     temp = []
     for i in collection.find():
         temp.append(i[type])
     return temp
 
-def print_database(collection): #for debugging
+def print_database(collection):
     for day in collection.find():
         print(day)
         print()

@@ -4,11 +4,15 @@
  */
 
  /*
-    color palette:
-    $warm black: #004346
-    $opal: #B7D5D4
-    $melon: #ECB8A5;
-    $dark sienna: #481620;
+CSS
+/* CSS HEX */
+/* --blue-sapphire: #065a82ff; header flair 
+--black-coffee: #2a1a1fff; main text
+--persimmon: #E55812; top banners
+--mikado-yellow: #ffc100ff; mid-level banners
+--lemon-meringue: #f4e8c1ff; general background
+--forest-green-crayola: #63a375ff; buttons
+--cinnamon-satin: #ca6680ff; visited */ 
  */
 
  /* global settings ------------------------- */
@@ -22,20 +26,21 @@
   }
 
  a:visited {
-     color: #481620;
+     color: #ca6680ff;
  }
 
 head {
-    font-family: "Avant Garde", Avantgarde, CenturyGothic, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /* header section ------------------------------ */
 
 header {
-    font-family: "Avant Garde", Avantgarde, CenturyGothic, sans-serif;
-    background: #ECB8A5;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: #f4e8c1ff;
     border-radius: 5px;
     padding: 10px;
+    border-color: #065a82ff
 }
 
 header h1 {
@@ -70,8 +75,8 @@ header h1, header h2 {
 /* body section ----------------------------------- */
 
 body {
-    font-family: "Avant Garde", Avantgarde, CenturyGothic, sans-serif;
-    background-color: #B7D5D4;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #f4e8c1ff;
     padding-left: 10%; 
     padding-right: 2%;
 }
@@ -84,7 +89,20 @@ body {
 }
 
 h1, h2, h3 { 
-    font-family: "Avant Garde", Avantgarde, CenturyGothic, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.dateheading {
+    background-color: #E55812;
+    font-weight: 800;
+}
+
+.mealheading {
+    background-color: #ffc100ff;
+}
+
+button {
+    background-color: #63a375ff;
 }
 
 em {
