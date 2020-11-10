@@ -14,12 +14,12 @@
         <div class="mealheading">{{mealname}}</div>
         <div class="cooks">
             {% if cook %}
-            <div class="cookheading">Cooks<button type="editcooks">Edit</button></div>
+            <div class="cookheading">Cooks<button type="button">Edit</button></div>
             {% for cook in cooks %}
             {{cook}}
             {% endfor %}
             {% else %}
-            <button type="submit">Sign up</button>
+            <button type="button">Sign up</button>
             {% endif %}
         </div>
         <div class="dishes">
@@ -29,7 +29,7 @@
             {{dish}}
             {% endfor %}
             {% else %}
-            <button type="submit">Add menu</button>
+            <button type="button">Add menu</button>
             {% endif %}
         </div>
         {% endfor %}
