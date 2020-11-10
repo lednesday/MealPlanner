@@ -13,46 +13,108 @@
     <ul class="checkboxes">
         <li>
             <label for="date">Date:</label>
-            <input type="text" id="date" name="date">
+            <!-- <input type="text" id="date" name="date"> -->
+
+            <input type="date" id="date" name="date"
+                   value="01-01-2020"
+                   min="01-01-2020" max="01-01-2025">
         </li>
         <li>
+
             <label for="meal1">Meal 1:</label>
-            <input type="text" id="meal1" name="meal1">
+            <select id="meal1" name="meal1">
+              <option value="" selected="selected">None</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+            </select>
         </li>
         <li>
+
             <label for="cook1">Cook:</label>
-            <input type="text" id="cook1" name="cook1">
+            <select id= "cook1" name= "cook1">
+              <option value="" selected="selected">None</option>
+
+              {% for x in names %}
+                <option value="{{x}}">{{x}}</option>
+              {% endfor %}
+            </select>
+
         </li>
         <li>
-            <label for="dish1-1">Dish 1:</label>
-            <input type="text" id="dish1-1" name="dish1_1">
+          <label for="dish1-1">Dish:</label>
+          <select id= "dish1-1" name="dish1-1">
+            <option value="" SELECTED="selected">None</option>
+
+            {% for x in dishes %}
+              <option value="{{x}}">{{x}}</option>
+            {% endfor %}
+          </select>
+
         </li>
         <li>
-            <label for="dish1-2">Dish 2:</label>
-            <input type="text" id="dish1-2" name="dish1_2">
+          <label for="dish1-2">Dish:</label>
+          <select id="dish1-2" name="dish1-2">
+            <option value="" selected="selected">None</option>
+            {% for x in dishes %}
+            <option value="{{x}}">{{x}}</option>
+            {% endfor %}
+          </select>
+
         </li>
         <li>
-            <label for="meal1">Meal 2:</label>
-            <input type="text" id="meal2" name="meal2">
+            <label for="meal2">Meal 2:</label>
+            <select id="meal2" name="meal2">
+              <option value="" selected="selected">None</option>
+
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+            </select>
+
         </li>
         <li>
-            <label for="cook1">Cook:</label>
-            <input type="text" id="cook2" name="cook2">
+            <label for="cook2">Cook:</label>
+            <select id="cook2" name="cook2">
+              <option value="" selected="selected">None</option>
+              {% for x in names %}
+              <option value="{{x}}">{{x}}</option>
+              {% endfor %}
+            </select>
         </li>
         <li>
-            <label for="dish1-1">Dish 1:</label>
-            <input type="text" id="dish2-1" name="dish2_1">
+            <label for="dish2-1">Dish:</label>
+            <select id="dish2-1" name="dish2-1">
+              <option value="" selected="selected">None</option>
+              {% for x in dishes %}
+              <option value="{{x}}">{{x}}</option>
+              {% endfor %}
+            </select>
+
         </li>
         <li>
-            <label for="dish1-2">Dish 2:</label>
-            <input type="text" id="dish2-2" name="dish2_2">
+          <label for="dish2-2">Dish:</label>
+          <select id="dish2-2" name="dish2-2">
+            <option value="" selected="selected">None</option>
+
+            {% for x in dishes %}
+            <option value="{{x}}">{{x}}</option>
+            {% endfor %}
+          </select>
+
         </li>
+
         <li class="button">
             <button type="submit">Add day</button>
         </li>
+
         <li class="button">
             <!-- Mozilla says this is bad UX practice -->
             <button type="reset">Clear form</button>
+        </li>
+
+        <li class="button">
+            <button type ="submit" name ="display" formmethod="post" formaction="/display" id="display" value="Display">Display</button>
         </li>
     </ul>
 </form>
