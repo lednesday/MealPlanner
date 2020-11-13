@@ -10,5 +10,5 @@ I moved the "app = Flask(__name__)" (line 10) from the old __ini__.py and change
 * the program have to installed mongodb (different than pymongo).  https://www.mongodb.com/try/download/community
 
 To run it (with the droping list, for now) you need to:
-  - Go to the top folder and run recipe_database.py and cook_database.py (to add test data)
+  - Go to the top folder and run recipe_database.py and cook_database.py that are in the Databse folder (to add test data to be displayed in the drop lists).
   - Go to mealplannerapp folder and run "flask run" and see the result on the browser.
