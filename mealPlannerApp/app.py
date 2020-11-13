@@ -32,7 +32,7 @@ def todo():
     for day in mealplanner.find({},{"_id": 0, "date": 1, "meals": 1} ):
         list_result.append("Date: " + str(day['date']) + " Meals:" + str(day['meals']))
 
-    print(list_result)
+    # print(list_result)
 
     if len(list_result) == 0:#
         return render_template('vacio.html')#if no items, show vacio
@@ -46,7 +46,7 @@ def index():
     list_cooks = retrieve_data_index_list(cook_database, "name")
     list_dishes = retrieve_data_index_list(recipe_database, "title")
 
-    print(list_dishes)
+    # print(list_dishes)
     if request.method == "POST":
         if request.form.get:
             date = request.form.get("date")
