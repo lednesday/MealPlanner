@@ -9,20 +9,23 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 client = MongoClient("localhost", 27017) # connect to engine.
-'''
-clean previous content of database
-'''
 db = client["Project2"] # create database
+
 mealplanner = db['Mealplanner']
+
+'''
+clean previous content of database(comment out when no needed for testing)
+'''
 # mealplanner.drop()
+
 cook_database = db["cook"]
 recipe_database = db["Recipe"]
 
 """Defines all of the routes for the App"""
 
 # from mealPlannerApp import mealPlanner
-from flask import render_template, request
-import os
+# from flask import render_template, request
+# import os
 # mealPlanner.config["TEXT_IMPORT"] = "./static/uploads
 @app.route('/display', methods=['POST'])
 def todo():
@@ -31,8 +34,6 @@ def todo():
     list_result = []
     for day in mealplanner.find({},{"_id": 0, "date": 1, "meals": 1} ):
         list_result.append("Date: " + str(day['date']) + " Meals:" + str(day['meals']))
-
-    # print(list_result)
 
     if len(list_result) == 0:#
         return render_template('vacio.html')#if no items, show vacio
@@ -46,7 +47,6 @@ def index():
     list_cooks = retrieve_data_index_list(cook_database, "name")
     list_dishes = retrieve_data_index_list(recipe_database, "title")
 
-    # print(list_dishes)
     if request.method == "POST":
         if request.form.get:
             date = request.form.get("date")
@@ -59,7 +59,7 @@ def index():
             dish2_1 = request.form.get("dish2-1")
             dish2_2 = request.form.get("dish2-2")
 
-            day1 = create_day(str(date))
+            day1 = create_day(date)
             dishes1 = []
             cooks1 = []
             if meal1 != "":
