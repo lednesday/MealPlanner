@@ -2,11 +2,13 @@ File data_mongo.py added. It is a revision from the entry.py and helpers.py. Thi
 
 Added: Preview_structure.png - How one day record in mongo looks like.
 
-10-13-20:
+- 10-13-20:
 
 I manage to put all the folders structures as we wanted after studying an example code. I deleted the __init__.py and route.py while copying the whole code from route.py to app.py. I changed the flask variable from mealPlannerApp to app. In line 26 in app.py, I found "# mealPlanner.config["TEXT_IMPORT"] = "./static/uploads", which I guess it was used for project1 and I don't what is its function, so I commented it out.
-I moved the "app = Flask(__name__)" (line 10) from the old __ini__.py and changed "app.run(debug=True)" in line 98 from mealPlanner to app.
+I moved the "app = Flask(__name__)" (line 10) from the old __ini__.py and changed "app.run(debug=True)" in line 98 from mealPlanner to app. I left the folder Database and its files since they are needed to test the current state of the program. Tested in Windows, Mac and Ubuntu.
+
+* the program have to installed mongodb (different than pymongo).  https://www.mongodb.com/try/download/community
 
 To run it (with the droping list, for now) you need to:
-- Go to the top folder and run recipe_database.py and cook_database.py (to add test data)
-- Go to mealplannerapp folder and run "flask run" and see the result on the browser.
+  - Go to the top folder and run recipe_database.py and cook_database.py (to add test data)
+  - Go to mealplannerapp folder and run "flask run" and see the result on the browser.
