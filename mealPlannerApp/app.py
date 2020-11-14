@@ -28,8 +28,8 @@ Set's up secret key so flash messages can be displayed
 import configparser#import the key from secret file
 config = configparser.ConfigParser()
 config.read("credentials.ini")
-app.secret_key = config["DEFAULT"]["key_google"]
-
+# app.secret_key = config["DEFAULT"]["key_google"]
+app.secret_key = "Holaaaaa"
 
 
 '''
