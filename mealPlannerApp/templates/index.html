@@ -1,4 +1,4 @@
-{% extends base.html %}
+{% extends 'base.html' %}
 
 {% block header %}
 <h1>MealPlanner Home</h1>
@@ -10,8 +10,8 @@
 {% block content %}
 <div class="instructions">
     <ul>
-        <li>Step 1: The planner <a href="newplan.html">sets up a new mealplan using our template.</a></li>
-        <li>Step 2: The cooks <a href="signup.html">sign up for the meals they'll be responsible for,</a> and indicate
+        <li>Step 1: The planner <a href="{{url_for('newplan') }}">sets up a new mealplan using our template.</a></li>
+        <li>Step 2: The cooks <a href="{{url_for('signup') }}">sign up for the meals they'll be responsible for,</a> and indicate
             what they'll be cooking.</li>
         <li>Coming soon: Browse recipes, adjust ingredients for group size, and generate shopping lists and recipe
             sheets.</li>
@@ -23,7 +23,7 @@
         We created this tool as a project for CIS 422, Software Methodology 1,
         taught in fall 2020 by Michal Young at the University of Oregon.
     </p>
-    <p>You can access oru project repository at <a
+    <p>You can access our project repository at <a
             href="https://github.com/lednesday/MealPlanner">https://github.com/lednesday/MealPlanner</a>.</p>
 </footer>
 {% endblock %}
