@@ -2,6 +2,11 @@
 
 {% block header %}
 <h1>MealPlanner Home</h1>
+
+{% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+{% endfor %}
+
 <h3>The MealPlanner is your online resources for planning shared meals.
     Perfect for river trips, getaways at a beach house, or communal living.
 </h3>
@@ -10,6 +15,8 @@
 {% block content %}
 <div class="instructions">
     <ul>
+
+
         <li>Step 1: The planner <a href="{{url_for('newplan') }}">sets up a new mealplan using our template.</a></li>
         <li>Step 2: The cooks <a href="{{url_for('signup') }}">sign up for the meals they'll be responsible for,</a> and indicate
             what they'll be cooking.</li>
@@ -18,6 +25,7 @@
     </ul>
 </div>
 <footer class="about">
+
     About us:
     <p>We are Max Aguirre, Bria Gray, Lindsay Marean, and Antonio Silva Pauca.
         We created this tool as a project for CIS 422, Software Methodology 1,

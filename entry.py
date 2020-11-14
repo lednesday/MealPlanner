@@ -63,8 +63,7 @@ class MealPlan:
 
             for meal in day.get_meals():
                 result["date"][day.get_index()]["meals"][meal.get_meal_name()] = \
-                {}
-                # {"dishes":meal.get_dishes(), "cooks":meal.get_cooks()}
+                {"dishes":meal.get_dishes(), "cooks":meal.get_cooks()}
 
         return result
 

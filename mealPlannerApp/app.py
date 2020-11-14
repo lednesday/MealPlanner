@@ -7,19 +7,36 @@ from helpers import *
 import pymongo # modules
 from pymongo import MongoClient
 
+'''
+instance of Flask
+'''
 app = Flask(__name__)
+
+
+'''
+Connecting flask with MONGODB
+'''
 client = MongoClient("localhost", 27017) # connect to engine.
 db = client["Project2"] # create database
-
 mealplanner = db['Mealplanner']
+cook_database = db["cook"]
+recipe_database = db["Recipe"]
+'''
+Secret Key
+Set's up secret key so flash messages can be displayed
+'''
+import configparser#import the key from secret file
+config = configparser.ConfigParser()
+config.read("credentials.ini")
+app.secret_key = config["DEFAULT"]["key_google"]
+
+
 
 '''
 clean previous content of database(comment out when no needed for testing)
 '''
 # mealplanner.drop()
 
-cook_database = db["cook"]
-recipe_database = db["Recipe"]
 
 """Defines all of the routes for the App"""
 
@@ -98,13 +115,10 @@ recipe_database = db["Recipe"]
 
 @app.route('/display', methods=['POST'])
 def todo():
-    # items = mealplanner.find()
-    # array = list(mealplanner.find())
+
     list_result = []
     for day in mealplanner.find({},{"_id": 0, "date": 1, "meals": 1} ):
         list_result.append("Date: " + str(day['date']) + " Meals:" + str(day['meals']))
-
-    print(list_result)
 
     if len(list_result) == 0:
         return render_template('vacio.html')  #  if no items, show vacio
@@ -121,17 +135,28 @@ def index():
 def newplan():
     if request.method == "POST":
         if request.form.get:
-            date = request.form.get("plan_name")
-            print(date)
+            plan_name = request.form.get("plan_name")
+            # print(date)
             start_date = request.form.get("start_date")
-            print(start_date)
+            # print(start_date)
             end_date = request.form.get("end_date")
-            print(end_date)
+            # print(end_date)
             checked_meals = request.form.getlist('meal')
-            print(checked_meals)
+            # print(checked_meals)
+            meal_plan = create_newplan(start_date, end_date , plan_name, checked_meals)
+            # print(mealplan.get_dictionary())
 
-
-        return redirect(url_for("index"))
+            date = date_range(start_date, end_date)
+            if search_date_in_mealplan(mealplanner, plan_name, date) == 1:
+                flash("There is a conflict between dates. Try again. ")
+                print("CONFLICT")
+                return render_template("newplan.html")
+            elif insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == 1:
+                flash("That name has been taken. Choose another one. ")
+                return render_template("newplan.html")
+            else:
+                flash("New plan was added! ")
+                return redirect(url_for("index"))
 
     return render_template("newplan.html")
 
