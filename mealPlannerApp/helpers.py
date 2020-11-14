@@ -35,21 +35,20 @@ def create_newplan(start_date: str, end_date:str , name_plan:str, list_meals:lis
     return mp
 
 
-def insert_entry_mongo(object, collection, type:str): # enter and object (Day(), Dish(), Cook() and a type (date, Name, Title, meal_plan)
+def insert_entry_mongo(object, collection, type:str): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title, meal_plan)
     if collection.count_documents({type: object.get_index() }, limit = 1) != 0:
         print("Record exists") #if the date already exists, it doesn't do anything
-        temp = 1
+        return True
     else:
         temp = collection.insert_one(object.get_dictionary())
-    return temp #id returned (may need it later) returns 1 if exists and it fails to add.
+        return False #id returned (may need it later) returns 1 if exists and it fails to add.
 
 def search_date_in_mealplan(collection, mealplanner_name:str, date:list):
     for i in date:
-        print(i)
-        if collection.find( {"meal_plan" : mealplanner_name, "date." + i: {"$exists": True } } ).count() > 0:
+        if collection.find( {"meal_plan" : mealplanner_name, "date." + i: {"$exists": True } } ).count() != 0:
             print("Fecha ", i)
-            return 1
-    return 0
+            return True
+    return False
 
 
 

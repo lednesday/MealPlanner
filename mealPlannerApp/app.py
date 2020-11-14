@@ -146,12 +146,9 @@ def newplan():
             meal_plan = create_newplan(start_date, end_date , plan_name, checked_meals)
             # print(mealplan.get_dictionary())
 
-            date = date_range(start_date, end_date)
-            if search_date_in_mealplan(mealplanner, plan_name, date) == 1:
-                flash("There is a conflict between dates. Try again. ")
-                print("CONFLICT")
-                return render_template("newplan.html")
-            elif insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == 1:
+            dates = date_range(start_date, end_date)# returns a list with all the dates bewtween start and end date.
+
+            if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
                 flash("That name has been taken. Choose another one. ")
                 return render_template("newplan.html")
             else:
