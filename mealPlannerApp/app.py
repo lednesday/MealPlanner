@@ -36,8 +36,6 @@ app.secret_key = "Holaaaaa"
 clean previous content of database(comment out when no needed for testing)
 '''
 # mealplanner.drop()
-
-
 """Defines all of the routes for the App"""
 
 # from mealPlannerApp import mealPlanner
