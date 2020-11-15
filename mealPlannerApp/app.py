@@ -141,17 +141,21 @@ def newplan():
             # print(end_date)
             checked_meals = request.form.getlist('meal')
             # print(checked_meals)
-            meal_plan = create_newplan(start_date, end_date , plan_name, checked_meals)
-            # print(mealplan.get_dictionary())
 
-            dates = date_range(start_date, end_date)# returns a list with all the dates bewtween start and end date.
-
-            if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
-                flash("That name has been taken. Choose another one. ")
+            if plan_name == "" or start_date == ""  or end_date == "":# case that the person hasn't input data.
+                flash("No input provided.")
                 return render_template("newplan.html")
             else:
-                flash("New plan was added! ")
-                return redirect(url_for("index"))
+                meal_plan = create_newplan(start_date, end_date , plan_name, checked_meals)
+                # print(mealplan.get_dictionary())
+                dates = date_range(start_date, end_date)# returns a list with all the dates bewtween start and end date.
+
+                if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
+                    flash("That name has been taken. Choose another one. ")
+                    return render_template("newplan.html")
+                else:
+                    flash("New plan was added! ")
+                    return redirect(url_for("index"))
 
     return render_template("newplan.html")
 
