@@ -5,16 +5,18 @@
 {% endblock %}
 
 {% block content %}
-<form action="" method="post" id="newplan">
-    <!-- SECRET_KEY variable must be defined in the Flask configuration for next line to work -->
-    <!-- cbcb form.hidden_tag() cbcb -->
 
-    {% for message in get_flashed_messages() %}
-        <p>{{ message }}</p>
-    {% endfor %}
-    
+<!-- {% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+{% endfor %} -->
+
+<form action="" method="post" id="newplan">
+
     <label for="plan name">Meal plan name</label>
-    <input type="text" id="plan_name" name="plan_name" maxlength="50" placeholder="October Rogue Trip">
+
+    <input type="text" id="plan_name" name="plan_name" maxlength="50" placeholder="October Rogue Trip"autocomplete="off"  autofocus >
+    <p id="response"> </p>
+
     <fieldset>
         <legend>Select the dates for your meal plan</legend>
         <p>
@@ -48,5 +50,33 @@
         </ul>
     </fieldset>
     <p> <button type="submit">Submit</button> </p>
+
 </form>
+
+<script>
+    $("#newplan ").submit(function(event) {
+       event.preventDefault();
+      });
+
+    $("#plan_name").keyup(function(event) {
+       var txt = $("#plan_name").val();  // Current content of the input field
+       var keycode = event.which;      // They key that just went up
+       $.getJSON( "/_check_name",
+                  {text: txt},
+                  function(data) {
+                    rsval = data.result.response;
+                    console.log("rsval: " + rsval);
+                    if (rsval.localeCompare("Yes") == 0){
+                       $("#response").html("Already taken!")
+                    }
+                    else{
+                      $("#response").html("Good name!");
+                    }
+                   }
+
+               );
+       });
+
+</script>
+
 {% endblock %}

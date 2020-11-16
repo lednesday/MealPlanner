@@ -1,6 +1,6 @@
 """Defines the flask Application instance"""
 
-from flask import Flask, render_template, request, redirect, url_for, abort, send_from_directory, g, flash
+from flask import jsonify, Flask, render_template, request, redirect, url_for, abort, send_from_directory, g, flash
 from entry import *
 from helpers import *
 
@@ -142,7 +142,7 @@ def newplan():
             checked_meals = request.form.getlist('meal')
             # print(checked_meals)
 
-            if plan_name == "" or start_date == ""  or end_date == "":# case that the person hasn't input data.
+            if plan_name != "" and start_date != ""  and end_date != "":# case that the person hasn't input data.
                 flash("No input provided.")
                 return render_template("newplan.html")
             else:
@@ -166,6 +166,58 @@ def signup():
         return redirect(url_for("index"))
 
     return render_template("signup.html")
+
+
+'''
+Experiment to check for name in database
+'''
+@app.route("/_check_name")#from minijax
+def check_name():
+    print("ahora")
+    # name = request.form.get("plan_name")
+    name = request.args.get("text", type=str)
+    print(name)
+    list_mealplan = retrieve_data_index_list(mealplanner, "meal_plan")
+
+    if name in list_mealplan:
+        rslt = {"response": "Yes"}
+    else:
+        rslt = {"response": "No"}
+
+    return jsonify(result=rslt)
+
+
+    # jumble = flask.session["jumble"]#from session
+    # matches = flask.session.get("matches", [])  # Default to empty list
+    # in_jumble = LetterBag(jumble).contains(text)#check if a word is inside.
+    # matched = WORDS.has(text)#check if the word has been already guessed
+
+    # if matched and in_jumble and not (text in matches):#New Match
+    #     rslt = {"response": "Match"}
+    #     app.logger.debug("MATCH!!")
+    #     matches.append(text)
+    #     flask.session["matches"] = matches
+    # elif text in matches:#Already Found
+    #     app.logger.debug("Already found.")
+    #     rslt = {"response": "Already"}
+    # elif len(text) > 7:
+    #     rslt = {"response": "many"}
+    # elif not matched:
+    #     app.logger.debug("No in Vocab")
+    #     rslt = {"response": "No"}
+    # elif not in_jumble:
+    #     rslt = {"response": "No"}
+    # else:
+    #     app.logger.debug("This case shouldn't happen!")
+    #     rslt = {"response": "No"}
+    #     assert False  # Raises AssertionError
+    #
+    # if len(matches) >= flask.session["target_count"]:
+    #    rslt = {"response": "end"}
+    #    return flask.jsonify(result=rslt)
+    # else:
+    #    return flask.jsonify(result=rslt)
+
 
 
 if __name__ == "__main__":
