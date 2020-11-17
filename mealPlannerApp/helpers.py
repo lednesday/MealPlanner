@@ -1,4 +1,101 @@
 from entry import *
+import pandas as pd
+from datetime import datetime
+
+'''
+Date range functions: Provide a start date and a end date and it will return  a list of strings with all the dates.
+'''
+def date_range(start, end):
+    temp_range = pd.date_range(start=start, end=end) # return a datetimeindex
+    date_rng = temp_range.date
+
+    lista = []
+    for i in date_rng:
+        lista.append(i.strftime('%Y-%m-%d'))
+
+    return lista
+
+'''
+newplan functions following the format of the website
+
+This function will create a place holder in the database from the start_date to the end_date, and it will add the meals (with empty list of cooks and dishes) that are selected in the front end.
+'''
+
+def create_newplan(start_date: str, end_date:str , name_plan:str, list_meals:list):
+    mp = MealPlan(name_plan)
+
+    range_list = date_range(start_date, end_date)
+
+    for i in range_list:
+        day_temp = Day(i) # first, create the day
+        for j in list_meals:
+            day_temp.add_meal(Meal(j    )) #then add all the meals that are in the list_meals
+        mp.add_day(day_temp)
+
+    return mp
+
+
+def insert_entry_mongo(object, collection, type:str): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title, meal_plan)
+    if collection.count_documents({type: object.get_index() }, limit = 1) != 0:
+        print("Record exists") #if the date already exists, it doesn't do anything
+        return True
+    else:
+        temp = collection.insert_one(object.get_dictionary())
+        return False #id returned (may need it later) returns 1 if exists and it fails to add.
+
+def search_date_in_mealplan(collection, mealplanner_name:str, date:list):
+    for i in date:
+        if collection.find( {"meal_plan" : mealplanner_name, "date." + i: {"$exists": True } } ).count() != 0:
+            print("Fecha ", i)
+            return True
+    return False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 '''
 We create one day at the time
