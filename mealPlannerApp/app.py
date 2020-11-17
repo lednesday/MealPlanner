@@ -142,7 +142,7 @@ def newplan():
             checked_meals = request.form.getlist('meal')
             # print(checked_meals)
 
-            if plan_name != "" and start_date != ""  and end_date != "":# case that the person hasn't input data.
+            if plan_name == "" and start_date == ""  and end_date == "":# case that the person hasn't input data.
                 flash("No input provided.")
                 return render_template("newplan.html")
             else:

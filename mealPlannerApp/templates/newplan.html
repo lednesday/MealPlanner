@@ -6,9 +6,9 @@
 
 {% block content %}
 
-<!-- {% for message in get_flashed_messages() %}
+{% for message in get_flashed_messages() %}
     <p>{{ message }}</p>
-{% endfor %} -->
+{% endfor %}
 
 <form action="" method="post" id="newplan">
 
@@ -54,9 +54,9 @@
 </form>
 
 <script>
-    $("#newplan ").submit(function(event) {
-       event.preventDefault();
-      });
+    // $("#newplan ").submit(function(event) {
+    //    event.preventDefault();
+    //   });
 
     $("#plan_name").keyup(function(event) {
        var txt = $("#plan_name").val();  // Current content of the input field
