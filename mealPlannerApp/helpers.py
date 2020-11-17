@@ -65,6 +65,16 @@ def print_database(collection): #for debugging
         print(day)
         print()
 
+def return_dictionary_mongo(collection, meal_planner_name:str ):
+    # cur = mealplanner.find({"meal_plan":meal_planner_name})
+    try:
+        title = {}
+        for i in collection.find({"meal_plan":meal_planner_name}):
+            title = i
+    except:
+        print("Meal planner not found")
+
+    return title
 
 
 
@@ -98,13 +108,6 @@ def print_database(collection): #for debugging
 '''
 -------------- everything under this line is under revision!!! --------------------
 '''
-
-
-
-
-
-
-
 def search_date_in_mealplan(collection, mealplanner_name:str, date:list):
     for i in date:
         if collection.find( {"meal_plan" : mealplanner_name, "date." + i: {"$exists": True } } ).count() != 0:

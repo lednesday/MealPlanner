@@ -165,7 +165,9 @@ def signup():
     if request.method == "POST":
         return redirect(url_for("index"))
 
-    list_mealplans = retrieve_data_index_list(mealplanner, "meal_plan")
+    name_of_plan = "New plan"# name of the plan we are requesting the dictionary with the data
+    list_mealplans = return_dictionary_mongo(mealplanner, name_of_plan)
+    print(list_mealplans)#example of dictionary in console
 
     return render_template("signup.html", list=list_mealplans)
 
