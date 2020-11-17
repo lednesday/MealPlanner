@@ -165,7 +165,9 @@ def signup():
     if request.method == "POST":
         return redirect(url_for("index"))
 
-    return render_template("signup.html")
+    list_mealplans = retrieve_data_index_list(mealplanner, "meal_plan")
+
+    return render_template("signup.html", list=list_mealplans)
 
 
 '''

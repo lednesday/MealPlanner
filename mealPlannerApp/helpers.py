@@ -46,12 +46,18 @@ def insert_entry_mongo(object, collection, type:str): # enter and object (Day(),
 def search_date_in_mealplan(collection, mealplanner_name:str, date:list):
     for i in date:
         if collection.find( {"meal_plan" : mealplanner_name, "date." + i: {"$exists": True } } ).count() != 0:
-            print("Fecha ", i)
+            # print("Fecha ", i)
             return True
     return False
 
+'''
+add dishes and cooks
+'''
+def add_dish_mongo(collection, meal_plan_name:str, date_to_add: str, meal_to_add: str, dish: str): #add an extra dish when provided with a date and a meal.
+    collection.update_one({"meal_plan":meal_plan_name}, {'$push': {"date."+date_to_add+".meals."+meal_to_add +".dishes": dish}})
 
-
+def add_cook_mongo(collection, meal_plan_name:str, date_to_add: str, meal_to_add: str, cook: str): #add an extra dish when provided with a date and a meal.
+    collection.update_one({"meal_plan":meal_plan_name}, {'$push': {"date."+date_to_add+".meals."+meal_to_add +".cooks": cook}})
 
 
 
@@ -151,11 +157,7 @@ add meals, dishes and cooks (in mongodb) -  EXCLUSIVE FOR DAY() MEALPLANNER
 def add_meals_mongo(collection, add_meal_to_date: str, meal: str): # add an extra meal in a day
     collection.update_one({"date":add_meal_to_date}, {'$set': {"Meals."+meal:{"dishes":[], "cooks":[]}}})
 
-def add_dish_mongo(collection, add_dish_to_date: str, meal: str, dish: str): #add an extra dish when provided with a date and a meal.
-    collection.update_one({"date":add_dish_to_date}, {'$push': {"Meals."+meal+".dishes": dish}})
 
-def add_cook_mongo(collection, add_cook_to_date: str, meal: str, cook: str): #add an extra cook when provided with a date and a meal.
-    collection.update_one({"date":add_cook_to_date}, {'$push': {"Meals."+meal+".cooks": cook}})
 
 '''
 delete a dish, cook, needs a date, a meal(breakfast, dinner, lunch, etc) and the dish we wish to delete  -  EXCLUSIVE FOR mongodb MEALPLANNER
