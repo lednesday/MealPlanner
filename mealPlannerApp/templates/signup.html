@@ -7,32 +7,28 @@
 
 {% block content %}
 <div class="days">
-    {% for day in list.date %}
+    {% for day, day_dict in list.date.items() %}
     <div class="oneday">
+        </p>
         <div class="dateheading">{{ day }}</div>
-        {% for meal in day.meals %}
-        <h3>testing a meal</h3>
+        {% for meal in day_dict.meals %}
         <h3>{{ meal }}</h3>
         <div class="mealheading">{{ meal }}</div>
         <div class="cooks">
-            {% if cook in day.cooks %}
             <div class="cookheading">Cooks<button type="button">Edit</button></div>
-            {% for cook in day.cooks %}
+            {% for cook in day_dict.cooks %}
             {{ cook }}
-            {% endfor %}
             {% else %}
             <button type="button">Sign up</button>
-            {% endif %}
+            {% endfor %}
         </div>
         <div class="dishes">
-            {% if dish %}
-            <div class="menuheading">Menu<button type="submit">Edit</button></div>
-            {% for dish in dishes %}
-            {{dish}}
-            {% endfor %}
+            <div class="menuheading">Menu<button type="button">Edit</button></div>
+            {% for dish in day_dict.dishes %}
+            {{ dish }}
             {% else %}
             <button type="button">Add menu</button>
-            {% endif %}
+            {% endfor %}
         </div>
         {% endfor %}
     </div>
