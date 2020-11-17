@@ -2,21 +2,23 @@
 
 {% block header %}
 <h1>Sign up to cook</h1>
-<h2>{{plantitle}}</h2>
+<h2>Meal plan: {{ list.meal_plan }}</h2>
 {% endblock %}
 
 {% block content %}
 <div class="days">
-    {% for day in days %}
+    {% for day in list.date %}
     <div class="oneday">
-        <div class="dateheading">{{date}}</div>
-        {% for meal in meals %}
-        <div class="mealheading">{{mealname}}</div>
+        <div class="dateheading">{{ day }}</div>
+        {% for meal in day.meals %}
+        <h3>testing a meal</h3>
+        <h3>{{ meal }}</h3>
+        <div class="mealheading">{{ meal }}</div>
         <div class="cooks">
-            {% if cook %}
+            {% if cook in day.cooks %}
             <div class="cookheading">Cooks<button type="button">Edit</button></div>
-            {% for cook in cooks %}
-            {{cook}}
+            {% for cook in day.cooks %}
+            {{ cook }}
             {% endfor %}
             {% else %}
             <button type="button">Sign up</button>
