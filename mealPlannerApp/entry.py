@@ -27,15 +27,11 @@ class Day:
         Formats all the info of the object into a json format ready to be inserted in mongodb
         '''
 
-        result = {"meal_plan":self.get_index(), "date":{}}
+        result = {"meals":{}}
 
-        for day in self.__days:
-
-            result["date"][day.get_index()] = {"meals":{}}
-
-            for meal in day.get_meals():
-                result["date"][day.get_index()]["meals"][meal.get_meal_name()] = {"dishes":meal.get_dishes(), "cooks":meal.get_cooks()}
-
+        for meal in self.__meals:
+            result["meals"][meal.get_meal_name()] = \
+            {"dishes":meal.get_dishes(), "cooks":meal.get_cooks()}
 
         return result
 
@@ -68,7 +64,9 @@ class MealPlan:
             result["date"][day.get_index()] = {"meals":{}}
 
             for meal in day.get_meals():
-                result["date"][day.get_index()]["meals"][meal.get_meal_name()] = {"dishes":meal.get_dishes(), "cooks":meal.get_cooks()}
+                result["date"][day.get_index()] = day.get_dictionary()
+
+                # ["meals"][meal.get_meal_name()] = {"dishes":meal.get_dishes(), "cooks":meal.get_cooks()}
 
         return result
 
