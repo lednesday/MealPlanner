@@ -14,11 +14,12 @@ mealplanner = db['Mealplanner']
 start_date = "2020-10-01"
 end_date = "2020-10-03"
 meal_planner = "New plan"
-meal_list = ["Breakfast", "Lunch"]
+meal_list = [["Breakfast", "Lunch"],["Breakfast", "Lunch"],["Breakfast", "Lunch"]]
 
 mealplan = create_newplan(start_date, end_date , meal_planner, meal_list)
 print(mealplan.get_dictionary())
 insert_entry_mongo(mealplan, mealplanner, "meal_plan")
+
 day1 = "2020-10-01"
 add_dish_mongo(mealplanner, meal_planner, day1, "Breakfast", "Eggs")
 add_dish_mongo(mealplanner, meal_planner, day1, "Breakfast", "Pasta")
@@ -66,5 +67,5 @@ add_cook_mongo(mealplanner, meal_planner, day1, "Lunch", "Antonio")
 
 
 
-# print_database(mealplanner)
+print_database(mealplanner)
 # def add_dish_mongo(collection, meal_plan_name:str, date_to_add: str, meal_to_add: str, dish: str): #add an extra dish when provided with a date and a meal.

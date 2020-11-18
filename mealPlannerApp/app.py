@@ -111,17 +111,17 @@ clean previous content of database(comment out when no needed for testing)
 
 
 
-@app.route('/display', methods=['POST'])
-def todo():
-
-    list_result = []
-    for day in mealplanner.find({},{"_id": 0, "date": 1, "meals": 1} ):
-        list_result.append("Date: " + str(day['date']) + " Meals:" + str(day['meals']))
-
-    if len(list_result) == 0:
-        return render_template('vacio.html')  #  if no items, show vacio
-    else:
-        return render_template('todo.html', items=list_result)
+# @app.route('/display', methods=['POST'])
+# def todo():
+#
+#     list_result = []
+#     for day in mealplanner.find({},{"_id": 0, "date": 1, "meals": 1} ):
+#         list_result.append("Date: " + str(day['date']) + " Meals:" + str(day['meals']))
+#
+#     if len(list_result) == 0:
+#         return render_template('vacio.html')  #  if no items, show vacio
+#     else:
+#         return render_template('todo.html', items=list_result)
 
 
 @app.route("/", methods=["POST", "GET"])
@@ -169,7 +169,9 @@ def signup():
 
     name_of_plan = "New plan"# name of the plan we are requesting the dictionary with the data
     list_mealplans = return_dictionary_mongo(mealplanner, name_of_plan)
-    print(list_mealplans)#example of dictionary in console
+    print(list_mealplans)
+    if len(list_mealplans) == 0:
+        render_template("index.html")
 
     return render_template("signup.html", list=list_mealplans)
 
@@ -179,13 +181,12 @@ Experiment to check for name in database
 '''
 @app.route("/_check_name")#from minijax
 def check_name():
-    print("ahora")
-    # name = request.form.get("plan_name")
     name = request.args.get("text", type=str)
-    print(name)
     list_mealplan = retrieve_data_index_list(mealplanner, "meal_plan")
 
-    if name in list_mealplan:
+    if name == "":
+        rslt = {"response": "Zero"}
+    elif name in list_mealplan:
         rslt = {"response": "Yes"}
     else:
         rslt = {"response": "No"}
