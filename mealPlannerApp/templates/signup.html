@@ -11,25 +11,28 @@
     <div class="oneday">
         </p>
         <div class="dateheading">{{ day }}</div>
-        {% for meal in day_dict.meals %}
-        <h3>{{ meal }}</h3>
+        {% for meal, meal_dict in day_dict.meals.items() %}
         <div class="mealheading">{{ meal }}</div>
         <div class="cooks">
-            <div class="cookheading">Cooks<button type="button">Edit</button></div>
-            {% for cook in day_dict.cooks %}
+            <div class="cookheading">Cooks: <button type="button">Edit</button></div>
+            {% for cook in meal_dict.cooks %}
             {{ cook }}
             {% else %}
             <button type="button">Sign up</button>
             {% endfor %}
         </div>
+        </p>
         <div class="dishes">
-            <div class="menuheading">Menu<button type="button">Edit</button></div>
-            {% for dish in day_dict.dishes %}
+            <div class="menuheading">Menu: <button type="button">Edit</button></div>
+            {% for dish in meal_dict.dishes %}
+            <li>
             {{ dish }}
+            </li>
             {% else %}
             <button type="button">Add menu</button>
             {% endfor %}
         </div>
+        </p>
         {% endfor %}
     </div>
     {% endfor %}
