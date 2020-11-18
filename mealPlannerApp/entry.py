@@ -22,13 +22,20 @@ class Day:
     def get_meals(self):
         return self.__meals
 
-    def get_dictionary(self): # Return a dictionary to add to the mealplanner.
+    def get_dictionary(self):
+        '''
+        Formats all the info of the object into a json format ready to be inserted in mongodb
+        '''
 
-        result = {"meals":{}}
+        result = {"meal_plan":self.get_index(), "date":{}}
 
-        for meal in self.__meals:
-            result["meals"][meal.get_meal_name()] = \
-            {"dishes":meal.get_dishes(), "cooks":meal.get_cooks()}
+        for day in self.__days:
+
+            result["date"][day.get_index()] = {"meals":{}}
+
+            for meal in day.get_meals():
+                result["date"][day.get_index()]["meals"][meal.get_meal_name()] = {"dishes":meal.get_dishes(), "cooks":meal.get_cooks()}
+
 
         return result
 
@@ -63,7 +70,6 @@ class MealPlan:
 
             for meal in day.get_meals():
                 result["date"][day.get_index()]["meals"][meal.get_meal_name()] = {"dishes":meal.get_dishes(), "cooks":meal.get_cooks()}
-
 
         return result
 

@@ -23,14 +23,27 @@ This function will create a place holder in the database from the start_date to 
 
 def create_newplan(start_date: str, end_date:str , name_plan:str, list_meals:list):
     mp = MealPlan(name_plan)
-
     range_list = date_range(start_date, end_date)
 
+    # for i in range_list:
+    #     day_temp = Day(i) # first, create the day
+    #     for j in list_meals:
+    #         print(j)
+    #         for h in j:
+    #             print(h)
+    #             day_temp.add_meal(Meal(h)) #then add all the meals that are in the list_meals
+    #     mp.add_day(day_temp)
+
+    day_created = []
     for i in range_list:
-        day_temp = Day(i) # first, create the day
-        for j in list_meals:
-            day_temp.add_meal(Meal(j    )) #then add all the meals that are in the list_meals
-        mp.add_day(day_temp)
+        day_created.append(Day(i))
+
+    j = 0
+    for i in list_meals:
+        for k in i:
+            day_created[j].add_meal(Meal(k))
+        mp.add_day(day_created[j])
+        j += 1
 
     return mp
 
@@ -43,76 +56,59 @@ def insert_entry_mongo(object, collection, type:str): # enter and object (Day(),
         temp = collection.insert_one(object.get_dictionary())
         return False #id returned (may need it later) returns 1 if exists and it fails to add.
 
-
-
-'''
-add dishes and cooks to mongodb
-'''
-def add_dish_mongo(collection, meal_plan_name:str, date_to_add: str, meal_to_add: str, dish: str): #add an extra dish when provided with a date and a meal.
-    collection.update_one({"meal_plan":meal_plan_name}, {'$push': {"date."+date_to_add+".meals."+meal_to_add +".dishes": dish}})
-
-def add_cook_mongo(collection, meal_plan_name:str, date_to_add: str, meal_to_add: str, cook: str): #add an extra dish when provided with a date and a meal.
-    collection.update_one({"meal_plan":meal_plan_name}, {'$push': {"date."+date_to_add+".meals."+meal_to_add +".cooks": cook}})
-
-def retrieve_data_index_list(collection, type): #return a list with index of tables ("date" for days, "title" for recipes and "name" for cooks)
-    temp = []
-    for i in collection.find():
-        temp.append(i[type])
-    return temp
-
-def print_database(collection): #for debugging
-    for day in collection.find():
-        print(day)
-        print()
-
-def return_dictionary_mongo(collection, meal_planner_name:str ):
-    # cur = mealplanner.find({"meal_plan":meal_planner_name})
-    try:
-        title = {}
-        for i in collection.find({"meal_plan":meal_planner_name}):
-            title = i
-    except:
-        print("Meal planner not found")
-
-    return title
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
--------------- everything under this line is under revision!!! --------------------
-'''
 def search_date_in_mealplan(collection, mealplanner_name:str, date:list):
     for i in date:
         if collection.find( {"meal_plan" : mealplanner_name, "date." + i: {"$exists": True } } ).count() != 0:
+            print("Fecha ", i)
             return True
     return False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 '''
 We create one day at the time
@@ -168,6 +164,12 @@ add meals, dishes and cooks (in mongodb) -  EXCLUSIVE FOR DAY() MEALPLANNER
 def add_meals_mongo(collection, add_meal_to_date: str, meal: str): # add an extra meal in a day
     collection.update_one({"date":add_meal_to_date}, {'$set': {"Meals."+meal:{"dishes":[], "cooks":[]}}})
 
+def add_dish_mongo(collection, add_dish_to_date: str, meal: str, dish: str): #add an extra dish when provided with a date and a meal.
+    collection.update_one({"date":add_dish_to_date}, {'$push': {"Meals."+meal+".dishes": dish}})
+
+def add_cook_mongo(collection, add_cook_to_date: str, meal: str, cook: str): #add an extra cook when provided with a date and a meal.
+    collection.update_one({"date":add_cook_to_date}, {'$push': {"Meals."+meal+".cooks": cook}})
+
 '''
 delete a dish, cook, needs a date, a meal(breakfast, dinner, lunch, etc) and the dish we wish to delete  -  EXCLUSIVE FOR mongodb MEALPLANNER
 '''
@@ -178,6 +180,20 @@ def delete_cook(collection, date: str, meal: str, cook_delete:str):
     collection.update_one({"date":date}, { "$pull": { "Meals." + meal + ".cooks" : dish_delete}})
 
 '''
+Add_cook
+'''
+def add_cooks(collection, date: str, meal:str, cooks: list):
+    collection.update_one({"date":date},{"$set":{"Meals."+ meal +".cooks":cooks}})
+
+'''
+Add meals
+TODO
+'''
+def add_dishes(collection, date: str, meal:str, dishes: list):
+    collection.update_one({"date":date},{"$set":{"Meals."+ meal +".dishes":dishes}})
+
+
+'''
 Retrieve names, titles, dishes as a list to be use later (maybe for a drop down list?)
 '''
 def retrieve_data_meals(collection, date: str): #return the meals present in the database
@@ -186,3 +202,14 @@ def retrieve_data_meals(collection, date: str): #return the meals present in the
     for i in result[0]['meals'].keys():
         temp.append(i)
     return temp
+
+def retrieve_data_index_list(collection, type): #return a list with index of tables ("date" for days, "title" for recipes and "name" for cooks)
+    temp = []
+    for i in collection.find():
+        temp.append(i[type])
+    return temp
+
+def print_database(collection): #for debugging
+    for day in collection.find():
+        print(day)
+        print()

@@ -129,25 +129,27 @@ def index():
     return render_template("index.html")
 
 
+#to add
 @app.route("/newplan", methods=["POST", "GET"])
 def newplan():
     if request.method == "POST":
         if request.form.get:
             plan_name = request.form.get("plan_name")
-            # print(date)
             start_date = request.form.get("start_date")
-            # print(start_date)
             end_date = request.form.get("end_date")
-            # print(end_date)
-            checked_meals = request.form.getlist('meal')
-            # print(checked_meals)
-
+            checked_meals = request.form.getlist('meal0')
+            checked = []
             if plan_name == "" and start_date == ""  and end_date == "":# case that the person hasn't input data.
                 flash("No input provided.")
                 return render_template("newplan.html")
             else:
-                meal_plan = create_newplan(start_date, end_date , plan_name, checked_meals)
-                # print(mealplan.get_dictionary())
+
+                for i in range(0, len(date_range(start_date, end_date))):
+                    temp = "meal"+str(i)
+                    checked.append(request.form.getlist(temp))
+
+                meal_plan = create_newplan(start_date, end_date , plan_name, checked)
+
                 dates = date_range(start_date, end_date)# returns a list with all the dates bewtween start and end date.
 
                 if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
@@ -155,7 +157,7 @@ def newplan():
                     return render_template("newplan.html")
                 else:
                     flash("New plan was added! ")
-                    return redirect(url_for("index"))
+                return redirect(url_for("index"))
 
     return render_template("newplan.html")
 
@@ -190,37 +192,15 @@ def check_name():
 
     return jsonify(result=rslt)
 
+@app.route("/_count_inputs", methods=["POST", "GET"])#from minijax
+def count_inputs():
+    start_date = request.args.get("start", type=str)
+    end_date = request.args.get("end", type=str)
+    dates_range = date_range(start_date, end_date)
+    rslt = {"dates_range": dates_range}
 
-    # jumble = flask.session["jumble"]#from session
-    # matches = flask.session.get("matches", [])  # Default to empty list
-    # in_jumble = LetterBag(jumble).contains(text)#check if a word is inside.
-    # matched = WORDS.has(text)#check if the word has been already guessed
+    return jsonify(result=rslt)
 
-    # if matched and in_jumble and not (text in matches):#New Match
-    #     rslt = {"response": "Match"}
-    #     app.logger.debug("MATCH!!")
-    #     matches.append(text)
-    #     flask.session["matches"] = matches
-    # elif text in matches:#Already Found
-    #     app.logger.debug("Already found.")
-    #     rslt = {"response": "Already"}
-    # elif len(text) > 7:
-    #     rslt = {"response": "many"}
-    # elif not matched:
-    #     app.logger.debug("No in Vocab")
-    #     rslt = {"response": "No"}
-    # elif not in_jumble:
-    #     rslt = {"response": "No"}
-    # else:
-    #     app.logger.debug("This case shouldn't happen!")
-    #     rslt = {"response": "No"}
-    #     assert False  # Raises AssertionError
-    #
-    # if len(matches) >= flask.session["target_count"]:
-    #    rslt = {"response": "end"}
-    #    return flask.jsonify(result=rslt)
-    # else:
-    #    return flask.jsonify(result=rslt)
 
 
 
