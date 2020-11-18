@@ -16,7 +16,9 @@
         <div class="cooks">
             <div class="cookheading">Cooks: <button type="button">Edit</button></div>
             {% for cook in meal_dict.cooks %}
+            <li>
             {{ cook }}
+            </li>
             {% else %}
             <button type="button">Sign up</button>
             {% endfor %}
