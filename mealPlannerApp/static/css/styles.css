@@ -40,7 +40,9 @@ header {
     background: #f4e8c1ff;
     border-radius: 5px;
     padding: 10px;
-    border-color: #065a82ff
+    border-style: solid;
+    border-width: thick;
+    border-color: #065a82ff;
 }
 
 header h1 {
@@ -53,6 +55,7 @@ header h2 {
 header h1, header h2 {
     padding: 5px;
     border-radius: 5px;
+    background: #63a375ff;
 }
 
 .nav {
@@ -68,7 +71,7 @@ header h1, header h2 {
 
 .nav a {
     /* makes click target larger */
-    padding: 10px 0;
+    padding: 10px;
 }
 
 
@@ -92,6 +95,13 @@ h1, h2, h3 {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.dateheading, .mealheading {
+    padding-left: 2%; 
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 5px;
+}
+
 .dateheading {
     background-color: #E55812;
     font-weight: 800;
@@ -101,8 +111,13 @@ h1, h2, h3 {
     background-color: #ffc100ff;
 }
 
+.dishes, .cooks {
+    list-style-type: none;
+}
+
 button {
     background-color: #63a375ff;
+    border-radius: 5px;
 }
 
 em {
