@@ -65,7 +65,6 @@ class MealPlan:
         result = {"meal_plan":self.get_index(), "date":{}}
 
         for day in self.__days:
-
             result["date"][day.get_index()] = {"meals":{}}
 
             for meal in day.get_meals():

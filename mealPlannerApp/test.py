@@ -18,6 +18,9 @@ meal_list = [["Breakfast", "Lunch"],["Breakfast", "Lunch"],["Breakfast", "Lunch"
 
 mealplan = create_newplan(start_date, end_date , meal_planner, meal_list)
 print(mealplan.get_dictionary())
+
+
+    
 insert_entry_mongo(mealplan, mealplanner, "meal_plan")
 
 day1 = "2020-10-01"
