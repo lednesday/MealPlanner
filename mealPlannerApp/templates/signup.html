@@ -7,10 +7,14 @@
 
 {% block content %}
 
+{% if hide == 0%}
+
 <form  action="" method="post" id="newplan">
 <li>
     <label for="meal_plan">Meal plans:</label>
     <select id= "meal_plan" name= "meal_plan">
+        <option value="" selected="selected">None</option>
+
       {% for x in mealplans_names %}
           <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
       {% endfor %}
@@ -19,8 +23,10 @@
 <!-- <p> <button id="myBtn" type="submit">Submit</button> </p> -->
 </form>
 
+{% endif %}
 
 
+{% if list %}
 <div class="days">
     {% for day, day_dict in list.date.items() %}
     <div class="oneday">
@@ -53,7 +59,11 @@
     {% endfor %}
 </div>
 
-<!-- Script -->
+{% else %}
+
+{% endif %}
+
+
 <script type='text/javascript'>
 $(document).ready(function(){
   $('#meal_plan').change(function(){

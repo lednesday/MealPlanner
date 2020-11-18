@@ -22,8 +22,11 @@
 </head>
 
 <body onload="check_date_today()">
+
     <main>
         <header>
+          {% if hide == 0 %}
+
             <div class="nav">
                 <ul>
                     <li><a href="{{url_for('index') }}">Return to home</a></li>
@@ -35,6 +38,8 @@
             </div>
             {% block header %}
             {% endblock %}
+            {% endif %}
+
         </header>
         {% block content %} {% endblock %}
     </main>

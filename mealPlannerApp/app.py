@@ -126,7 +126,7 @@ clean previous content of database(comment out when no needed for testing)
 
 @app.route("/", methods=["POST", "GET"])
 def index():
-    return render_template("index.html")
+    return render_template("index.html", hide = 0)
 
 
 #to add
@@ -159,7 +159,7 @@ def newplan():
                     flash("New plan was added! ")
                 return redirect(url_for("index"))
 
-    return render_template("newplan.html")
+    return render_template("newplan.html", hide = 0)
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
@@ -170,14 +170,27 @@ def signup():
         meal_plan = request.form.get("meal_plan")
         # print(meal_plan)
         list_mealplans = return_dictionary_mongo(mealplanner, meal_plan)
-        return render_template("signup.html", list=list_mealplans, mealplans_names=mealplanners_names)
+        return render_template("signup.html", list=list_mealplans, mealplans_names=mealplanners_names, hide = 0)
 
 
 
     name_of_plan = "New plan"# name of the plan we are requesting the dictionary with the data
-    list_mealplans = return_dictionary_mongo(mealplanner, name_of_plan)
+    list_mealplans = []
     # print(list_mealplans)#example of dictionary in console
-    return render_template("signup.html", list=list_mealplans, mealplans_names=mealplanners_names)
+    return render_template("signup.html", list=list_mealplans, mealplans_names=mealplanners_names, hide = 0)
+
+
+'''
+experiment. Send link by email for users to add cooks and dishes. Users should be available
+to edit but not able to see other links
+'''
+@app.route('/plan/<plan_name>')
+def landing_page(plan_name):
+    print("plsn")
+    list_mealplans = return_dictionary_mongo(mealplanner, plan_name)
+
+
+    return render_template("signup.html", list=list_mealplans, hide = 1)
 
 
 '''
