@@ -161,28 +161,32 @@ def newplan():
 
     return render_template("newplan.html")
 
-
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
+    mealplanners_names = return_dictionary_mongo_all(mealplanner)
     if request.method == "POST":
-        return redirect(url_for("index"))
+        # return redirect(url_for("index"))
+        # print("hola")
+        meal_plan = request.form.get("meal_plan")
+        # print(meal_plan)
+        list_mealplans = return_dictionary_mongo(mealplanner, meal_plan)
+        return render_template("signup.html", list=list_mealplans, mealplans_names=mealplanners_names)
+
+
 
     name_of_plan = "New plan"# name of the plan we are requesting the dictionary with the data
     list_mealplans = return_dictionary_mongo(mealplanner, name_of_plan)
-    print(list_mealplans)
-    if len(list_mealplans) == 0:
-        render_template("index.html")
-
-    return render_template("signup.html", list=list_mealplans)
+    # print(list_mealplans)#example of dictionary in console
+    return render_template("signup.html", list=list_mealplans, mealplans_names=mealplanners_names)
 
 
 '''
 Experiment to check for name in database
 '''
-@app.route("/_check_name")#from minijax
+@app.route("/_check_name")#function to check names. Connects to js in newsplan/
 def check_name():
     name = request.args.get("text", type=str)
-    list_mealplan = retrieve_data_index_list(mealplanner, "meal_plan")
+    list_mealplan = retrieve_data_index_list(mealplanner, "meal_plan")# checks names in the mealplan to check if exists.
 
     if name == "":
         rslt = {"response": "Zero"}

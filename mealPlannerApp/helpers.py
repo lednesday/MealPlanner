@@ -72,7 +72,6 @@ def print_database(collection): #for debugging
         print()
 
 def return_dictionary_mongo(collection, meal_planner_name:str ):
-    # cur = mealplanner.find({"meal_plan":meal_planner_name})
     try:
         title = {}
         for i in collection.find({"meal_plan":meal_planner_name}):
@@ -82,6 +81,15 @@ def return_dictionary_mongo(collection, meal_planner_name:str ):
 
     return title
 
+def return_dictionary_mongo_all(collection):
+    try:
+        title = []
+        for i in collection.find():
+            title.append(i)
+    except:
+        print("Meal planner not found")
+
+    return title
 
 
 

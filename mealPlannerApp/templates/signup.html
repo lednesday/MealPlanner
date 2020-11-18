@@ -6,6 +6,21 @@
 {% endblock %}
 
 {% block content %}
+
+<form  action="" method="post" id="newplan">
+<li>
+    <label for="meal_plan">Meal plans:</label>
+    <select id= "meal_plan" name= "meal_plan">
+      {% for x in mealplans_names %}
+          <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
+      {% endfor %}
+    </select>
+</li>
+<!-- <p> <button id="myBtn" type="submit">Submit</button> </p> -->
+</form>
+
+
+
 <div class="days">
     {% for day, day_dict in list.date.items() %}
     <div class="oneday">
@@ -37,4 +52,15 @@
     </div>
     {% endfor %}
 </div>
+
+<!-- Script -->
+<script type='text/javascript'>
+$(document).ready(function(){
+  $('#meal_plan').change(function(){
+    // Call submit() method on <form id='myform'>
+    console.log("hola")
+    $('#newplan').submit();
+  });
+});
+</script>
 {% endblock %}
