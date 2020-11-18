@@ -2,36 +2,37 @@
 
 {% block header %}
 <h1>Sign up to cook</h1>
-<h2>{{plantitle}}</h2>
+<h2>Meal plan: {{ list.meal_plan }}</h2>
 {% endblock %}
 
 {% block content %}
 <div class="days">
-    {% for day in days %}
+    {% for day, day_dict in list.date.items() %}
     <div class="oneday">
-        <div class="dateheading">{{date}}</div>
-        {% for meal in meals %}
-        <div class="mealheading">{{mealname}}</div>
+        </p>
+        <div class="dateheading">{{ day }}</div>
+        {% for meal, meal_dict in day_dict.meals.items() %}
+        <div class="mealheading">{{ meal }}</div>
         <div class="cooks">
-            {% if cook %}
-            <div class="cookheading">Cooks<button type="button">Edit</button></div>
-            {% for cook in cooks %}
-            {{cook}}
-            {% endfor %}
+            <div class="cookheading">Cooks: <button type="button">Edit</button></div>
+            {% for cook in meal_dict.cooks %}
+            {{ cook }}
             {% else %}
             <button type="button">Sign up</button>
-            {% endif %}
-        </div>
-        <div class="dishes">
-            {% if dish %}
-            <div class="menuheading">Menu<button type="submit">Edit</button></div>
-            {% for dish in dishes %}
-            {{dish}}
             {% endfor %}
+        </div>
+        </p>
+        <div class="dishes">
+            <div class="menuheading">Menu: <button type="button">Edit</button></div>
+            {% for dish in meal_dict.dishes %}
+            <li>
+            {{ dish }}
+            </li>
             {% else %}
             <button type="button">Add menu</button>
-            {% endif %}
+            {% endfor %}
         </div>
+        </p>
         {% endfor %}
     </div>
     {% endfor %}
