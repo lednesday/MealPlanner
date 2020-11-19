@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>Enter a recipe</h1>
+{% endblock %}
+
+{% block content %}
+<form action="" method="post" id="recipe">
+    <fieldset>
+        <label for="recipe name">Recipe title: </label>
+        <input type="text" id="recipe_name" name="recipe_name" maxlength="50" placeholder="Magnificent Mac -n- Cheese" autocomplete="off"  autofocus >
+        <label for="number served">Serves: </label>
+        <input type="text" id="yield" name="yield" maxlength="10" placeholder="4">
+    </fieldset>
+
+    <fieldset>
+        <legend>Ingredients</legend>
+        <p>
+            <label for="ingredient">Item: </label>
+            <input type="text" placeholder="shredded cheddar cheese" id="item" name="item">
+        </p>
+        <p>
+            <label for="quantity">Quantity: </label>
+            <input type="text" placeholder="2" id="quantity" name="quantity">
+        </p>
+        <p>
+            <label for="quantity">Unit of measurement: </label>
+            <input type="text" placeholder="cups" id="unit" name="unit">
+        </p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Directions</legend>
+        <p>
+            <label for="step">Step: </label>
+            <input type="text" maxlength="250" placeholder="Melt butter in medium-size skillet" id="step" name="step">
+        </p>
+    </fieldset>
+
+    <fieldset>
+        <label for="allergens">Allergens: </label>
+        <input type="text" id="allergens" name="allergens" maxlength="50" placeholder="peanuts">
+        <label for="special diet">Special diets: </label>
+        <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegetarian">
+    </fieldset>
+
+</form>
+{% endblock %}
