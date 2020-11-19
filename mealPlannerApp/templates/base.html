@@ -21,9 +21,11 @@
     </script>
 </head>
 
-<body>
+<body onload="check_date_today()">
+
     <main>
         <header>
+            {% if hide == 0 %}
             <div class="nav">
                 <ul>
                     <li><a href="{{url_for('index') }}">Return to home</a></li>
@@ -33,10 +35,15 @@
                     <!-- <li><a href="recipebrowser.html">Browse recipes</a></li> -->
                 </ul>
             </div>
+            {% endif %}
+
             {% block header %}
             {% endblock %}
+
+
         </header>
-        {% block content %} {% endblock %}
+        {% block content %}
+        {% endblock %}
     </main>
 </body>
 

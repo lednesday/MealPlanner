@@ -22,9 +22,11 @@ class Day:
     def get_meals(self):
         return self.__meals
 
-    def get_dictionary(self): # Return a dictionary to add to the mealplanner.
-
-        result = {"meals":{}}
+    def get_dictionary(self):
+        '''
+        Formats all the info of the object into a json format ready to be inserted in mongodb
+        '''
+        result = {"date":self.get_index(),"meals":{}}
 
         for meal in self.__meals:
             result["meals"][meal.get_meal_name()] = \
@@ -58,12 +60,10 @@ class MealPlan:
         result = {"meal_plan":self.get_index(), "date":{}}
 
         for day in self.__days:
-
             result["date"][day.get_index()] = {"meals":{}}
 
             for meal in day.get_meals():
-                result["date"][day.get_index()]["meals"][meal.get_meal_name()] = {"dishes":meal.get_dishes(), "cooks":meal.get_cooks()}
-
+                result["date"][day.get_index()] = day.get_dictionary()
 
         return result
 
@@ -80,6 +80,9 @@ class Meal:
     '''
     dishes an object (recipe object contain name, ingredients, allergies and instructions), meanwhile, string.
     '''
+    def get_index(self):
+        return self.__name
+
     def add_dish(self, dish:str ):
         self.__dishes.append(dish) # "recipe" should have an attribute for allergies
 
@@ -94,6 +97,12 @@ class Meal:
 
     def get_meal_name(self):
         return self.__name
+
+    def get_dictionary_meal(self):
+
+        result = {self.get_index():{"dishes":self.get_dishes(), "cooks": self.get_cooks()}} 
+
+        return result
 
 # class Dish:
 #     '''

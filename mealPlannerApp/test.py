@@ -13,12 +13,16 @@ mealplanner = db['Mealplanner']
 
 start_date = "2020-10-01"
 end_date = "2020-10-03"
-meal_planner = "New plan"
-meal_list = ["Breakfast", "Lunch"]
+meal_planner = "plano"
+meal_list = [["Breakfast", "Lunch"],["Breakfast", "Lunch"],["Breakfast", "Lunch"]]
 
 mealplan = create_newplan(start_date, end_date , meal_planner, meal_list)
 print(mealplan.get_dictionary())
+
+
+
 insert_entry_mongo(mealplan, mealplanner, "meal_plan")
+
 day1 = "2020-10-01"
 add_dish_mongo(mealplanner, meal_planner, day1, "Breakfast", "Eggs")
 add_dish_mongo(mealplanner, meal_planner, day1, "Breakfast", "Pasta")
@@ -41,6 +45,8 @@ add_dish_mongo(mealplanner, meal_planner, day1, "Lunch", "Coffee")
 add_cook_mongo(mealplanner, meal_planner, day1, "Breakfast", "Bria")
 add_cook_mongo(mealplanner, meal_planner, day1, "Lunch", "Antonio")
 
+
+print(return_dictionary_mongo_all(mealplanner)[0]['meal_plan'])
 # cur = mealplanner.find({"meal_plan":"New plan"})
 # for i in cur:
 #     title = i

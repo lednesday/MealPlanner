@@ -7,6 +7,8 @@ from helpers import *
 import pymongo # modules
 from pymongo import MongoClient
 
+import datetime
+
 '''
 instance of Flask
 '''
@@ -111,43 +113,45 @@ clean previous content of database(comment out when no needed for testing)
 
 
 
-@app.route('/display', methods=['POST'])
-def todo():
-
-    list_result = []
-    for day in mealplanner.find({},{"_id": 0, "date": 1, "meals": 1} ):
-        list_result.append("Date: " + str(day['date']) + " Meals:" + str(day['meals']))
-
-    if len(list_result) == 0:
-        return render_template('vacio.html')  #  if no items, show vacio
-    else:
-        return render_template('todo.html', items=list_result)
+# @app.route('/display', methods=['POST'])
+# def todo():
+#
+#     list_result = []
+#     for day in mealplanner.find({},{"_id": 0, "date": 1, "meals": 1} ):
+#         list_result.append("Date: " + str(day['date']) + " Meals:" + str(day['meals']))
+#
+#     if len(list_result) == 0:
+#         return render_template('vacio.html')  #  if no items, show vacio
+#     else:
+#         return render_template('todo.html', items=list_result)
 
 
 @app.route("/", methods=["POST", "GET"])
 def index():
-    return render_template("index.html")
+    return render_template("index.html", hide = 0)
 
 
+#to add
 @app.route("/newplan", methods=["POST", "GET"])
 def newplan():
     if request.method == "POST":
         if request.form.get:
             plan_name = request.form.get("plan_name")
-            # print(date)
             start_date = request.form.get("start_date")
-            # print(start_date)
             end_date = request.form.get("end_date")
-            # print(end_date)
-            checked_meals = request.form.getlist('meal')
-            # print(checked_meals)
-
+            checked_meals = request.form.getlist('meal0')
+            checked = []
             if plan_name == "" and start_date == ""  and end_date == "":# case that the person hasn't input data.
                 flash("No input provided.")
                 return render_template("newplan.html")
             else:
-                meal_plan = create_newplan(start_date, end_date , plan_name, checked_meals)
-                # print(mealplan.get_dictionary())
+
+                for i in range(0, len(date_range(start_date, end_date))):
+                    temp = "meal"+str(i)
+                    checked.append(request.form.getlist(temp))
+
+                meal_plan = create_newplan(start_date, end_date , plan_name, checked)
+
                 dates = date_range(start_date, end_date)# returns a list with all the dates bewtween start and end date.
 
                 if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
@@ -155,72 +159,93 @@ def newplan():
                     return render_template("newplan.html")
                 else:
                     flash("New plan was added! ")
-                    return redirect(url_for("index"))
+                return redirect(url_for("index"))
 
-    return render_template("newplan.html")
-
+    return render_template("newplan.html", hide = 0)
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
+    mealplanners_names = return_dictionary_mongo_all(mealplanner)
     if request.method == "POST":
-        return redirect(url_for("index"))
+        # return redirect(url_for("index"))
+        # print("hola")
+        meal_plan = request.form.get("meal_plan")
+        # print(meal_plan)
+        list_mealplans = return_dictionary_mongo(mealplanner, meal_plan)
+        return render_template("signup.html", list=list_mealplans, mealplans_names=mealplanners_names, hide = 0)
 
     name_of_plan = "New plan"# name of the plan we are requesting the dictionary with the data
-    list_mealplans = return_dictionary_mongo(mealplanner, name_of_plan)
+    list_mealplans = []
     print(list_mealplans)#example of dictionary in console
-
-    return render_template("signup.html", list=list_mealplans)
+    return render_template("signup.html", list=list_mealplans, mealplans_names=mealplanners_names, hide = 0)
 
 
 '''
-Experiment to check for name in database
+experiment. Send link by email for users to add cooks and dishes. Users should be available
+to edit but not able to see other links
 '''
-@app.route("/_check_name")#from minijax
+@app.route('/plan/<plan_name>')
+def landing_page(plan_name):
+    print("plan")
+    list_mealplans = return_dictionary_mongo(mealplanner, plan_name)
+    return render_template("signup.html", list=list_mealplans, hide=1)
+
+
+#pass
+@app.route("/_check_name")#function to check names. Connects to js in newsplan/
 def check_name():
-    print("ahora")
-    # name = request.form.get("plan_name")
     name = request.args.get("text", type=str)
-    print(name)
-    list_mealplan = retrieve_data_index_list(mealplanner, "meal_plan")
+    list_mealplan = retrieve_data_index_list(mealplanner, "meal_plan")# checks names in the mealplan to check if exists.
 
-    if name in list_mealplan:
+    if name == "":
+        rslt = {"response": "Zero"}
+    elif name in list_mealplan:
         rslt = {"response": "Yes"}
     else:
         rslt = {"response": "No"}
 
     return jsonify(result=rslt)
 
+#pass
+@app.route("/_count_inputs", methods=["POST", "GET"])
+def count_inputs():
+    start_date = request.args.get("start", type=str)
+    end_date = request.args.get("end", type=str)
+    dates_range = date_range(start_date, end_date)
+    full_date = []
+    for i in dates_range:
+        full_date.append(datetime.datetime.strptime(i, '%Y-%m-%d').strftime('%A, %d %B of %Y'))
 
-    # jumble = flask.session["jumble"]#from session
-    # matches = flask.session.get("matches", [])  # Default to empty list
-    # in_jumble = LetterBag(jumble).contains(text)#check if a word is inside.
-    # matched = WORDS.has(text)#check if the word has been already guessed
+    rslt = {"dates_range": full_date}
 
-    # if matched and in_jumble and not (text in matches):#New Match
-    #     rslt = {"response": "Match"}
-    #     app.logger.debug("MATCH!!")
-    #     matches.append(text)
-    #     flask.session["matches"] = matches
-    # elif text in matches:#Already Found
-    #     app.logger.debug("Already found.")
-    #     rslt = {"response": "Already"}
-    # elif len(text) > 7:
-    #     rslt = {"response": "many"}
-    # elif not matched:
-    #     app.logger.debug("No in Vocab")
-    #     rslt = {"response": "No"}
-    # elif not in_jumble:
-    #     rslt = {"response": "No"}
-    # else:
-    #     app.logger.debug("This case shouldn't happen!")
-    #     rslt = {"response": "No"}
-    #     assert False  # Raises AssertionError
-    #
-    # if len(matches) >= flask.session["target_count"]:
-    #    rslt = {"response": "end"}
-    #    return flask.jsonify(result=rslt)
-    # else:
-    #    return flask.jsonify(result=rslt)
+    return jsonify(result=rslt)
+
+#experiment
+@app.route("/testentry", methods=["POST", "GET"])#from minijax
+def url_to():
+
+    list_cooks = retrieve_data_index_list(cook_database, "name")
+    list_dishes = retrieve_data_index_list(recipe_database, "title")
+
+    date  = request.args.get('date', None)
+    meal  = request.args.get('meal', None)
+    planner_name  = request.args.get('planner_name', None)
+
+
+    if request.method == "POST":
+        if request.form.get:
+            cook = request.form.get("cook1")
+            dish1 = request.form.get("dish1-1")
+            dish2 = request.form.get("dish1-2")
+
+            dishes = [cook]
+            cooks = [dish1, dish2]
+
+            meal_obj = create_meal_add(meal, cooks, dishes)
+            add_meals_day_mongo(mealplanner, planner_name, date, meal_obj) # add an extra meal in a day
+
+
+    return render_template("testentry.html",date = date, meal = meal, hide = 0, names =list_cooks, dishes =list_dishes)
 
 
 

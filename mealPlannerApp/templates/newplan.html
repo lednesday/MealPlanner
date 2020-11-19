@@ -10,11 +10,12 @@
     <p>{{ message }}</p>
 {% endfor %}
 
-<form action="" method="post" id="newplan">
+
+<form  action="" method="post" id="newplan">
 
     <label for="plan name">Meal plan name</label>
 
-    <input type="text" id="plan_name" name="plan_name" maxlength="50" placeholder="October Rogue Trip"autocomplete="off"  autofocus >
+    <input type="text" id="plan_name" name="plan_name" maxlength="50" required="required" placeholder="October Rogue Trip" >
     <p id="response"> </p>
 
     <fieldset>
@@ -27,55 +28,140 @@
             <label for="end date">End date:</label>
             <input type="date" id="end_date" name="end_date">
         </p>
+
     </fieldset>
-    <fieldset>
-        <legend>Select the meals you'll be sharing</legend>
-        <ul class="checkboxes">
-            <li>
-                <label for="breakfast">breakfast</label>
-                <input type="checkbox" id="breakfast" name="meal" value="breakfast">
-            </li>
-            <li>
-                <label for="lunch">lunch</label>
-                <input type="checkbox" id="lunch" name="meal" value="lunch">
-            </li>
-            <li>
-                <label for="snacks">snacks</label>
-                <input type="checkbox" id="snacks" name="meal" value="snacks">
-            </li>
-            <li>
-                <label for="dinner">dinner</label>
-                <input type="checkbox" id="dinner" name="meal" value="dinner">
-            </li>
-        </ul>
-    </fieldset>
-    <p> <button type="submit">Submit</button> </p>
+
+    <p> <button id="myBtn" type="submit">Submit</button> </p>
+
+    <div id="container"/>
 
 </form>
 
-<script>
-    // $("#newplan ").submit(function(event) {
-    //    event.preventDefault();
-    //   });
 
-    $("#plan_name").keyup(function(event) {
-       var txt = $("#plan_name").val();  // Current content of the input field
-       var keycode = event.which;      // They key that just went up
-       $.getJSON( "/_check_name",
-                  {text: txt},
-                  function(data) {
-                    rsval = data.result.response;
-                    console.log("rsval: " + rsval);
-                    if (rsval.localeCompare("Yes") == 0){
-                       $("#response").html("Already taken!")
-                    }
-                    else{
-                      $("#response").html("Good name!");
-                    }
-                   }
 
-               );
-       });
+<script type="text/javascript">
+  function disable() {//enable or disable submit
+      document.getElementById("myBtn").disabled = true;
+  }
+  function enable() {
+      document.getElementById("myBtn").disabled = false;
+  }
+
+  $("#plan_name").keyup(function(event) {//function to check if a name is already in the database
+     var txt = $("#plan_name").val();  // Current content of the input field
+     var keycode = event.which;      // They key that just went up
+     $.getJSON( "/_check_name",
+                {text: txt},
+                function(data) {
+                  rsval = data.result.response;
+                  console.log("rsval: " + rsval);
+                  if (rsval.localeCompare("Yes") == 0){
+                      $("#response").html("This name has been already taken. Choose another one")
+                      disable()
+                  }
+                  else if (rsval.localeCompare("Zero") == 0){
+                      $("#response").html("No name has been provided")
+                      disable()
+                  }
+                  else{
+                      $("#response").html("This name is available.");
+                      enable()
+                  }
+                }
+
+             );
+    });
+
+
+    function addFields(list_range){//add fields. list ranges is a list of dates where we need to select meals.
+        var number = list_range.length;
+
+        while (container.hasChildNodes()) {
+           container.removeChild(container.lastChild);
+        }
+
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();  // Curren
+
+        for ( i = 0 ; i < number; i++){
+          var fieldset = document.createElement ("fieldset");
+          var legend = document.createElement ("legend");
+          legend.innerHTML = "Select the meals you'll be sharing for " + list_range[i];
+          var ul = document.createElement('ul')
+          ul.setAttribute('class','checkbox');
+
+          meals = ['Breakfast','Lunch','Snack','Dinner'];
+          document.getElementById('container').appendChild(ul);
+          var j = 0
+          meals.forEach(fun_add);
+
+          function fun_add(element, index, arr) {
+            var li = document.createElement('li');
+            var label = document.createElement('label');
+            var input = document.createElement('input');
+            input.type = "checkbox";
+            input.name = "meal"+i;
+            input.value = meals[j]
+            j = j + 1;
+            label.innerHTML = element;
+
+            li.appendChild(label);
+            li.appendChild(input);
+            ul.appendChild(li);
+          }
+
+          fieldset.appendChild (ul);
+          fieldset.appendChild (legend);
+          container.appendChild(fieldset);
+        }
+   };
+
+
+  function check_dates_order(){//checks that the start date is always before end date. Otherwise, it disable submit button.
+      var start_date = $("#start_date").val();
+      var end_date = $("#end_date").val();
+      if (start_date > end_date){
+        disable();
+        $("#response").html("The start date cannot be after the end date.")
+      }
+      else if (start_date < end_date){
+        $("#response").html("")
+        enable();
+      }
+  };
+
+  $("#start_date").change(range_fields);//events that check if user change dates
+  $("#end_date").change(range_fields);
+
+  function range_fields() {//gets start and end date and calculate how many days difference and print the same number of fields.
+      var start_date = $("#start_date").val();
+      var end_date = $("#end_date").val();  // Current content of the input field\
+
+      $.getJSON( "/_count_inputs",
+                {start: start_date,
+                  end: end_date},
+                 function(data) {
+                   list_dates = data.result.dates_range;
+                   addFields(list_dates);
+                   check_dates_order();
+                  }
+        );
+    };
+
+  function check_date_today(){//gets today's date and add it as default in start and end date, disable submit (to avoid send empty meal names and creates one field.)
+    var date_today = new Date();
+    var year = date_today.getFullYear();
+    var month = String(date_today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var day = String(date_today.getDate()).padStart(2, '0');
+    date_today = year+'-'+ month+'-' + day;
+    document.getElementById('start_date').value = date_today;
+    document.getElementsByName("start_date")[0].setAttribute('min', date_today);//js prevent user to schedule a plan before today.
+    document.getElementById('end_date').value = date_today;
+    document.getElementsByName("end_date")[0].setAttribute('min', date_today);
+
+    disable();
+    range_fields();
+  }
 
 </script>
 

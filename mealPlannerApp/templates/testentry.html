@@ -12,22 +12,25 @@
 
     <ul class="checkboxes">
         <li>
-            <label for="date">Date:</label>
+            <label for="date">Date: </label>
             <!-- <input type="text" id="date" name="date"> -->
 
             <input type="date" id="date" name="date"
-                   value="01-01-2020"
-                   min="01-01-2020" max="01-01-2025">
+                   value={{date}}
+                   disabled>
         </li>
         <li>
 
-            <label for="meal1">Meal 1:</label>
-            <select id="meal1" name="meal1">
+            <label for="meal1">Meal: </label>
+            <input type="text" id="meal" name="meal"
+                   value={{meal}}
+                   disabled>
+            <!-- <select id="meal1" name="meal">
               <option value="" selected="selected">None</option>
               <option value="Breakfast">Breakfast</option>
               <option value="Lunch">Lunch</option>
               <option value="Dinner">Dinner</option>
-            </select>
+            </select> -->
         </li>
         <li>
 
@@ -62,7 +65,7 @@
           </select>
 
         </li>
-        <li>
+        <!-- <li>
             <label for="meal2">Meal 2:</label>
             <select id="meal2" name="meal2">
               <option value="" selected="selected">None</option>
@@ -102,7 +105,7 @@
             {% endfor %}
           </select>
 
-        </li>
+        </li> -->
 
         <li class="button">
             <button type="submit">Add day</button>
