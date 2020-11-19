@@ -84,6 +84,18 @@ body {
     padding-right: 2%;
 }
 
+.topbanner {
+    background-color: #E55812;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.midbanner {
+    background-color: #ffc100ff;
+    padding: 5px;
+    border-radius: 5px;
+}
+
 .checkboxes {
     list-style-type: none;}
 
