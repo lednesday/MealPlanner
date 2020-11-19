@@ -238,8 +238,8 @@ def url_to():
             dish1 = request.form.get("dish1-1")
             dish2 = request.form.get("dish1-2")
 
-            dishes = [cook]
-            cooks = [dish1, dish2]
+            cooks = [cook]
+            dishes = [dish1, dish2]
 
             meal_obj = create_meal_add(meal, cooks, dishes)
             add_meals_day_mongo(mealplanner, planner_name, date, meal_obj) # add an extra meal in a day
