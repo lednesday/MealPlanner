@@ -17,7 +17,7 @@ meal_planner = "plano"
 meal_list = [["Breakfast", "Lunch"],["Breakfast", "Lunch"],["Breakfast", "Lunch"]]
 
 mealplan = create_newplan(start_date, end_date , meal_planner, meal_list)
-# print(mealplan.get_dictionary())
+print(mealplan.get_dictionary())
 
 
 

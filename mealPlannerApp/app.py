@@ -174,11 +174,9 @@ def signup():
         list_mealplans = return_dictionary_mongo(mealplanner, meal_plan)
         return render_template("signup.html", list=list_mealplans, mealplans_names=mealplanners_names, hide = 0)
 
-
-
     name_of_plan = "New plan"# name of the plan we are requesting the dictionary with the data
     list_mealplans = []
-    # print(list_mealplans)#example of dictionary in console
+    print(list_mealplans)#example of dictionary in console
     return render_template("signup.html", list=list_mealplans, mealplans_names=mealplanners_names, hide = 0)
 
 
@@ -188,16 +186,12 @@ to edit but not able to see other links
 '''
 @app.route('/plan/<plan_name>')
 def landing_page(plan_name):
-    print("plsn")
+    print("plan")
     list_mealplans = return_dictionary_mongo(mealplanner, plan_name)
+    return render_template("signup.html", list=list_mealplans, hide=1)
 
 
-    return render_template("signup.html", list=list_mealplans, hide = 1)
-
-
-'''
-Experiment to check for name in database
-'''
+#pass
 @app.route("/_check_name")#function to check names. Connects to js in newsplan/
 def check_name():
     name = request.args.get("text", type=str)
@@ -212,7 +206,8 @@ def check_name():
 
     return jsonify(result=rslt)
 
-@app.route("/_count_inputs", methods=["POST", "GET"])#from minijax
+#pass
+@app.route("/_count_inputs", methods=["POST", "GET"])
 def count_inputs():
     start_date = request.args.get("start", type=str)
     end_date = request.args.get("end", type=str)
@@ -225,6 +220,32 @@ def count_inputs():
 
     return jsonify(result=rslt)
 
+#experiment
+@app.route("/testentry", methods=["POST", "GET"])#from minijax
+def url_to():
+
+    list_cooks = retrieve_data_index_list(cook_database, "name")
+    list_dishes = retrieve_data_index_list(recipe_database, "title")
+
+    date  = request.args.get('date', None)
+    meal  = request.args.get('meal', None)
+    planner_name  = request.args.get('planner_name', None)
+
+
+    if request.method == "POST":
+        if request.form.get:
+            cook = request.form.get("cook1")
+            dish1 = request.form.get("dish1-1")
+            dish2 = request.form.get("dish1-2")
+
+            dishes = [cook]
+            cooks = [dish1, dish2]
+
+            meal_obj = create_meal_add(meal, cooks, dishes)
+            add_meals_day_mongo(mealplanner, planner_name, date, meal_obj) # add an extra meal in a day
+
+
+    return render_template("testentry.html",date = date, meal = meal, hide = 0, names =list_cooks, dishes =list_dishes)
 
 
 

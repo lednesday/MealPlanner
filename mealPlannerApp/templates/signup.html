@@ -7,22 +7,18 @@
 
 {% block content %}
 
-{% if hide == 0%}
-
+{% if hide == 0 %}
 <form  action="" method="post" id="newplan">
 <li>
     <label for="meal_plan">Meal plans:</label>
     <select id= "meal_plan" name= "meal_plan">
-        <option value="" selected="selected">None</option>
-
+          <option value="" selected="selected">None</option>
       {% for x in mealplans_names %}
           <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
       {% endfor %}
     </select>
 </li>
-<!-- <p> <button id="myBtn" type="submit">Submit</button> </p> -->
 </form>
-
 {% endif %}
 
 
@@ -36,7 +32,7 @@
         {% for meal, meal_dict in day_dict.meals.items() %}
         <div class="mealheading">{{ meal }}</div>
         <div class="cooks">
-            <div class="cookheading">Cooks: <button type="button">Edit</button></div>
+            <div class="cookheading">Cooks: <button type="button" onclick="window.location.href='{{ url_for( 'url_to', date = day, meal = meal, planner_name = list.meal_plan ) }}';">Edit</button></div>
             {% for cook in meal_dict.cooks %}
             {{ cook }}
             {% else %}
@@ -74,4 +70,5 @@ $(document).ready(function(){
   });
 });
 </script>
+
 {% endblock %}
