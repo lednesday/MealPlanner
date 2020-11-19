@@ -7,6 +7,8 @@ from helpers import *
 import pymongo # modules
 from pymongo import MongoClient
 
+import datetime
+
 '''
 instance of Flask
 '''
@@ -215,7 +217,11 @@ def count_inputs():
     start_date = request.args.get("start", type=str)
     end_date = request.args.get("end", type=str)
     dates_range = date_range(start_date, end_date)
-    rslt = {"dates_range": dates_range}
+    full_date = []
+    for i in dates_range:
+        full_date.append(datetime.datetime.strptime(i, '%Y-%m-%d').strftime('%A, %d %B of %Y'))
+
+    rslt = {"dates_range": full_date}
 
     return jsonify(result=rslt)
 
