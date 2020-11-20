@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>Create a cook profile</h1>
+<p>This information isn't required, but it may make meal planning easier for the entire group.</p>
+{% endblock %}
+
+{% block content %}
+<form action="" method="post" id="recipe">
+    <fieldset>
+        <label for="cook name">Name: </label>
+        <input type="text" id="cook_name" name="cook_name" maxlength="75" placeholder="Martha Steward" autocomplete="off"  autofocus >
+        <label for="allergies">Allergies: </label>
+        <input type="text" id="allergies" name="allergies" maxlength="100" placeholder="shrimp">
+        <label for="allergies">Other dietary restrictions: </label>
+        <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegan">
+    </fieldset>
+    <p> <button type="submit">Submit</button> </p>
+</form>
+{% endblock %}
