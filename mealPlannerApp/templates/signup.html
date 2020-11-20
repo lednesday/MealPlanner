@@ -24,11 +24,14 @@
     </select>
 </li>
 
+
+
 </form>
 {% endif %}
 
 {% if list %}
 <div class="days">
+
     {% for day, day_dict in list.date.items() %}
     <div class="oneday">
       <div class="dateheading">{{ day }}</div>
@@ -36,6 +39,9 @@
       <div class="mealheading">{{ meal }}</div>
 
       <div class="cooks">
+        {% for message in get_flashed_messages() %}
+            <p>{{ message }}</p>
+        {% endfor %}
           <div class="cookheading"><b>Cooks:</b>
             {% for cook in meal_dict.cooks %}
             <li>
@@ -49,9 +55,6 @@
             </form>
             </li>
             {% endfor %}
-
-
-
             <li>
               <form action="{{ url_for( 'add_cook', date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
                 <li class="button">
@@ -75,8 +78,8 @@
 
           <form action="{{ url_for( 'delete_dish', dish_delete = dish, date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
             <li class="button">
-              {{ dish   }}
-              <button type ="submit" >1X</button>
+              {{ dish }}
+              <button type ="submit">X</button>
             </li>
           </form>
           </li>
@@ -85,18 +88,27 @@
           <li>
             <form action="{{ url_for( 'add_dish', date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
               <li class="button">
+
+
                 <select id= "dish" name= "dish">
                   <option value="" selected="selected">None</option>
                   {% for x in dishes %}
                     <option value="{{x}}">{{x}}</option>
                   {% endfor %}
                 </select>
+
+
                 <button type ="submit" >Add dish</button>
               </li>
             </form>
           </li>
         </div>
       </div>
+
+
+      <!-- <select id="selectNumber">
+         <option>Choose a number</option>
+      </select> -->
 
       {% endfor %}
       </div>

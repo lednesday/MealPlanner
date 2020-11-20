@@ -80,15 +80,14 @@ def signup():
     list_cooks = retrieve_data_index_list(cook_database, "name")
     list_dishes = retrieve_data_index_list(recipe_database, "title")
 
-    meal_plan_redirect  = request.args.get('meal_plan', None)
+    meal_plan  = request.args.get('meal_plan', None)
 
     if request.method == "POST":
         meal_plan = request.form.get("meal_plan")
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
-    elif meal_plan_redirect != None:
-        print("entro a  redirec")
-        one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan_redirect)
+    elif meal_plan != None:
+        one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
 
     one_mealplanner = []
@@ -103,6 +102,7 @@ def landing_page(plan_name):
     print("plan")
     list_mealplans = return_dictionary_mongo(mealplanner, plan_name)
     return render_template("signup.html", list=list_mealplans, hide=1)
+
 
 #pass
 @app.route("/_check_name")#function to check names. Connects to js in newsplan/
@@ -136,14 +136,17 @@ def count_inputs():
 @app.route("/add_cook", methods=["POST", "GET"])
 def add_cook():
 
-    # meal_plan = request.form.get("meal_plan")
     date  = request.args.get('date', None)
     meal  = request.args.get('meal', None)
     planner_name  = request.args.get('planner_name', None)
     cook = request.form.get("cook")
-
-    if cook != None:
-        add_cook_mongo(mealplanner, planner_name, date, meal, cook)
+    print(cook)
+    if cook != "":
+        cooks_in_database = get_cooks_mongo(mealplanner, planner_name, date, meal)
+        if cook not in cooks_in_database:
+            add_cook_mongo(mealplanner, planner_name, date, meal, cook)
+        else:
+            flash('"' +cook +'" is already registered. ')
 
     one_mealplanner = return_dictionary_mongo(mealplanner, planner_name)
     return redirect(url_for('signup', meal_plan = planner_name))
@@ -151,40 +154,66 @@ def add_cook():
 
 @app.route("/add_dish", methods=["POST", "GET"])
 def add_dish():
-    print("borrar")
     planner_name  = request.args.get('planner_name', None)
     list_mealplans = return_dictionary_mongo(mealplanner, planner_name)
     date  = request.args.get('date', None)
     meal  = request.args.get('meal', None)
     dish = request.form.get("dish")
-    if dish != None:
-        add_dish_mongo(mealplanner, planner_name, date, meal, dish)
+    if dish != "":
+        dishes_in_database = get_dishes_mongo(mealplanner, planner_name, date, meal)
+        if dish not in dishes_in_database:
+            add_dish_mongo(mealplanner, planner_name, date, meal, dish)
+        else:
+            flash('"' +dish +'" is already registered. ')
 
     one_mealplanner = return_dictionary_mongo(mealplanner, planner_name)
     return redirect(url_for('signup', meal_plan = planner_name))
 
 @app.route("/delete_dish", methods=["POST", "GET"])
 def delete_dish():
+    # args from website
     dish_delete  = request.args.get('dish_delete', None)
     planner_name  = request.args.get('planner_name', None)
-    list_mealplans = return_dictionary_mongo(mealplanner, planner_name)
     date  = request.args.get('date', None)
     meal  = request.args.get('meal', None)
     delete_dish_mongo(mealplanner, planner_name, date, meal, dish_delete)
-    one_mealplanner = return_dictionary_mongo(mealplanner, planner_name)
     return redirect(url_for('signup', meal_plan = planner_name))
 
 @app.route("/delete_cook", methods=["POST", "GET"])
 def delete_cook():
+    # args from website
     cook_delete  = request.args.get('cook_delete', None)
     planner_name  = request.args.get('planner_name', None)
-    list_mealplans = return_dictionary_mongo(mealplanner, planner_name)
     date  = request.args.get('date', None)
     meal  = request.args.get('meal', None)
     delete_cook_mongo(mealplanner, planner_name, date, meal, cook_delete)
-    one_mealplanner = return_dictionary_mongo(mealplanner, planner_name)
     return redirect(url_for('signup', meal_plan = planner_name))
 
+@app.route("/_available", methods=["POST", "GET"])
+def available():
+    planner_name = request.args.get("name", type=str)
+    date = request.args.get("date", type=str)
+    meal = request.args.get("meal", type=str)
+
+    cooks_in_database = get_cooks_mongo(mealplanner, planner_name, date, meal)
+    list_cooks = retrieve_data_index_list(cook_database, "name")
+
+    dishes_in_database = get_dishes_mongo(mealplanner, planner_name, date, meal)
+    list_dishes = retrieve_data_index_list(cook_database, "title")
+
+    ava_cooks = []
+    ava_dishes = []
+    for i in list_cooks:
+        if i not in cooks_in_database:
+            ava_cooks.append(i)
+
+    for i in list_dishes:
+        if i not in dishes_in_database:
+            ava_cooks.append(i)
+
+    rslt = {"cooks": ava_cooks, "dishes": ava_dishes}
+
+    return jsonify(result=rslt)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -185,6 +185,41 @@ function range_fields() {//gets start and end date and calculate how many days d
   });
 
 
+  function adquire_data() {
+    var start_date = $("#start_date").val();
+    var end_date = $("#end_date").val();
+    var start_date = $("#start_date").val();
+    
+    $.getJSON( "/_available",
+              {name: name_request,
+                date: date_request,
+              meal: meal_request},
+               function(data) {
+                 list_dates = data.result;
+                 print(list_dates)
+                }
+      );
+  }
+
+
+  planner_name = request.args.get("name", type=str)
+  date = request.args.get("date", type=str)
+  meal = request.args.get("meal", type=str)
+
+
+  function dropDown(){
+    var select = document.getElementById("selectNumber");
+    var options = ["1", "2", "3", "4", "5"];
+
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+      }
+    }
+    dropDown();
 
 </script>
 

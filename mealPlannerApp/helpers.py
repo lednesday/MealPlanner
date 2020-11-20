@@ -125,12 +125,16 @@ def get_dishes_mongo(collection, meal_plan_name:str, date: str, meal: str):
     return result
 
 '''
-Gets cooks, provide mealplan, day, meal
+Gets cooks and dishes, provide mealplan, day, meal
 '''
 def get_cooks_mongo(collection, meal_plan_name:str, date: str, meal: str):
     temp = return_dictionary_mongo(collection, meal_plan_name)
     result =temp['date'][date]['meals'][meal]['cooks']
-
+    return result
+    
+def get_dishes_mongo(collection, meal_plan_name:str, date: str, meal: str):
+    temp = return_dictionary_mongo(collection, meal_plan_name)
+    result =temp['date'][date]['meals'][meal]['dishes']
     return result
 '''
 delete one dish
@@ -146,6 +150,16 @@ def delete_cook_mongo(collection, meal_plan_name:str, date: str, meal: str, cook
       { "meal_plan": meal_plan_name },
       { '$pull': { 'date.'+date+".meals."+meal+".cooks": cook  } }
     );
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -234,7 +248,6 @@ def insert_entry_mongo(object, collection, type:str): # enter and object (Day(),
     else:
         temp = collection.insert_one(object.get_dictionary())
     return temp #id returned (may need it later) returns 1 if exists
-
 
 '''
 deletes entry according to the date
