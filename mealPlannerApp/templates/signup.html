@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>Sign up to cook</h1>
+{% if list %}
+<h1>Sign up page for cooks and dishes.</h1>
 <h2>Meal plan: {{ list.meal_plan }}</h2>
+{% else %}
+<h1>Sign up page for cooks and dishes.</h1>
+<h2>Select one meal plan:</h2>
+{%  endif %}
 {% endblock %}
 
 {% block content %}
@@ -18,59 +23,87 @@
       {% endfor %}
     </select>
 </li>
+
 </form>
 {% endif %}
-
-
 
 {% if list %}
 <div class="days">
     {% for day, day_dict in list.date.items() %}
     <div class="oneday">
-        </p>
-        <div class="dateheading">{{ day }}</div>
-        {% for meal, meal_dict in day_dict.meals.items() %}
-        <div class="mealheading">{{ meal }}</div>
-        <div class="cooks">
-            <div class="cookheading">Cooks: <button type="button" onclick="window.location.href='{{ url_for( 'url_to', date = day, meal = meal, planner_name = list.meal_plan ) }}';">Edit</button></div>
+      <div class="dateheading">{{ day }}</div>
+      {% for meal, meal_dict in day_dict.meals.items() %}
+      <div class="mealheading">{{ meal }}</div>
+
+      <div class="cooks">
+          <div class="cookheading"><b>Cooks:</b>
             {% for cook in meal_dict.cooks %}
             <li>
-            {{ cook }}
+
+            <form action="{{ url_for( 'delete_cook', cook_delete = cook, date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
+
+              <li class="button">
+                  {{ cook }}
+                <button type ="submit" >X</button>
+              </li>
+            </form>
             </li>
-            {% else %}
-            <button type="button">Sign up</button>
             {% endfor %}
-        </div>
-        </p>
-        <div class="dishes">
-            <div class="menuheading">Menu: <button type="button">Edit</button></div>
-            {% for dish in meal_dict.dishes %}
+
+
+
             <li>
-            {{ dish }}
+              <form action="{{ url_for( 'add_cook', date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
+                <li class="button">
+                  <select id= "cook" name= "cook">
+                    <option value="" selected="selected">None</option>
+                    {% for x in names %}
+                      <option value="{{x}}">{{x}}</option>
+                    {% endfor %}
+                    </select>
+                    <button type ="submit" id="submit_cook">Add cook</button>
+                </li>
+              </form>
             </li>
-            {% else %}
-            <button type="button">Add menu</button>
-            {% endfor %}
+          </div>
+      </div>
+
+      <div class="dishes">
+        <div class="dishheading"><b>Dishes:</b>
+          {% for dish in meal_dict.dishes %}
+          <li>
+
+          <form action="{{ url_for( 'delete_dish', dish_delete = dish, date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
+            <li class="button">
+              {{ dish   }}
+              <button type ="submit" >1X</button>
+            </li>
+          </form>
+          </li>
+          {% endfor %}
+
+          <li>
+            <form action="{{ url_for( 'add_dish', date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
+              <li class="button">
+                <select id= "dish" name= "dish">
+                  <option value="" selected="selected">None</option>
+                  {% for x in dishes %}
+                    <option value="{{x}}">{{x}}</option>
+                  {% endfor %}
+                </select>
+                <button type ="submit" >Add dish</button>
+              </li>
+            </form>
+          </li>
         </div>
-        </p>
-        {% endfor %}
-    </div>
+      </div>
+
+      {% endfor %}
+      </div>
     {% endfor %}
 </div>
-
 {% else %}
 
 {% endif %}
-
-
-<script type='text/javascript'>
-$(document).ready(function(){
-  $('#meal_plan').change(function(){
-    // Call submit() method on <form id='myform'>
-    console.log("hola")
-    $('#newplan').submit();
-  });
-});
-</script>
 
 {% endblock %}

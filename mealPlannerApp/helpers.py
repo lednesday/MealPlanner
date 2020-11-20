@@ -101,17 +101,51 @@ def create_meal_add(meal:str, cooks:list, dishes:list):
 '''
 Add meal. needs name of the planner and the date_event
 '''
-def add_meals_day_mongo(collection, meal_planner:str, date: str, meal: Meal): # add an extra meal in a day
-    print(meal.get_dictionary_meal())
+def add_meals_day_mongo(collection, meal_planner:str, date: str, meal: Meal):
     collection.update_one({"meal_plan":meal_planner}, {'$set': {'date.'+date+".meals":meal.get_dictionary_meal()}})
 
+'''
+Add cook to database, providing a plan name, a date, a meal and a cook
+'''
+def add_cook_mongo(collection, meal_plan_name:str, date_to_add: str, meal_to_add: str, cook: str):
+    collection.update_one({"meal_plan":meal_plan_name}, {'$push': {'date.'+date+".meals."+meal_to_add+".cooks":cook}})
 
+'''
+Add dish to database, providing a plan name, a date, a meal and a cook
+'''
+def add_dish_mongo(collection, meal_plan_name:str, date_to_add: str, meal_to_add: str, dish: str):
+    collection.update_one({"meal_plan":meal_plan_name}, {'$push': {'date.'+date+".meals."+meal_to_add+".dishes":dish}})
+'''
+Gets dishes, provide mealplan, day, meal
+'''
+def get_dishes_mongo(collection, meal_plan_name:str, date: str, meal: str):
+    temp = return_dictionary_mongo(collection, meal_plan_name)
+    result =temp['date'][date]['meals'][meal]['dishes']
 
+    return result
 
+'''
+Gets cooks, provide mealplan, day, meal
+'''
+def get_cooks_mongo(collection, meal_plan_name:str, date: str, meal: str):
+    temp = return_dictionary_mongo(collection, meal_plan_name)
+    result =temp['date'][date]['meals'][meal]['cooks']
 
+    return result
+'''
+delete one dish
+'''
+def delete_dish_mongo(collection, meal_plan_name:str, date: str, meal: str, dish:str):
+    collection.update(
+      { "meal_plan": meal_plan_name },
+      { '$pull': { 'date.'+date+".meals."+meal+".dishes": dish} }
+    );
 
-
-
+def delete_cook_mongo(collection, meal_plan_name:str, date: str, meal: str, cook:str):
+    collection.update(
+      { "meal_plan": meal_plan_name },
+      { '$pull': { 'date.'+date+".meals."+meal+".cooks": cook  } }
+    );
 
 
 
