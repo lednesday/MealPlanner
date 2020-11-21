@@ -60,10 +60,6 @@ def cook():
 
         insert_entry_mongo(cook, cook_database, "name")
 
-        if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
-                    flash("That name has been taken. Choose another one. ")
-                    return render_template("newplan.html")
-
     return render_template("cook.html", hide = 0)
 
 @app.route("/newplan", methods=["POST", "GET"])
