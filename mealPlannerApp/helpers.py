@@ -39,6 +39,8 @@ def create_newplan(start_date: str, end_date:str , name_plan:str, list_meals:lis
 
     return mp
 
+
+
 def insert_entry_mongo(object, collection, type:str): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title, meal_plan)
     if collection.count_documents({type: object.get_index() }, limit = 1) != 0:
         print("Record exists") #if the date already exists, it doesn't do anything
@@ -48,9 +50,16 @@ def insert_entry_mongo(object, collection, type:str): # enter and object (Day(),
         return False #id returned (may need it later) returns 1 if exists and it fails to add.
 
 '''
+insert recipe to meal_planner
+'''
+def insert_recipe_cook_plan(object, collection, plan): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title,
+    print(object.get_dictionary())
+    collection.update_one({"meal_plan":plan}, {'$set': {'cooks':object.get_dictionary()}})
+
+
+'''
 add dishes and cooks to mongodb
 '''
-
 
 def retrieve_data_index_list(collection, type): #return a list with index of tables ("date" for days, "title" for recipes and "name" for cooks)
     temp = []
@@ -102,7 +111,6 @@ def create_cook_add(name: str, allergies:str, restrictions:str, email:str):
     temp.add_allergies(allergies)
     temp.add_restrictions(restrictions)
     temp.add_email(email)
-    
     return temp
 
 
@@ -133,7 +141,8 @@ def get_dishes_mongo(collection, meal_plan_name:str, date: str, meal: str):
     return result
 
 '''
-Gets cooks and dishes, provide mealplan, day, meal
+Gets cooks and dishes, provide mealplan, day, meal (para eliminar opciones seleccionadas
+)
 '''
 def get_cooks_mongo(collection, meal_plan_name:str, date: str, meal: str):
     temp = return_dictionary_mongo(collection, meal_plan_name)
@@ -167,6 +176,11 @@ def delete_cook_mongo(collection, meal_plan_name:str, date: str, meal: str, cook
       { "meal_plan": meal_plan_name },
       { '$pull': { 'date.'+date+".meals."+meal+".cooks": cook  } }
     );
+
+
+
+
+
 
 
 

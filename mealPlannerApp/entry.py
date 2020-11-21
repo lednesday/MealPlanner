@@ -57,14 +57,14 @@ class MealPlan:
         Formats all the info of the object into a json format ready to be inserted in mongodb
         '''
 
-        result = {"meal_plan":self.get_index(), "date":{}}
+        result = {"meal_plan":self.get_index(), "date":{}, "recipes":{}, "cooks":{}}
 
         for day in self.__days:
             result["date"][day.get_index()] = {"meals":{}}
 
             for meal in day.get_meals():
                 result["date"][day.get_index()] = day.get_dictionary()
-
+        print(result)
         return result
 
 
@@ -100,7 +100,7 @@ class Meal:
 
     def get_dictionary_meal(self):
 
-        result = {self.get_index():{"dishes":self.get_dishes(), "cooks": self.get_cooks()}} 
+        result = {self.get_index():{"dishes":self.get_dishes(), "cooks": self.get_cooks()}}
 
         return result
 
