@@ -140,26 +140,47 @@ class Meal:
 #         print(self.__recipe) # May change depending on recipe format
 
 
-# class Cook:
-    # '''
-    # A cook is a person who will cook the meal. Each meal has one or more
-    # assigned cooks.
-    # '''
-    #
-    # def __init__(self, name:str):
-    #     '''
-    #     creates day but it can add meals and cooks later. Date is required
-    #     '''
-    #     self.__name = name # Cook's name
-    #     self.__extra = [] # Cook's name
-    #
-    #
-    # def get_name(self):
-    #     return self.__name
-    #
-    # def add_extra(self, info: str):
-    #     '''
-    #     add random info from cook (i.e. allergies, if prefer not to cook meat, etc)
-    #     For now, it will add the info as a lidst of strings, one by one
-    #     '''
-    #     self.__extra.append(info) #
+class Cook:
+    '''
+    A cook is a person who will cook the meal. Each meal has one or more
+    assigned cooks.
+    '''
+
+    def __init__(self, name:str):
+        '''
+        creates day but it can add meals and cooks later. Date is required
+        '''
+        self.__name = name # Cook's name
+        self.__allergies = [] # Cook's allergier
+        self.__restrictions = [] # Vegan, Gluten-free, etc
+        self.__email = ""
+
+    def get_index(self):
+        return self.__name
+
+    def add_email(self, email:str):
+        self.__email = email
+
+
+    def add_allergies(self, allergies: str):
+        '''
+        add random info from cook (i.e. allergies, if prefer not to cook meat, etc)
+        For now, it will add the info as a lidst of strings, one by one
+        '''
+        temp = allergies.split(", ")
+        for i in temp:
+            self.__allergies.append(i)
+
+    def add_restrictions(self, info: str):
+        '''
+        add random info from cook (i.e. allergies, if prefer not to cook meat, etc)
+        For now, it will add the info as a lidst of strings, one by one
+        '''
+        temp = info.split(", ")
+        for i in temp:
+            self.__restrictions.append(i)
+
+    def get_dictionary(self):
+        temp = {"name": self.__name , "allergies": self.__allergies, \
+                "restrictions": self.__restrictions, "email" : self.__email}
+        return temp

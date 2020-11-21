@@ -49,6 +49,21 @@ def recipe():
 
 @app.route("/cook", methods=["POST", "GET"])
 def cook():
+
+    if request.method == "POST":
+        cook_name = request.form.get("cook_name")
+        cook_allergies = request.form.get("allergies")
+        cook_restrictions = request.form.get("restrictions")
+        cook_email = "temp@fakeemails.com"
+
+        cook = create_cook_add(cook_name, cook_allergies, cook_restrictions, cook_email)
+
+        insert_entry_mongo(cook, cook_database, "name")
+
+        if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
+                    flash("That name has been taken. Choose another one. ")
+                    return render_template("newplan.html")
+
     return render_template("cook.html", hide = 0)
 
 @app.route("/newplan", methods=["POST", "GET"])

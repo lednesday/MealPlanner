@@ -97,6 +97,14 @@ def create_meal_add(meal:str, cooks:list, dishes:list):
 
     return temp_meal
 
+def create_cook_add(name: str, allergies:str, restrictions:str, email:str):
+    temp = Cook(name)
+    temp.add_allergies(allergies)
+    temp.add_restrictions(restrictions)
+    temp.add_email(email)
+    
+    return temp
+
 
 '''
 Add meal. needs name of the planner and the date_event
