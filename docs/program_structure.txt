@@ -1,0 +1,17 @@
+# Program Structure
+
+The MealPlanner program is structured in the following way:
+
+The master structure is a MealPlanner.
+
+	Each Mealplanner has a list of Days.
+
+		Each Day has a list of Meals.
+
+			Each Meal has two lists: A list of Cooks, and a list of Dishes.
+
+				A Cook is a person, identified by name,
+
+				A Dish consists of a list of ingredients, quantities, and its recipe.
+
+MealPlanner, Day, Meal, Cook, and Dish are all objects.

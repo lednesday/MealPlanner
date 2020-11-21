@@ -1,0 +1,8 @@
+
+This is the process to build the application starting with cloning the repository
+
+1: run "pip install -r requirements.txt" on bash in the mealPlannerApp directory
+2: Create a Python environment by running "Python3 -m venv env"
+3: Activate the Python environment by running "source env/bin/activate"
+4: In the Database directory, run recipe_database.py and cook_database.py
+5: Type flask run

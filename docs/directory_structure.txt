@@ -1,0 +1,13 @@
+
+# Directory Structure
+
+The application repository is currently organized as follows:
+
+Database: This directory contains the Cook and Dish classes, and anything that
+they need for them to exist in the MongoDB database.
+
+mealPlannerApp: This is the main directory of the application, which contains
+the app.py file for flask, as well as the MealPlanner, Day, and Meal classes in
+the entry.py file. There is also the requirements.txt file to be installed with
+pip/pip3 for the program to be able to run, and the templates and css directories
+that generate the webpages that the user sees.
