@@ -131,11 +131,20 @@ def get_cooks_mongo(collection, meal_plan_name:str, date: str, meal: str):
     temp = return_dictionary_mongo(collection, meal_plan_name)
     result =temp['date'][date]['meals'][meal]['cooks']
     return result
-    
+
 def get_dishes_mongo(collection, meal_plan_name:str, date: str, meal: str):
     temp = return_dictionary_mongo(collection, meal_plan_name)
     result =temp['date'][date]['meals'][meal]['dishes']
     return result
+
+def get_date_mongo(collection, meal_plan_name:str):
+    temp = return_dictionary_mongo(collection, meal_plan_name)
+    dates = []
+    for key in temp['date']:
+        dates.append(key)
+    return dates
+
+
 '''
 delete one dish
 '''
@@ -150,6 +159,11 @@ def delete_cook_mongo(collection, meal_plan_name:str, date: str, meal: str, cook
       { "meal_plan": meal_plan_name },
       { '$pull': { 'date.'+date+".meals."+meal+".cooks": cook  } }
     );
+
+
+
+
+
 
 
 

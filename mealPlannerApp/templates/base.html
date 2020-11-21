@@ -21,7 +21,7 @@
     </script>
 </head>
 
-<body onload="check_date_today()">
+<body onload="check_date_today()" onload="adquire_data()">
 
     <main>
         <header>
@@ -31,7 +31,9 @@
                     <li><a href="{{url_for('index') }}">Return to home</a></li>
                     <li><a href="{{url_for('newplan') }}">Create or edit a meal plan</a></li>
                     <li><a href="{{url_for('signup') }}">Sign up on a meal plan</a></li>
-                    <li><a href="editrecipe.html">Enter or edit a recipe</a></li>
+                    <li><a href="{{url_for('recipe') }}">Enter recipe</a></li>
+                    <li><a href="{{url_for('cook') }}">Enter cook</a></li>
+
                     <!-- <li><a href="recipebrowser.html">Browse recipes</a></li> -->
                 </ul>
             </div>
@@ -185,41 +187,50 @@ function range_fields() {//gets start and end date and calculate how many days d
   });
 
 
-  function adquire_data() {
-    var start_date = $("#start_date").val();
-    var end_date = $("#end_date").val();
-    var start_date = $("#start_date").val();
-    
-    $.getJSON( "/_available",
-              {name: name_request,
-                date: date_request,
-              meal: meal_request},
-               function(data) {
-                 list_dates = data.result;
-                 print(list_dates)
-                }
-      );
-  }
+  // function adquire_data() {
+  //   var plan_request = $("#plan_dj").val();
+  //   var date_request = $("#day_dj").val();
+  //   var meal_request = $("#meal_dj").val();
+  //   console.log(plan_request);
+  //   console.log(date_request);
+  //   console.log(meal_request);
+  //
+  //   $.getJSON( "/_available",
+  //             {name: plan_request,
+  //               date: date_request,
+  //             meal: meal_request},
+  //              function(data) {
+  //                cooks = data.result.cooks
+  //                dishes = data.result.dishes
+  //                console.log(dishes)
+  //                console.log(cooks)
+  //                dropDown(cooks);
+  //               }
+  //     );
+  // }
+  //
+  // function dropDown(array){
+  //   var select = document.getElementById("selectNumber");
+  //   console.log(array)
+  //
+  //   for(var i = 0; i < array.length; i++) {
+  //       var opt = array[i];
+  //       console.log(i)
+  //       var el = document.createElement("option");
+  //       el.textContent = opt;
+  //       el.value = opt;
+  //       select.appendChild(el);
+  //     }
+  //   }
+  //
+  // $(document).ready(function(){
+  //   $("selectNumber").click(function(){
+  //     adquire_data();
+  //     console.log("ilaaa")
+  //   });
+  // });
+  // $(document).ready(function(){ adquire_data(); })
 
-
-  planner_name = request.args.get("name", type=str)
-  date = request.args.get("date", type=str)
-  meal = request.args.get("meal", type=str)
-
-
-  function dropDown(){
-    var select = document.getElementById("selectNumber");
-    var options = ["1", "2", "3", "4", "5"];
-
-    for(var i = 0; i < options.length; i++) {
-        var opt = options[i];
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
-        select.appendChild(el);
-      }
-    }
-    dropDown();
 
 </script>
 

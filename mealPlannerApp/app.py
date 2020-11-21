@@ -43,6 +43,14 @@ clean previous content of database(comment out when no needed for testing)
 def index():
     return render_template("index.html", hide = 0)
 
+@app.route("/recipe", methods=["POST", "GET"])
+def recipe():
+    return render_template("recipe.html", hide = 0)
+
+@app.route("/cook", methods=["POST", "GET"])
+def cook():
+    return render_template("cook.html", hide = 0)
+
 @app.route("/newplan", methods=["POST", "GET"])
 def newplan():
     if request.method == "POST":
@@ -82,9 +90,18 @@ def signup():
 
     meal_plan  = request.args.get('meal_plan', None)
 
+
     if request.method == "POST":
         meal_plan = request.form.get("meal_plan")
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
+
+        # for i in get_date_mongo(mealplanner, meal_plan):
+        #     # cooks_in_database = get_cooks_mongo(mealplanner, meal_plan, i, meal_plan)
+        #     # print(cooks_in_database)
+        #     print(i)
+        # list_cooks = retrieve_data_index_list(cook_database, "name")
+        #
+
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
     elif meal_plan != None:
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
@@ -189,31 +206,32 @@ def delete_cook():
     delete_cook_mongo(mealplanner, planner_name, date, meal, cook_delete)
     return redirect(url_for('signup', meal_plan = planner_name))
 
-@app.route("/_available", methods=["POST", "GET"])
-def available():
-    planner_name = request.args.get("name", type=str)
-    date = request.args.get("date", type=str)
-    meal = request.args.get("meal", type=str)
-
-    cooks_in_database = get_cooks_mongo(mealplanner, planner_name, date, meal)
-    list_cooks = retrieve_data_index_list(cook_database, "name")
-
-    dishes_in_database = get_dishes_mongo(mealplanner, planner_name, date, meal)
-    list_dishes = retrieve_data_index_list(cook_database, "title")
-
-    ava_cooks = []
-    ava_dishes = []
-    for i in list_cooks:
-        if i not in cooks_in_database:
-            ava_cooks.append(i)
-
-    for i in list_dishes:
-        if i not in dishes_in_database:
-            ava_cooks.append(i)
-
-    rslt = {"cooks": ava_cooks, "dishes": ava_dishes}
-
-    return jsonify(result=rslt)
+# @app.route("/_available", methods=["POST", "GET"])
+# def available():
+#     planner_name = request.args.get("name", type=str)
+#     date = request.args.get("date", type=str)
+#     meal = request.args.get("meal", type=str)
+#
+#     print(planner_name, date, meal)
+#     cooks_in_database = get_cooks_mongo(mealplanner, planner_name, date, meal)
+#     list_cooks = retrieve_data_index_list(cook_database, "name")
+#
+#     dishes_in_database = get_dishes_mongo(mealplanner, planner_name, date, meal)
+#     list_dishes = retrieve_data_index_list(recipe_database, "title")
+#
+#     ava_cooks = []
+#     ava_dishes = []
+#     for i in list_cooks:
+#         if i not in cooks_in_database:
+#             ava_cooks.append(i)
+#
+#     for i in list_dishes:
+#         if i not in dishes_in_database:
+#             ava_dishes.append(i)
+#
+#     rslt = {"cooks": ava_cooks, "dishes": ava_dishes}
+#
+#     return jsonify(result=rslt)
 
 if __name__ == "__main__":
     app.run(debug=True)
