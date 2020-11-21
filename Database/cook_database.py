@@ -1,4 +1,4 @@
-
+#23:35
 from entry import *
 from helpers import *
 import pymongo # modules
@@ -12,7 +12,7 @@ clean previous content of database
 '''
 #client.drop_database("cook")
 db = client["Project2"] # create database
-cook_database = db["cook"]
+cook_database = db["Cook"]
 cook_database.drop()
 
 class Cook:

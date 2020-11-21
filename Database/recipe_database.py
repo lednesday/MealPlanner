@@ -1,4 +1,4 @@
-#23:35
+
 from entry import *
 from helpers import *
 import pymongo # modules
@@ -12,7 +12,7 @@ dish_database = db["Dish"] #create collection
 '''
 clean previous content of database (only when necessary, otherwise commented out.)
 '''
-#dish_database.drop()
+dish_database.drop()
 
 class Dish:
     '''
@@ -27,10 +27,10 @@ class Dish:
         self.__name = name
         self.__ingredients = [] # list of ingredients
         self.__quantities = [] # List of ingredient quantities: indexes match.
+        self.__units = [] # Units in which the quantities will be represented
         self.__recipe = ""
         self.__allergens = [] # list of allergens
-        #self.__animal_product = "Normal" # Whether a dish is regular, vegetarian, or vegan
-        self.__vegan = False;
+        self.__restrictions = [] # Vegan, Gluten-Free, etc
 
     def get_index(self):
         '''
@@ -60,6 +60,14 @@ class Dish:
         for i in temp:
             self.__quantities.append(i)
 
+    def define_units(self, units:str):
+        '''
+        Defines the quantities of each meal ingredient
+        '''
+        temp = units.split(", ")
+        for i in temp:
+            self.__units.append(i)
+
     '''
     Notes: My idea is that we have fields for ingredients and their quantities,
     as well as the recipe. Once inserted into their forms, each ingredient and 
@@ -74,30 +82,44 @@ class Dish:
 
     def add_allergens(self, allergens:str):
         '''
-        Adds an allergen to the dish description. is probably okay as a string.
+        Adds an allergen to the dish. is probably okay as a string.
         '''
         temp = allergens.split(", ")
         for i in temp:
             self.__allergens.append(i)
 
-    def is_vegan(self):
-        return self.__vegan
+    def add_restrictions(self, restrictions:str):
+        '''
+        Adds a restriction to the dish. is probably okay as a string.
+        '''
+        temp = restrictions.split(", ")
+        for i in temp:
+            self.__restrictions.append(i)
 
 
     def get_dictionary(self):
-        temp = {"title": self.__name , "ingredients": self.__ingredients, "instructions":self.__recipe}
+        temp = {"title": self.__name,"recipe": self.__recipe, "ingredients": self.__ingredients, \
+                "quantities":self.__quantities, "units":self.__units, "allergens":self.__allergens, \
+                "restrictions":self.__restrictions}
         return temp
 
 
-def create_insert_dish(name: str, recipe:str, ingredients: str, collection):
+def create_insert_dish(name: str, recipe:str, ingredients:str, quantities:str, units:str, allergens:str, restrictions:str, collection):
     temp = Dish(name)
     temp.add_recipe(recipe)
     temp.add_ingredients(ingredients)
+    temp.define_quantities(quantities)
+    temp.define_units(units)
+    temp.add_allergens(allergens)
+    temp.add_restrictions(restrictions)
     insert_entry_mongo(temp, collection, "title")
+
+create_insert_dish("Hologram food", "Shine light from hologram projector onto surface", "Light", "???", "watts", "None", "None", dish_database)
 
 
 #test adding some dises (variables are in recipes_variables.py)
-create_insert_dish("Blistered Green Beans with Garlic", blistered_green, ingredients, dish_database)
+'''
+create_insert_dish("Blistered Green Beans with Garlic", blistered_green, blistered_green_ingredients, dish_database)
 create_insert_dish("Salt-and-Vinegar Rosti", salt_vinager, salt_vinager_ingredients, dish_database)
 create_insert_dish("Teriyaki Chicken", teriyaki, teriyaki_ingredients, dish_database)
 create_insert_dish("Green beans casserole", green_beans_casserole, green_beans_casserole_ingredients, dish_database)
@@ -106,6 +128,7 @@ create_insert_dish("Keto Breakfast Sandwiches", Keto_Breakfast_Sandwiches, Keto_
 create_insert_dish("BBQ Cheeseburger Onion", BBQ_Cheeseburger_Onion, BBQ_Cheeseburger_Onion_ingredients, dish_database)
 create_insert_dish("Slow Cooker Pork Shoulder", Slow_Cooker_Pork_Shoulder, Slow_Cooker_Pork_Shoulder_ingredients, dish_database)
 create_insert_dish("Slow Cooker Chicken", Slow_Cooker_Chicken, Slow_Cooker_Chicken_ingredients, dish_database)
+'''
 
 print_database(dish_database)
 
