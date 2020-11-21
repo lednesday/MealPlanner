@@ -30,20 +30,17 @@
 
 {% if list %}
 <div class="days">
-
+  {% for message in get_flashed_messages() %}
+      <p>{{ message }}</p>
+  {% endfor %}
     {% for day, day_dict in list.date.items() %}
     <div class="oneday">
       <div class="dateheading">{{ day }}</div>
       {% for meal, meal_dict in day_dict.meals.items() %}
-      <!-- <input type="hidden" id="plan_dj" name="plan_dj" value="{{ list.meal_plan}}">
-      <input type="hidden" id="day_dj" name="day_dj" value="{{day}}">
-      <input type="hidden" id="meal_dj" name="meal_dj" value="{{meal}}"> -->
       <div class="mealheading">{{ meal }}</div>
 
       <div class="cooks">
-  <!-- {% for message in get_flashed_messages() %}
-      <p>{{ message }}</p>
-  {% endfor %} -->
+
           <div class="cookheading"><b>Cooks:</b>
             {% for cook in meal_dict.cooks %}
             <li>
@@ -58,17 +55,17 @@
             {% endfor %}
             <li>
 
-
               <form action="{{ url_for( 'add_cook', date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
                 <li class="button">
-                  <select id= "cook" name= "cook">
-                    <option value="" selected="selected">None</option>
-                    {% for x in names %}
-                      <option value="{{x}}">{{x}}</option>
-                    {% endfor %}
-                    </select>
-                    <button type ="submit" id="submit_cook">Add cook</button>
-                </li>
+
+                  <input list="cook" name="cook" id="cook">
+                  <datalist id="cook">
+                    <option value="None">None</optiom>
+                      {% for x in names %}
+                        <option value="{{x}}">{{x}}</option>
+                      {% endfor %}
+                  </datalist>
+                  <button type ="submit" id="submit_cook">Add cook</button>
               </form>
             </li>
           </div>
@@ -89,28 +86,19 @@
           {% endfor %}
           <li>
             <form action="{{ url_for( 'add_dish', date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
-              <li class="button">
-
-
-                <select id= "dish" name= "dish">
-                  <option value="" selected="selected">None</option>
+              <input list="dish" name="dish" id="dish">
+              <datalist id="dish">
+                <option value="None">None</optiom>
                   {% for x in dishes %}
                     <option value="{{x}}">{{x}}</option>
                   {% endfor %}
-                </select>
+              </datalist>
 
-
-                <button type ="submit" >Add dish</button>
-              </li>
+              <button type ="submit" id="submit_cook">Add dish</button>
             </form>
           </li>
         </div>
       </div>
-
-
-      <!-- <select id="selectNumber">
-         <option>Choose a number</option>
-      </select> -->
 
       {% endfor %}
       </div>

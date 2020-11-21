@@ -21,8 +21,8 @@ Connecting flask with MONGODB
 client = MongoClient("localhost", 27017) # connect to engine.
 db = client["Project2"] # create database
 mealplanner = db['Mealplanner']
-cook_database = db["cook"]
-recipe_database = db["Recipe"]
+# cook_database = db["cook"]
+# recipe_database = db["Recipe"]
 '''
 Secret Key
 Set's up secret key so flash messages can be displayed
@@ -96,30 +96,31 @@ def newplan():
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
-    list_cooks = retrieve_data_index_list(cook_database, "name")
-    list_dishes = retrieve_data_index_list(recipe_database, "title")
+    '''
+    review
+    '''
+
 
     meal_plan  = request.args.get('meal_plan', None)
 
-
     if request.method == "POST":
         meal_plan = request.form.get("meal_plan")
+        list_cooks = drop_list_cooks(mealplanner, meal_plan)
+        list_dishes = drop_list_recipes(mealplanner, meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
-
-        # for i in get_date_mongo(mealplanner, meal_plan):
-        #     # cooks_in_database = get_cooks_mongo(mealplanner, meal_plan, i, meal_plan)
-        #     # print(cooks_in_database)
-        #     print(i)
-        # list_cooks = retrieve_data_index_list(cook_database, "name")
-        #
-
+        print(list_cooks)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
     elif meal_plan != None:
+        list_cooks = drop_list_cooks(mealplanner, meal_plan)
+        list_dishes = drop_list_recipes(mealplanner, meal_plan)
+        print(list_cooks)
+
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
 
     one_mealplanner = []
-    return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
+    return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0)
+
 
 '''
 experiment. Send link by email for users to add cooks and dishes. Users should be available
@@ -136,7 +137,7 @@ def landing_page(plan_name):
 @app.route("/_check_name")#function to check names. Connects to js in newsplan/
 def check_name():
     name = request.args.get("text", type=str)
-    list_mealplan = retrieve_data_index_list(mealplanner, "meal_plan")# checks names in the mealplan to check if exists.
+    list_mealplan = retrieve_data_index_list(mealplanner)# checks names in the mealplan to check if exists.
 
     if name == "":
         rslt = {"response": "Zero"}
@@ -216,33 +217,6 @@ def delete_cook():
     meal  = request.args.get('meal', None)
     delete_cook_mongo(mealplanner, planner_name, date, meal, cook_delete)
     return redirect(url_for('signup', meal_plan = planner_name))
-
-# @app.route("/_available", methods=["POST", "GET"])
-# def available():
-#     planner_name = request.args.get("name", type=str)
-#     date = request.args.get("date", type=str)
-#     meal = request.args.get("meal", type=str)
-#
-#     print(planner_name, date, meal)
-#     cooks_in_database = get_cooks_mongo(mealplanner, planner_name, date, meal)
-#     list_cooks = retrieve_data_index_list(cook_database, "name")
-#
-#     dishes_in_database = get_dishes_mongo(mealplanner, planner_name, date, meal)
-#     list_dishes = retrieve_data_index_list(recipe_database, "title")
-#
-#     ava_cooks = []
-#     ava_dishes = []
-#     for i in list_cooks:
-#         if i not in cooks_in_database:
-#             ava_cooks.append(i)
-#
-#     for i in list_dishes:
-#         if i not in dishes_in_database:
-#             ava_dishes.append(i)
-#
-#     rslt = {"cooks": ava_cooks, "dishes": ava_dishes}
-#
-#     return jsonify(result=rslt)
 
 if __name__ == "__main__":
     app.run(debug=True)
