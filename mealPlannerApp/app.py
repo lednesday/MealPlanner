@@ -46,12 +46,15 @@ def index():
 @app.route("/recipe", methods=["POST", "GET"])
 def recipe():
     if request.method == "POST":
+        mealPlanName = request.form.get("meal_plan")
         recipe_name = request.form.get("recipe_name")
         servings = request.form.get("yield")
-        item1 = request.form.get("item")
+        item1 = request.form.getlist("item")
         item1.append(request.form.get("quantity"))
         item1.append(request.form.get("measurement"))
-        print(item1)
+        tuplex = tuple(item1)
+        print(tuplex)
+        print(mealPlanName)
 
     return render_template("recipe.html", hide=0)
 
