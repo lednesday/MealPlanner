@@ -46,6 +46,9 @@ def index():
 @app.route("/cook", methods=["POST", "GET"])
 def cook():
 
+    mealplanners_names = return_dictionary_mongo_all(mealplanner)
+    meal_plan  = request.args.get('meal_plan', None)
+
     if request.method == "POST":
         cook_name = request.form.get("cook_name")
         cook_allergies = request.form.get("allergies")
@@ -56,10 +59,17 @@ def cook():
         create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
                            cook_email, cook_mealplan, mealplanner)
 
-    return render_template("cook.html", hide = 0)
+    return render_template("cook.html", mealplans_names=mealplanners_names, hide = 0)
 
 @app.route("/recipe", methods=["POST", "GET"])
 def recipe():
+
+    if request.method == "POST":
+        dish_name = request.form.get("recipe_name")
+        #dish_ingredients =
+
+        dish_allergens = request.form.get("")
+
     return render_template("recipe.html", hide = 0)
 
 @app.route("/newplan", methods=["POST", "GET"])
