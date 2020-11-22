@@ -1,0 +1,50 @@
+- create branch:
+git checkout -b <name of new branch>
+i.e. "git checkout -b antonio"  -> creates a new branch named antonio
+
+- check which branch you got in the repo and which one you are currently at:
+git branch
+
+- push files to your branch:
+make sure you are in your branch and then add, commit and push
+but first time pushing it may ask you to do in  different way with "git push --set-upstream origin <name of the branch you wanna push"
+#Only first time, after that, files can be pushed normally, as long as you are in the active branch.
+
+- switch branch:
+git checkout <name of the branch you want to switch>
+i.e "git checkout main" -> switch to main
+
+- delete branch:
+"you must be in a branch other than the one you want to delete"
+First locally (in your computer) with "git branch -d <name of the branch to delete>"
+then remotely (in the github) with "git push origin --delete <name of the branch to delete remotely>
+
+- push just one files:
+first, push the file in your branch
+then change to the branch you want to push the file from your branch (i.e main). Then
+"git checkout <name of your branch> -- <name of the file from your branch you want to push into another branch i.e. main>""
+Then "git commit -m <message> and finally "git push"
+
+If the following message shows up,
+'''
+Note: you may get the following message.
+error: failed to push some refs to 'git@github.com:lednesday/MealPlanner.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+'''
+Try from the branch you want to push your file (i.e main) make a "git pull" and try "git push" again
+
+- remove file:
+from the branch you want to delete.
+
+git rm <name of the file>
+git commit -m "m"
+git push
+
+- pull all files in main/master to our branch:
+git checkout <your branch>      # gets you "on branch dmgr2"
+git fetch origin        # gets you up to date with origin
+git merge origin/<name of main>
