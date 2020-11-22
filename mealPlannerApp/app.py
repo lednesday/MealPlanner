@@ -50,18 +50,11 @@ def cook():
         cook_name = request.form.get("cook_name")
         cook_allergies = request.form.get("allergies")
         cook_restrictions = request.form.get("restrictions")
-<<<<<<< HEAD
-        cook_email = "temp@fakeemails.com"
-
-        cook = create_insert_cook(cook_name, cook_allergies, cook_restrictions, cook_email)
-        insert_entry_mongo(cook, cook_database, "name")
-=======
         cook_email = request.form.get("email")
         cook_mealplan = "mealplanner"
 
         create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
                            cook_email, cook_mealplan, mealplanner)
->>>>>>> 516efb200e253c7ffaf9cf99b85afcdcd8b94c75
 
     return render_template("cook.html", hide = 0)
 
