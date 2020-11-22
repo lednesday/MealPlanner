@@ -9,53 +9,128 @@
     <fieldset>
         <label for="recipe name">Recipe title: </label>
         <input type="text" id="recipe_name" name="recipe_name" maxlength="50" placeholder="Magnificent Mac -n- Cheese" autocomplete="off"  autofocus >
-        <label for="number served">Serves: </label>
+        <label for="number served">Servings: </label>
         <input type="text" id="yield" name="yield" maxlength="10" placeholder="4">
     </fieldset>
 
-    <fieldset>
-        <legend>Ingredients</legend>
-        <p>
-            <label for="ingredient">Item: </label>
-            <input type="text" placeholder="shredded cheddar cheese" id="item" name="item">
-        </p>
-        <p>
-            <label for="quantity">Quantity: </label>
-            <input type="text" placeholder="2" id="quantity" name="quantity">
-        </p>
-        <p>
-            <label for="quantity">Unit of measurement: </label>
-            <input type="text" placeholder="2" id="measurement" name="quantity">
+    <fieldset id="ingredients_field">
+      <legend>Ingredients</legend>
+      <!-- <div id="placeholder"> -->
+        <div id="ingredient_diet">
+              <label for="ingredient">Item: </label>
+              <input type="text" placeholder="shredded cheddar cheese" id="item" name="item">
 
-        </p>
-        <div id="add">
-        <button onclick="addTables()" value="Add Row">Add Ingredients</button>
+              <label for="quantity">Quantity: </label>
+              <input type="text" placeholder="2" id="quantity" name="quantity">
+
+              <label for="unit">Unit of measurement: </label>
+              <input type="text" placeholder="oz, cups, etc" id="measurement" name="unit">
         </div>
-
-<script>
-  var x = "<tr addedrow='yes'><td> Item: </td><td><input type='text'/></td></tr><tr><td> Quantity: </td><td><input type= 'text'/></td></tr><tr><td> Unit of Measurement: </td><td><input type= 'text'/></td></tr>";
-  function addTables() {
-    document.getElementById("add").innerHTML += x
-}
-
-</script>
+      <!-- </div> -->
 
     </fieldset>
+    <button type="button" id="button" value="Add Row">Add Ingredients</button>
+
 
     <fieldset>
         <legend>Directions</legend>
         <p>
-            <label for="step">Step: </label>
-            <input type="text" maxlength="250" placeholder="Melt butter in medium-size skillet" id="step" name="step">
+            <textarea id="step" name="step" rows="10" cols="100"></textarea>
         </p>
     </fieldset>
 
-    <fieldset>
+    <fieldset id="restrictions_field">
+        <div id="special_diet">
+        <button type="button" id="allergen_button" value="Add Row">Add Allergen</button>
         <label for="allergens">Allergens: </label>
-        <input type="text" id="allergens" name="allergens" maxlength="50" placeholder="peanuts">
+        <input type="text" id="allergens" name="allergens" maxlength="50" placeholder="peanuts, eggs, etc">
         <label for="special diet">Special diets: </label>
-        <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegetarian">
+        <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegetarian, gluten-free, etc">
+        </div>
+        <button type ="submit" >Submit Recipe</button>
     </fieldset>
 
 </form>
+
+<script>
+var counter = 0;//save the number of fields
+function add_field() {
+    counter++;
+
+    var div = document.createElement ("div");
+    div.id = "ingredient_diet";
+
+    var label = document.createElement('label');
+    label.innerHTML = " Item: ";
+    label.htmlFor = "item"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "item";
+    item_input.id = "item"+counter;
+    div.appendChild(item_input);
+    ingredients_field.appendChild(div);
+
+    var label = document.createElement('label');
+    label.innerHTML = " Quantity: ";
+    label.htmlFor = "quantity"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "quantity";
+    item_input.id = "quantity"+counter;
+    div.appendChild(item_input);
+    ingredients_field.appendChild(div);
+
+    var label = document.createElement('label');
+    label.innerHTML = " Unit of measurement: ";
+    label.htmlFor = "units"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "units";
+    item_input.id = "units"+counter;
+    div.appendChild(item_input);
+    ingredients_field.appendChild(div);
+}
+
+$('#button').click(function() {
+  add_field();
+});
+
+var counter2 = 0;//save the number of fields
+function add_allergen() {
+    counter2++;
+
+    var div = document.createElement ("div");
+    div.id = "special_diet";
+
+    var label = document.createElement('label');
+    label.innerHTML = "Allergen: ";
+    label.htmlFor = "allergens"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "allergens";
+    item_input.id = "allergens"+counter2;
+    div.appendChild(item_input);
+    restrictions_field.appendChild(div);
+
+    var label = document.createElement('label');
+    label.innerHTML = " Special Diet: ";
+    label.htmlFor = "restrictions"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "restrictions";
+    item_input.id = "restrictions"+counter2;
+    div.appendChild(item_input);
+    restrictions_field.appendChild(div);
+}
+
+$('#allergen_button').click(function() {
+  add_allergen();
+});
+
+</script>
 {% endblock %}
