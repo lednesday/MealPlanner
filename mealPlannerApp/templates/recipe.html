@@ -13,27 +13,29 @@
         <input type="text" id="yield" name="yield" maxlength="10" placeholder="4">
     </fieldset>
 
-    <fieldset>
-        <legend>Ingredients</legend>
-        <p>
-            <label for="ingredient">Item: </label>
-            <input type="text" placeholder="shredded cheddar cheese" id="item" name="item">
-        </p>
-        <p>
-            <label for="quantity">Quantity: </label>
-            <input type="text" placeholder="2" id="quantity" name="quantity">
-        </p>
-        <p>
-            <label for="quantity">Unit of measurement: </label>
-            <input type="text" placeholder="cups" id="unit" name="unit">
-        </p>
+    <fieldset id="ingredients_field">
+      <legend>Ingredients</legend>
+      <!-- <div id="placeholder"> -->
+        <div id="ingredient_diet">
+              <label for="ingredient">Item: </label>
+              <input type="text" placeholder="shredded cheddar cheese" id="item" name="item">
+
+              <label for="quantity">Quantity: </label>
+              <input type="text" placeholder="2" id="quantity" name="quantity">
+
+              <label for="quantity">Unit of measurement: </label>
+              <input type="text" placeholder="2" id="measurement" name="quantity">
+        </div>
+      <!-- </div> -->
+
     </fieldset>
+    <button type="button" id="button" value="Add Row">Add Ingredients</button>
+
 
     <fieldset>
         <legend>Directions</legend>
         <p>
-            <label for="step">Step: </label>
-            <input type="text" maxlength="250" placeholder="Melt butter in medium-size skillet" id="step" name="step">
+            <textarea id="step" name="step" rows="10" cols="100"></textarea>
         </p>
     </fieldset>
 
@@ -45,4 +47,52 @@
     </fieldset>
 
 </form>
+
+<script>
+var counter = 0;//save the number of fields
+function add_field() {
+    counter++;
+
+    var div = document.createElement ("div");
+    div.id = "ingredient_diet";
+
+    var label = document.createElement('label');
+    label.innerHTML = "Item: ";
+    label.htmlFor = "item"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "item";
+    item_input.id = "item"+counter;
+    div.appendChild(item_input);
+    ingredients_field.appendChild(div);
+
+    var label = document.createElement('label');
+    label.innerHTML = " Quantity: ";
+    label.htmlFor = "quantity"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "quantity";
+    item_input.id = "quantity"+counter;
+    div.appendChild(item_input);
+    ingredients_field.appendChild(div);
+
+    var label = document.createElement('label');
+    label.innerHTML = " Unit of measurement: ";
+    label.htmlFor = "units"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "units";
+    item_input.id = "units"+counter;
+    div.appendChild(item_input);
+    ingredients_field.appendChild(div);
+}
+
+$('#button').click(function() {
+  add_field();
+});
+
+</script>
 {% endblock %}

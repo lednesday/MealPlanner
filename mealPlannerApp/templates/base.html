@@ -34,7 +34,6 @@
                     <li><a href="{{url_for('recipe') }}">Enter recipe</a></li>
                     <li><a href="{{url_for('cook') }}">Enter cook</a></li>
 
-                    <!-- <li><a href="recipebrowser.html">Browse recipes</a></li> -->
                 </ul>
             </div>
             {% endif %}
@@ -52,10 +51,10 @@
 
 <script>
 function disable() {//enable or disable submit
-    document.getElementById("myBtn").disabled = true;
+    document.getElementById("button").disabled = true;
 }
 function enable() {
-    document.getElementById("myBtn").disabled = false;
+    document.getElementById("button").disabled = false;
 }
 
 $("#plan_name").keyup(function(event) {//function to check if a name is already in the database
@@ -185,52 +184,6 @@ function range_fields() {//gets start and end date and calculate how many days d
       $('#newplan').submit();
     });
   });
-
-
-  // function adquire_data() {
-  //   var plan_request = $("#plan_dj").val();
-  //   var date_request = $("#day_dj").val();
-  //   var meal_request = $("#meal_dj").val();
-  //   console.log(plan_request);
-  //   console.log(date_request);
-  //   console.log(meal_request);
-  //
-  //   $.getJSON( "/_available",
-  //             {name: plan_request,
-  //               date: date_request,
-  //             meal: meal_request},
-  //              function(data) {
-  //                cooks = data.result.cooks
-  //                dishes = data.result.dishes
-  //                console.log(dishes)
-  //                console.log(cooks)
-  //                dropDown(cooks);
-  //               }
-  //     );
-  // }
-  //
-  // function dropDown(array){
-  //   var select = document.getElementById("selectNumber");
-  //   console.log(array)
-  //
-  //   for(var i = 0; i < array.length; i++) {
-  //       var opt = array[i];
-  //       console.log(i)
-  //       var el = document.createElement("option");
-  //       el.textContent = opt;
-  //       el.value = opt;
-  //       select.appendChild(el);
-  //     }
-  //   }
-  //
-  // $(document).ready(function(){
-  //   $("selectNumber").click(function(){
-  //     adquire_data();
-  //     console.log("ilaaa")
-  //   });
-  // });
-  // $(document).ready(function(){ adquire_data(); })
-
 
 </script>
 

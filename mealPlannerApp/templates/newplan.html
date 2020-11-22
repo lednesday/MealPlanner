@@ -6,17 +6,14 @@
 
 {% block content %}
 
-<!-- {% for message in get_flashed_messages() %}
+{% for message in get_flashed_messages() %}
     <p>{{ message }}</p>
-{% endfor %} -->
+{% endfor %}
 
 <form  action="" method="post" id="newplan">
-
     <label for="plan name">Meal plan name</label>
-
     <input type="text" id="plan_name" name="plan_name" maxlength="50" required="required" placeholder="October Rogue Trip" >
     <p id="response"> </p>
-
     <fieldset>
         <legend class="topbanner">Select the dates for your meal plan</legend>
         <p>
@@ -27,12 +24,10 @@
             <label for="end date">End date:</label>
             <input type="date" id="end_date" name="end_date">
         </p>
-
     </fieldset>
-
-    <p> <button id="myBtn" type="submit">Submit</button> </p>
-
+    <p> <button id="button" type="submit">Submit</button> </p>
     <div id="container"/>
-
 </form>
+
+
 {% endblock %}
