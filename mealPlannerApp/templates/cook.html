@@ -7,7 +7,7 @@
 
 {% block content %}
 {% if hide == 0 %}
-<form  action="" method="post" id="newplan">
+<form action="" method="post" id="recipe">
 <fieldset>
     <li>
     <label for="meal_plan">Select a meal plan to assign the cook to:</label>
@@ -19,10 +19,8 @@
         </select>
     </li>
 </fieldset>
-</form>
 {% endif %}
 
-<form action="" method="post" id="recipe">
     <fieldset>
         <label for="cook name">Name: </label>
         <input type="text" id="cook_name" name="cook_name" maxlength="75" placeholder="Martha Steward" autocomplete="off"  autofocus >
