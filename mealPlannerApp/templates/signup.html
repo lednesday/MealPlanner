@@ -54,21 +54,20 @@
             </li>
             {% endfor %}
             <li>
-
               <form action="{{ url_for( 'add_cook', date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
-                <li class="button">
 
-                  <input list="cook" name="cook" id="cook">
-                  <datalist id="cook">
-                      <option value="None">None</optiom>
+                <li class="button">
+                    <input type='text' list="cook" name="cook" autocomplete="off"/>
+                    <datalist id="cook">
                       {% for x in names %}
                       <option value="{{x}}">{{x}}</option>
                       {% endfor %}
-                  </datalist>
-                  <button type ="submit" id="submit_cook">Add cook</button>
+                    </datalist>
+                    <button type ="submit" id="submit_cook">Add cook</button>
                 </li>
-              </form>
 
+              </form>
+            </li>
           </div>
       </div>
 
@@ -87,15 +86,16 @@
           {% endfor %}
           <li>
             <form action="{{ url_for( 'add_dish', date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
-              <input list="dish" name="dish" id="dish">
-              <datalist id="dish">
-                <option value="None">None</optiom>
-                  {% for x in dishes %}
+              <!-- <input list="dish" name="dish" id="dish"> -->
+              <li class="button">
+                  <input type='text' list="dish" name="dish" autocomplete="off"/>
+                  <datalist id="dish">
+                    {% for x in dishes %}
                     <option value="{{x}}">{{x}}</option>
-                  {% endfor %}
-              </datalist>
-
-              <button type ="submit" id="submit_cook">Add dish</button>
+                    {% endfor %}
+                  </datalist>
+                  <button type ="submit" id="submit_cook">Add cook</button>
+              </li>
             </form>
           </li>
         </div>
