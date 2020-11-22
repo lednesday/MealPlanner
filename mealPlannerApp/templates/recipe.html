@@ -41,11 +41,11 @@
 
     <fieldset id="restrictions_field">
         <div id="special_diet">
-        <button type="button" id="allergen_button" value="Add Row">Add Allergen</button>
-        <label for="allergens">Allergens: </label>
-        <input type="text" id="allergens" name="allergens" maxlength="50" placeholder="peanuts, eggs, etc">
-        <label for="special diet">Special diets: </label>
-        <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegetarian, gluten-free, etc">
+            <legend>Enter Several Restrictions Separated by a Comma: </legend>
+            <label for="allergens">Allergens: </label>
+            <input type="text" id="allergens" name="allergens" maxlength="50" placeholder="peanuts, eggs, etc">
+            <label for="special diet">Special diets: </label>
+            <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegetarian, gluten-free, etc">
         </div>
         <button type ="submit" >Submit Recipe</button>
     </fieldset>
@@ -96,40 +96,6 @@ function add_field() {
 
 $('#button').click(function() {
   add_field();
-});
-
-var counter2 = 0;//save the number of fields
-function add_allergen() {
-    counter2++;
-
-    var div = document.createElement ("div");
-    div.id = "special_diet";
-
-    var label = document.createElement('label');
-    label.innerHTML = "Allergen: ";
-    label.htmlFor = "allergens"
-    div.appendChild(label);
-    var item_input = document.createElement('input');
-    item_input.type = "text";
-    item_input.name = "allergens";
-    item_input.id = "allergens"+counter2;
-    div.appendChild(item_input);
-    restrictions_field.appendChild(div);
-
-    var label = document.createElement('label');
-    label.innerHTML = " Special Diet: ";
-    label.htmlFor = "restrictions"
-    div.appendChild(label);
-    var item_input = document.createElement('input');
-    item_input.type = "text";
-    item_input.name = "restrictions";
-    item_input.id = "restrictions"+counter2;
-    div.appendChild(item_input);
-    restrictions_field.appendChild(div);
-}
-
-$('#allergen_button').click(function() {
-  add_allergen();
 });
 
 </script>
