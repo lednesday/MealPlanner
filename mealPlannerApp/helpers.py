@@ -200,6 +200,9 @@ def delete_cook_mongo(collection, meal_plan_name:str, date: str, meal: str, cook
       { '$pull': { 'date.'+date+".meals."+meal+".cooks": cook  } }
     );
 
+'''
+in progress
+'''
 def drop_list_cooks(collection, meal_plan_name):
     temp = return_dictionary_mongo(collection,meal_plan_name)['cooks']
     cooks = []

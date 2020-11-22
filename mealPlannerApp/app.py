@@ -96,12 +96,14 @@ def newplan():
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
-    '''
-    review
-    '''
-
 
     meal_plan  = request.args.get('meal_plan', None)
+    if meal_plan is not None:
+        list_cooks = drop_list_cooks(mealplanner, meal_plan)
+        list_dishes = drop_list_recipes(mealplanner, meal_plan)
+    else:
+        list_cooks =[]
+        list_dishes = []
 
     if request.method == "POST":
         meal_plan = request.form.get("meal_plan")
@@ -109,17 +111,20 @@ def signup():
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
         print(list_cooks)
+        print(list_dishes)
+
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
     elif meal_plan != None:
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
         print(list_cooks)
+        print(list_dishes)
 
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
 
     one_mealplanner = []
-    return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0)
+    return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
 
 
 '''
