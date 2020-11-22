@@ -186,6 +186,23 @@ function range_fields() {//gets start and end date and calculate how many days d
     });
   });
 
+  function AddTables() {
+  document.getElementById("add").innerHTML = "<tr addedrow='yes'><td>ingredient</td><td><input type='text'/></td></tr><tr><td>quantity</td><td><input type= 'text'/></td></tr><tr><td>Unit of Measurement</td><td><input type= 'text'/></td></tr>"
+}
+
+
+
+
+/  $(document).ready(function(){
+/  $("#add").bind("click",AddTables);
+/  function AddTables(e) {
+/    if($("#tbl tr[addedrow='yes']").length<20)
+/    {
+/    $("#tbl").append("<tr addedrow='yes'><td>ingredient</td><td><input type='text'/></td></tr><tr><td>quantity</td><td><input type= 'text'/></td></tr><tr><td>Unit of Measurement</td><td><input type= 'text'/></td></tr>");
+/            }
+/        };
+/   });
+
 
   // function adquire_data() {
   //   var plan_request = $("#plan_dj").val();

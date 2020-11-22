@@ -25,8 +25,21 @@
         </p>
         <p>
             <label for="quantity">Unit of measurement: </label>
-            <input type="text" placeholder="cups" id="unit" name="unit">
+            <input type="text" placeholder="2" id="measurement" name="quantity">
+
         </p>
+        <div id="add">
+        <button onclick="addTables()" value="Add Row">Add Ingredients</button>
+        </div>
+
+<script>
+  var x = "<tr addedrow='yes'><td> Item: </td><td><input type='text'/></td></tr><tr><td> Quantity: </td><td><input type= 'text'/></td></tr><tr><td> Unit of Measurement: </td><td><input type= 'text'/></td></tr>";
+  function addTables() {
+    document.getElementById("add").innerHTML += x
+}
+
+</script>
+
     </fieldset>
 
     <fieldset>

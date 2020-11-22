@@ -41,15 +41,16 @@ clean previous content of database(comment out when no needed for testing)
 
 @app.route("/", methods=["POST", "GET"])
 def index():
-    return render_template("index.html", hide = 0)
+    return render_template("index.html", hide=0)
 
 @app.route("/recipe", methods=["POST", "GET"])
 def recipe():
-    return render_template("recipe.html", hide = 0)
+
+    return render_template("recipe.html", hide=0)
 
 @app.route("/cook", methods=["POST", "GET"])
 def cook():
-    return render_template("cook.html", hide = 0)
+    return render_template("cook.html", hide=0)
 
 @app.route("/newplan", methods=["POST", "GET"])
 def newplan():
@@ -60,7 +61,7 @@ def newplan():
             end_date = request.form.get("end_date")
             checked_meals = request.form.getlist('meal0')
             checked = []
-            if plan_name == "" and start_date == ""  and end_date == "":# case that the person hasn't input data.
+            if plan_name == "" and start_date == "" and end_date == "":  # case that the person hasn't input data.
                 flash("No input provided.")
                 return render_template("newplan.html")
             else:
@@ -78,9 +79,9 @@ def newplan():
                     return render_template("newplan.html")
                 else:
                     flash("New plan was added! ")
-                return redirect(url_for("index"))
+                return redirect(url_for("index.html"))
 
-    return render_template("newplan.html", hide = 0)
+    return render_template("newplan.html", hide=0)
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
