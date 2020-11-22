@@ -45,6 +45,11 @@ def index():
 
 @app.route("/recipe", methods=["POST", "GET"])
 def recipe():
+    if request.method == "POST":
+        recipe_name = request.form.get("recipe_name")
+        servings = request.form.get("yield")
+
+
 
     return render_template("recipe.html", hide=0)
 
