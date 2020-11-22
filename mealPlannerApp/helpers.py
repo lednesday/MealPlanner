@@ -10,7 +10,7 @@ def create_insert_cook(name: str, allergies:str, restrictions:str, email:str, me
     temp.add_allergies(allergies)
     temp.add_restrictions(restrictions)
     temp.add_email(email)
-    insert_cook_mongo(temp, collection, mealplan)
+    insert_cook_mongo(temp, mealplan, collection)
 
 '''
 Add dish recipe to db
@@ -24,7 +24,7 @@ def create_insert_dish(name: str, recipe:str, ingredients:str, quantities:str, u
     temp.define_units(units)
     temp.add_allergens(allergens)
     temp.add_restrictions(restrictions)
-    insert_recipe_mongo(temp, collection, mealplan)
+    insert_recipe_mongo(temp, mealplan, collection)
 
 
 '''
@@ -127,21 +127,21 @@ def return_dictionary_mongo_all(collection):
 '''
 create meal and add cooks and dishes. (CLASSES)
 '''
-def create_meal_add(meal:str, cooks:list, dishes:list):
-    temp_meal = Meal(meal)
-    for i in cooks:
-        temp_meal.add_cook(i)
-    for i in dishes:
-        temp_meal.add_dish(i)
+# def create_meal_add(meal:str, cooks:list, dishes:list):
+#     temp_meal = Meal(meal)
+#     for i in cooks:
+#         temp_meal.add_cook(i)
+#     for i in dishes:
+#         temp_meal.add_dish(i)
+#
+#     return temp_meal
 
-    return temp_meal
-
-def create_cook_add(name: str, allergies:str, restrictions:str, email:str):
-    temp = Cook(name)
-    temp.add_allergies(allergies)
-    temp.add_restrictions(restrictions)
-    temp.add_email(email)
-    return temp
+# def create_cook_add(name: str, allergies:str, restrictions:str, email:str):
+#     temp = Cook(name)
+#     temp.add_allergies(allergies)
+#     temp.add_restrictions(restrictions)
+#     temp.add_email(email)
+#     return temp
 
 
 '''
@@ -208,6 +208,7 @@ def drop_list_cooks(collection, meal_plan_name):
     cooks = []
     for i in temp:
         cooks.append(i)
+
     return cooks
 
 def drop_list_recipes(collection, meal_plan_name):
@@ -215,24 +216,10 @@ def drop_list_recipes(collection, meal_plan_name):
     cooks = []
     for i in temp:
         cooks.append(i)
+
     return cooks
 
-def drop_list_remove_already(collection,meal_plan_name):
-    cooks = drop_list_cooks(collection,meal_plan_name)
-    recipes = drop_list_recipes(collection,meal_plan_name)
-    day_dict = return_dictionary_mongo(collection,meal_plan_name)['date']
-    # print(day_dict)
 
-    date = []
-    for i in day_dict.values():
-        date.append(i['meals'])
-
-
-    for i in date:
-        for j in i.values():
-            print(j['dishes'])
-
-    return
 
 
 
