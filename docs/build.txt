@@ -1,8 +1,18 @@
 
-This is the process to build the application starting with cloning the repository
+The Meal Planner application is hosted on Heroku, and can be accessed with the following link:
 
-1: run "pip install -r requirements.txt" on bash in the mealPlannerApp directory
-2: Create a Python environment by running "Python3 -m venv env"
-3: Activate the Python environment by running "source env/bin/activate"
-4: In the Database directory, run recipe_database.py and cook_database.py
-5: Type flask run
+https://meal-planner-app1.herokuapp.com/
+
+For developers who want to run the application on the repository, this is the process to build the application and run it on the Flask dev server:
+
+1: Clone the repository onto your computer
+2: On the main branch, go to the mealPlannerApp directory, which is where the application code is stored.
+3: Run "pip/pip3 install -r requirements.txt" on bash in the mealPlannerApp directory
+4: Create a Python environment by running "Python3 -m venv env"
+5: Activate the Python environment by running "source env/bin/activate"
+6: Type flask run to start running the application on Flask
+7: Follow the link provided by Flask to open the application.
+
+The final product takes in data inputted from the webpages, and then stores it into the database.
+However, before we set that up, we had some dummy data inputted by running cook_database.py and recipe_database.py
+To test that data inputting works, use the create_insert_cook and create_insert_dish functions.
