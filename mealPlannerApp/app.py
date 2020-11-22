@@ -48,8 +48,10 @@ def recipe():
     if request.method == "POST":
         recipe_name = request.form.get("recipe_name")
         servings = request.form.get("yield")
-
-
+        item1 = request.form.get("item")
+        item1.append(request.form.get("quantity"))
+        item1.append(request.form.get("measurement"))
+        print(item1)
 
     return render_template("recipe.html", hide=0)
 
@@ -84,7 +86,7 @@ def newplan():
                     return render_template("newplan.html")
                 else:
                     flash("New plan was added! ")
-                return redirect(url_for("index.html"))
+                return redirect(url_for("index"))
 
     return render_template("newplan.html", hide=0)
 
