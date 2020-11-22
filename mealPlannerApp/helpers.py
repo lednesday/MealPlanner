@@ -13,7 +13,7 @@ def create_insert_cook(name: str, allergies:str, restrictions:str, email:str, me
     insert_cook_mongo(temp, collection, mealplan)
 
 '''
-Add dish recipe
+Add dish recipe to db
 '''
 
 def create_insert_dish(name: str, recipe:str, ingredients:str, quantities:str, units:str, allergens:str, restrictions:str,mealplan:str, collection):
@@ -78,13 +78,13 @@ def insert_entry_mongo(object, collection, type:str): # enter and object (Day(),
 '''
 insert cook to meal_planner
 '''
-def insert_cook_mongo(object:Cook, collection, plan:str): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title,
+def insert_cook_mongo(object:Cook, plan:str, collection): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title,
     collection.update_one({"meal_plan":plan}, {'$set': {"cooks."+object.get_index():object.get_dictionary()}})
 
 '''
 insert recipes to meal_planner
 '''
-def insert_recipe_mongo(object:Dish, collection, plan:str): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title,
+def insert_recipe_mongo(object:Dish, plan:str, collection): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title,
     collection.update_one({"meal_plan":plan}, {'$set': {"recipes."+object.get_index():object.get_dictionary()}})
 
 '''

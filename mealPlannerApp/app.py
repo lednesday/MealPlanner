@@ -43,10 +43,6 @@ clean previous content of database(comment out when no needed for testing)
 def index():
     return render_template("index.html", hide = 0)
 
-@app.route("/recipe", methods=["POST", "GET"])
-def recipe():
-    return render_template("recipe.html", hide = 0)
-
 @app.route("/cook", methods=["POST", "GET"])
 def cook():
 
@@ -54,13 +50,17 @@ def cook():
         cook_name = request.form.get("cook_name")
         cook_allergies = request.form.get("allergies")
         cook_restrictions = request.form.get("restrictions")
-        cook_email = "temp@fakeemails.com"
+        cook_email = request.form.get("email")
+        cook_mealplan = "mealplanner"
 
-        cook = create_cook_add(cook_name, cook_allergies, cook_restrictions, cook_email)
-
-        insert_entry_mongo(cook, cook_database, "name")
+        create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
+                           cook_email, cook_mealplan, mealplanner)
 
     return render_template("cook.html", hide = 0)
+
+@app.route("/recipe", methods=["POST", "GET"])
+def recipe():
+    return render_template("recipe.html", hide = 0)
 
 @app.route("/newplan", methods=["POST", "GET"])
 def newplan():

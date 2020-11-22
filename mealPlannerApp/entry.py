@@ -1,20 +1,24 @@
 '''
 CLASSES FOR THE MEAL PLANNER
-DAY, MEALPLANNER,MEAL
+DAY, MEALPLANNER,MEAL, COOK, DISH
 '''
 
 class Day:
     '''
-    The program would create an array of days, each one containing
+    The program would create an array of days, each one containing meals
     '''
     def __init__(self, date:str ):
         '''
-        creates day but it can add meals and cooks later. Date is required
+        creates a Day, consisting of a date and a list of meals.
         '''
         self.__date = date  # date (it cannot be changed, for now)
         self.__meals = []# list of meals objects
 
     def get_index(self):
+        '''
+        We named the function "get index" to generalize for all objects, for
+        MongoDB purposes
+        '''
         return self.__date # return date when the cook shift is happening
 
     def add_meal(self, meal): # meal is a Meal() object
@@ -72,7 +76,7 @@ class MealPlan:
 
 class Meal:
     '''
-    "meal" is string that describes its (breakfast, lunch, dinner, etc)
+    "meal" has a string that describes its (breakfast, lunch, dinner, etc)
     Each meal contains a list of dishes and cooks.
     '''
     def __init__(self, name: str):
@@ -106,7 +110,7 @@ class Meal:
         return result
 
 '''
-CLASSES FOR RECIPES. THESE ARE ADDED INSIDE THE MEALPLANNER database
+CLASS FOR DISH/RECIPE. THESE ARE ADDED INSIDE THE MEALPLANNER database
 '''
 class Dish:
     '''
@@ -148,7 +152,7 @@ class Dish:
 
     def define_quantities(self, quantities:str):
         '''
-        Defines the quantities of each meal ingredient
+        Defines the quantities of each ingredient to be used
         '''
         temp = quantities.split(", ")
         for i in temp:
@@ -156,22 +160,11 @@ class Dish:
 
     def define_units(self, units:str):
         '''
-        Defines the quantities of each meal ingredient
+        Defines the units in which each ingredient is measured
         '''
         temp = units.split(", ")
         for i in temp:
             self.__units.append(i)
-
-    '''
-    Notes: My idea is that we have fields for ingredients and their quantities,
-    as well as the recipe. Once inserted into their forms, each ingredient and
-    quantity field would be added by the add_ingredient and define_quantities
-    methods, which could be structured to already take in lists if that is easier
-    to do on front-end. Recipe is just a string.
-
-    For the moment, they are currently three strings: one for the ingredients and
-    one for the quantities (separated by commas), and the one for the recipe.
-    '''
 
 
     def add_allergens(self, allergens:str):
@@ -224,8 +217,7 @@ class Cook:
 
     def add_allergies(self, allergies: str):
         '''
-        add random info from cook (i.e. allergies, if prefer not to cook meat, etc)
-        For now, it will add the info as a lidst of strings, one by one
+        add allergies to the cook, in the format: "elem1, elem2, ..."
         '''
         temp = allergies.split(", ")
         for i in temp:
@@ -233,8 +225,7 @@ class Cook:
 
     def add_restrictions(self, info: str):
         '''
-        add random info from cook (i.e. allergies, if prefer not to cook meat, etc)
-        For now, it will add the info as a lidst of strings, one by one
+        add dietary restrictions to the cook, in the format: "elem1, elem2, ..."
         '''
         temp = info.split(", ")
         for i in temp:
