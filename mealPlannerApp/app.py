@@ -47,17 +47,18 @@ def index():
 def cook():
 
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
-    meal_plan  = request.args.get('meal_plan', None)
 
     if request.method == "POST":
         cook_name = request.form.get("cook_name")
         cook_allergies = request.form.get("allergies")
         cook_restrictions = request.form.get("restrictions")
         cook_email = request.form.get("email")
-        cook_mealplan = "mealplanner"
-
+        meal_plan  = request.form.get('meal_plan', None)
+        # print(cook_name, cook_allergies,cook_restrictions, cook_email, meal_plan)
+        # cook_mealplan = "mealplanner"
+        print(return_dictionary_mongo_all(mealplanner))
         create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
-                           cook_email, cook_mealplan, mealplanner)
+                           cook_email, meal_plan, mealplanner)
 
     return render_template("cook.html", mealplans_names=mealplanners_names, hide = 0)
 
