@@ -95,7 +95,6 @@ def newplan():
                 dates = date_range(start_date, end_date)# returns a list with all the dates bewtween start and end date.
 
                 if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
-                    flash("That name has been taken. Choose another one. ")
                     return render_template("newplan.html")
                 else:
                     flash("New plan was added! ")
@@ -106,35 +105,23 @@ def newplan():
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
-
     meal_plan  = request.args.get('meal_plan', None)
-    if meal_plan is not None:
-        list_cooks = drop_list_cooks(mealplanner, meal_plan)
-        list_dishes = drop_list_recipes(mealplanner, meal_plan)
-    else:
-        list_cooks =[]
-        list_dishes = []
 
     if request.method == "POST":
         meal_plan = request.form.get("meal_plan")
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
-        print(list_cooks)
-        print(list_dishes)
-
+        drop_list_remove_already(mealplanner,meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
-    elif meal_plan != None:
+    elif meal_plan != None:#for redirect from delete and add dish cook
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
-        print(list_cooks)
-        print(list_dishes)
-
+        drop_list_remove_already(mealplanner,meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
 
-    one_mealplanner = []
-    return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
+    return render_template("signup.html", mealplans_names=mealplanners_names, hide = 0)
 
 
 '''
@@ -148,7 +135,10 @@ def landing_page(plan_name):
     return render_template("signup.html", list=list_mealplans, hide=1)
 
 
-#pass
+'''
+checks if name is in database.
+TODO check for no spaces.
+'''
 @app.route("/_check_name")#function to check names. Connects to js in newsplan/
 def check_name():
     name = request.args.get("text", type=str)
@@ -163,6 +153,10 @@ def check_name():
 
     return jsonify(result=rslt)
 
+
+'''
+return an array with dates to generate fields in signup
+'''
 @app.route("/_count_inputs", methods=["POST", "GET"])
 def count_inputs():
     start_date = request.args.get("start", type=str)
