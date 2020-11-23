@@ -37,6 +37,10 @@ clean previous content of database(comment out when no needed for testing)
 '''
 """Defines all of the routes for the App"""
 
+'''
+-------------------------------------- Routes to serve pages in template/ --------------------------------------
+'''
+
 @app.route("/", methods=["POST", "GET"])
 def index():
     return render_template("index.html", hide = 0)
@@ -142,18 +146,22 @@ def signup():
     return render_template("signup.html", mealplans_names=mealplanners_names, hide = 0)
 
 
+@app.route("/view_recipe", methods=["POST", "GET"])
+def view_recipe():
+    mealplanners_names = return_dictionary_mongo_all(mealplanner)
+
+    if request.method == "POST":
+        view = request.form.get("view")
+        cook = request.form.get("name")
+        print(view, cook)
+
+    return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
+
+
+
 '''
-experiment. Send link by email for users to add cooks and dishes. Users should be available
-to edit but not able to see other links
+----------------- Routes that serve functions. I.e. delete cook, add cook, delete meal plan, etc -----------------
 '''
-@app.route('/plan/<plan_name>')
-def landing_page(plan_name):
-    print("plan")
-    list_mealplans = return_dictionary_mongo(mealplanner, plan_name)
-    return render_template("signup.html", list=list_mealplans, hide=1)
-
-
-
 
 @app.route("/add_cook", methods=["POST", "GET"])
 def add_cook():
@@ -221,23 +229,23 @@ def remove_mealplan():
 
 
 '''
-------------------- JSON GET FUNCTIONS -------------------
+-------------------------------------- JSON GET FUNCTIONS --------------------------------------
 checks if name is in database.
-TODO check for no spaces.
+These functions make possible communication between javascript and flask
 '''
-@app.route("/_check_name")#function to check names. Connects to js in newsplan/
-def check_name():
-    name = request.args.get("text", type=str)
-    list_mealplan = retrieve_data_index_list(mealplanner)# checks names in the mealplan to check if exists.
-
-    if name == "":
-        rslt = {"response": "Zero"}
-    elif name in list_mealplan:
-        rslt = {"response": "Yes"}
-    else:
-        rslt = {"response": "No"}
-
-    return jsonify(result=rslt)
+# @app.route("/_check_name")#function to check names. Connects to js in newsplan/
+# def check_name():
+#     name = request.args.get("text", type=str)
+#     list_mealplan = retrieve_data_index_list(mealplanner)# checks names in the mealplan to check if exists.
+#
+#     if name == "":
+#         rslt = {"response": "Zero"}
+#     elif name in list_mealplan:
+#         rslt = {"response": "Yes"}
+#     else:
+#         rslt = {"response": "No"}
+#
+#     return jsonify(result=rslt)
 
 '''
 checks if a cook name is already in database
@@ -289,12 +297,11 @@ def count_inputs():
     full_date = []
     for i in dates_range:
         full_date.append(datetime.datetime.strptime(i, '%Y-%m-%d').strftime('%A, %d %B of %Y'))
-
     rslt = {"dates_range": full_date}
 
     return jsonify(result=rslt)
 
-@app.route("/_check_recipe")#function to check names. Connects to js in newsplan/
+@app.route("/_check_recipe")#function to check names. Connects to js in recipe add/
 def check_recipe():
     print('hola')
     meal_plan = request.args.get("meal_plan", type=str)
@@ -309,6 +316,44 @@ def check_recipe():
         rslt = {"response": "No"}
 
     return jsonify(result=rslt)
+
+@app.route("/_check_name")#function to check names. Connects to js in newsplan/
+def check_name():
+    name = request.args.get("text", type=str)
+    list_mealplan = retrieve_data_index_list(mealplanner)# checks names in the mealplan to check if exists.
+
+    if name == "":
+        rslt = {"response": "Zero"}
+    elif name in list_mealplan:
+        rslt = {"response": "Yes"}
+    else:
+        rslt = {"response": "No"}
+
+    return jsonify(result=rslt)
+
+
+@app.route("/_view_recipes")#visualize recipes. send names
+def view_recipes():
+    meal_plan = request.args.get("meal_plan", type=str)
+    names = drop_list_cooks(mealplanner, meal_plan)
+    print(meal_plan)
+    rslt = {"response": names}
+    return jsonify(result=rslt)
+
+
+
+
+
+
+'''
+experiment. Send link by email for users to add cooks and dishes. Users should be available
+to edit but not able to see other links
+'''
+@app.route('/plan/<plan_name>')
+def landing_page(plan_name):
+    print("plan")
+    list_mealplans = return_dictionary_mongo(mealplanner, plan_name)
+    return render_template("signup.html", list=list_mealplans, hide=1)
 
 if __name__ == "__main__":
     app.run(debug=True)

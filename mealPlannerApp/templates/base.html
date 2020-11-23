@@ -33,6 +33,7 @@
                     <li><a href="{{url_for('signup') }}">Sign up on a meal plan</a></li>
                     <li><a href="{{url_for('recipe') }}">Enter recipe</a></li>
                     <li><a href="{{url_for('cook') }}">Enter cook</a></li>
+                    <li><a href="{{url_for('view_recipe') }}">View cooks</a></li>
 
                 </ul>
             </div>
@@ -50,8 +51,8 @@
 
 
 <script>
-
-$("#recipe_name").keyup(function(event) {//function to check if a name is already in the database
+//function to check if a name is already in the database of recipess
+$("#recipe_name").keyup(function(event) {
    var meal_plan = $("#meal_plan").val();
    var recipe_name = $("#recipe_name").val();
    if (meal_plan!="")
@@ -81,23 +82,8 @@ $("#recipe_name").keyup(function(event) {//function to check if a name is alread
 
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$("#cook_name").keyup(function(event) {//function to check if a name is already in the database
+//function to check if a name is already in the database cooks
+$("#cook_name").keyup(function(event) {
    var cook_name = $("#cook_name").val();
    var meal_plan = $("#meal_plan").val();
    // console.log(meal_plan);
@@ -128,7 +114,8 @@ $("#cook_name").keyup(function(event) {//function to check if a name is already 
 
   });
 
-  $("#cook_email").keyup(function(event) {//function to check if a name is already in the database
+//function to check if a name is already in the databas cooks mails
+  $("#cook_email").keyup(function(event) {e
      var meal_plan = $("#meal_plan").val();
      var email = $("#cook_email").val();  // Current content of the input field
      if (meal_plan!="")
@@ -184,8 +171,8 @@ $("#plan_name").keyup(function(event) {//function to check if a name is already 
            );
   });
 
-
-  function addFields(list_range){//add fields. list ranges is a list of dates where we need to select meals.
+//add fields. list ranges is a list of dates where we need to select meals.
+  function addFields(list_range){
       var number = list_range.length;
 
       while (container.hasChildNodes()) {
@@ -229,6 +216,8 @@ $("#plan_name").keyup(function(event) {//function to check if a name is already 
  };
 
 
+
+
 function check_dates_order(){//checks that the start date is always before end date. Otherwise, it disable submit button.
     var start_date = $("#start_date").val();
     var end_date = $("#end_date").val();
@@ -244,6 +233,15 @@ function check_dates_order(){//checks that the start date is always before end d
 
 $("#start_date").change(range_fields);//events that check if user change dates
 $("#end_date").change(range_fields);
+
+
+
+
+
+
+
+
+
 
 function range_fields() {//gets start and end date and calculate how many days difference and print the same number of fields.
     var start_date = $("#start_date").val();
@@ -281,13 +279,21 @@ function range_fields() {//gets start and end date and calculate how many days d
     }
   }
 
+// signup triggers event when selected one meal plan.
   $(document).ready(function(){
     $('#meal_plan').change(function(){
       $('#newplan').submit();
     });
   });
 
-  //for enabling and disable submit
+// signup triggers event when selected one meal plan.
+  $(document).ready(function(){
+    $('#recipe').change(function(){
+      $('#recipe_meal').submit();
+    });
+  });
+
+//for enabling and disable submit
   function disable(x) {//enable or disable submit
       document.getElementById(x).disabled = true;
   }

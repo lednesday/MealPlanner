@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>Enter a recipe</h1>
+{% endblock %}
+
+{% block content %}
+
+<form action="" method="post" id="recipe_view">
+
+      <label for="view">Select the meal plan where the cook's info was registered</label>
+      <select id= "view" name= "view">
+            <option value="" selected="selected">None</option>
+            {% for x in mealplans_names %}
+            <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
+            {% endfor %}
+      </select>
+      <br>
+      <label for="name">Select cook:</label>
+      <select id= "name" name= "name">
+
+      </select>
+
+      <button type ="submit" id="submit_cook">send</button>
+</form>
+
+
+<script>
+
+
+  function add_drop_list(array){
+
+    var element = document.getElementById('name');
+    for (i = 0; i < array.length; i++) {
+      var option = document.createElement('option');
+      option.value = array[i];
+      option.innerHTML = array[i];
+      element.appendChild(option);
+    }
+    element.appendChild(option);
+
+ };
+
+
+
+
+ $('#view').change(function() {
+   var meal_plan = $("#view").val();
+   if (meal_plan!="")
+   console.log(meal_plan);
+   {
+     $.getJSON( "/_view_recipes",
+                {
+                meal_plan:meal_plan},
+                function(data) {
+                  rsval = data.result.response;
+                  add_drop_list(rsval)
+                }
+             );
+   }
+ });
+
+ </script>
+
+
+
+
+
+{% endblock %}
