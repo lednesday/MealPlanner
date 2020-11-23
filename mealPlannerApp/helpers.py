@@ -3,7 +3,6 @@ import pandas as pd
 from datetime import datetime
 
 
-
 '''
 gets names of cooks, if the name of mealplanner is provided
 '''
@@ -36,7 +35,7 @@ def remove_plan(collection, mealplan:str):
     collection.remove({"meal_plan":mealplan})
 
 '''
-add cooks to db
+add cooks to db (CLASSES)
 '''
 def create_insert_cook(name: str, allergies:str, restrictions:str, email:str, mealplan:str, collection):
     temp = Cook(name)
@@ -46,7 +45,7 @@ def create_insert_cook(name: str, allergies:str, restrictions:str, email:str, me
     insert_cook_mongo(temp, mealplan, collection)
 
 '''
-Add dish recipe to db
+Add dish recipe to db (CLASSES)
 '''
 
 def create_insert_dish(name: str, servings:int, ingredients:list, recipe:str, allergens:str, restrictions:str, mealplan:str, collection):
@@ -106,6 +105,22 @@ def insert_entry_mongo(object, collection, type:str): # enter and object (Day(),
     else:
         temp = collection.insert_one(object.get_dictionary())
         return False #id returned (may need it later) returns 1 if exists and it fails to add.
+
+'''
+insert cook to meal_planner
+'''
+def delete_cook_database_mongo(collection, plan:str, cook:str): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title)
+    collection.update_one({"meal_plan":plan}, {'$unset': {"cooks."+cook:{}}})   
+
+
+
+
+
+
+
+
+
+
 
 '''
 insert cook to meal_planner
@@ -199,6 +214,8 @@ Add cook to database, providing a plan name, a date, a meal and a cook
 '''
 def add_cook_mongo(collection, meal_plan_name:str, date_to_add: str, meal_to_add: str, cook: str):
     collection.update_one({"meal_plan":meal_plan_name}, {'$push': {'date.'+date_to_add+".meals."+meal_to_add+".cooks":cook}})
+
+
 
 '''
 Add dish to database, providing a plan name, a date, a meal and a cook

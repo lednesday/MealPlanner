@@ -153,7 +153,8 @@ def view_recipe():
         cook = request.form.get("name")
         data = return_dictionary_cooks(mealplanner
         , view, cook)
-        return render_template("cook_viewer.html", mealplans_names=mealplanners_names, data = data, hide=0)
+        print(view)
+        return render_template("cook_viewer.html", mealplans_names=mealplanners_names, data = data, hide=0, meal_plan=view)
 
     return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
 
@@ -162,6 +163,17 @@ def view_recipe():
 '''
 ----------------- Routes that serve functions. I.e. delete cook, add cook, delete meal plan, etc -----------------
 '''
+
+@app.route("/remove_cook", methods=["POST", "GET"])
+def remove_cook():
+
+    planner_name  = request.args.get('planner_name', None)
+    cook = request.args.get("cook")
+    print(cook)
+    delete_cook_database_mongo(mealplanner, planner_name, cook)
+
+    return redirect(url_for('view_recipe', meal_plan = planner_name))
+
 
 @app.route("/add_cook", methods=["POST", "GET"])
 def add_cook():
@@ -231,19 +243,6 @@ def remove_mealplan():
 checks if name is in database.
 These functions make possible communication between javascript and flask
 '''
-# @app.route("/_check_name")#function to check names. Connects to js in newsplan/
-# def check_name():
-#     name = request.args.get("text", type=str)
-#     list_mealplan = retrieve_data_index_list(mealplanner)# checks names in the mealplan to check if exists.
-#
-#     if name == "":
-#         rslt = {"response": "Zero"}
-#     elif name in list_mealplan:
-#         rslt = {"response": "Yes"}
-#     else:
-#         rslt = {"response": "No"}
-#
-#     return jsonify(result=rslt)
 
 '''
 checks if a cook name is already in database
@@ -334,9 +333,6 @@ def view_recipes():
     rslt = {"response": names}
     return jsonify(result=rslt)
 
-
-
-
 '''
 experiment. Send link by email for users to add cooks and dishes. Users should be available
 to edit but not able to see other links
@@ -345,6 +341,7 @@ to edit but not able to see other links
 def landing_page(plan_name):
     list_mealplans = return_dictionary_mongo(mealplanner, plan_name)
     return render_template("signup.html", list=list_mealplans, hide=1)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
