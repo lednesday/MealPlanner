@@ -7,7 +7,7 @@
 {% block content %}
 <form action="" method="post" id="recipe">
     <fieldset>
-        <li>
+
         <label for="meal_plan">Select a meal plan to assign the dish to:</label>
             <select id= "meal_plan" name= "meal_plan">
               <option value="" selected="selected">None</option>
@@ -15,9 +15,7 @@
               <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
               {% endfor %}
             </select>
-        </li>
-    </fieldset>
-
+            
     <fieldset>
         <label for="recipe name">Recipe title: </label>
         <input type="text" id="recipe_name" name="recipe_name" maxlength="50" placeholder="Magnificent Mac -n- Cheese" autocomplete="off"  autofocus >
@@ -75,6 +73,7 @@
         </div>
         <button type ="submit" id="button_submit" >Submit Recipe</button>
     </fieldset>
+  </fieldset>
 
 </form>
 
