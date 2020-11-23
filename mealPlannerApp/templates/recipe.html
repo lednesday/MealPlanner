@@ -7,42 +7,108 @@
 {% block content %}
 <form action="" method="post" id="recipe">
     <fieldset>
-        <label for="recipe name">Recipe title: </label>
-        <input type="text" id="recipe_name" name="recipe_name" maxlength="50" placeholder="Magnificent Mac -n- Cheese" autocomplete="off"  autofocus >
-        <label for="number served">Serves: </label>
-        <input type="text" id="yield" name="yield" maxlength="10" placeholder="4">
+        <li>
+        <label for="meal_plan">Select a meal plan to assign the dish to:</label>
+            <select id= "meal_plan" name= "meal_plan">
+              <option value="" selected="selected">None</option>
+              {% for x in mealplans_names %}
+              <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
+              {% endfor %}
+            </select>
+        </li>
     </fieldset>
 
     <fieldset>
-        <legend>Ingredients</legend>
-        <p>
-            <label for="ingredient">Item: </label>
-            <input type="text" placeholder="shredded cheddar cheese" id="item" name="item">
-        </p>
-        <p>
-            <label for="quantity">Quantity: </label>
-            <input type="text" placeholder="2" id="quantity" name="quantity">
-        </p>
-        <p>
-            <label for="quantity">Unit of measurement: </label>
-            <input type="text" placeholder="cups" id="unit" name="unit">
-        </p>
+        <label for="recipe name">Recipe title: </label>
+        <input type="text" id="recipe_name" name="recipe_name" maxlength="50" placeholder="Magnificent Mac -n- Cheese" autocomplete="off"  autofocus >
+        <label for="number served">Servings: </label>
+        <input type="text" id="yield" name="yield" maxlength="10" placeholder="4">
     </fieldset>
+
+    <fieldset id="ingredients_field">
+      <legend>Ingredients</legend>
+      <!-- <div id="placeholder"> -->
+        <div id="ingredient_diet">
+              <label for="ingredient">Item: </label>
+              <input type="text" placeholder="shredded cheddar cheese" id="item" name="item">
+
+              <label for="quantity">Quantity: </label>
+              <input type="text" placeholder="2" id="quantity" name="quantity">
+
+              <label for="unit">Unit of measurement: </label>
+              <input type="text" placeholder="oz, cups, etc" id="unit" name="unit">
+        </div>
+      <!-- </div> -->
+
+    </fieldset>
+    <button type="button" id="button" value="Add Row">Add Ingredients</button>
+
 
     <fieldset>
         <legend>Directions</legend>
         <p>
-            <label for="step">Step: </label>
-            <input type="text" maxlength="250" placeholder="Melt butter in medium-size skillet" id="step" name="step">
+            <textarea id="step" name="step" rows="10" cols="100"></textarea>
         </p>
     </fieldset>
 
-    <fieldset>
-        <label for="allergens">Allergens: </label>
-        <input type="text" id="allergens" name="allergens" maxlength="50" placeholder="peanuts">
-        <label for="special diet">Special diets: </label>
-        <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegetarian">
+    <fieldset id="restrictions_field">
+        <div id="special_diet">
+            <legend>Enter Several Restrictions Separated by a Comma: </legend>
+            <label for="allergens">Allergens: </label>
+            <input type="text" id="allergens" name="allergens" maxlength="50" placeholder="peanuts, eggs, etc">
+            <label for="special diet">Special diets: </label>
+            <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegetarian, gluten-free, etc">
+        </div>
+        <button type ="submit" >Submit Recipe</button>
     </fieldset>
 
 </form>
+
+<script>
+var counter = 0;//save the number of fields
+function add_field() {
+    counter++;
+
+    var div = document.createElement ("div");
+    div.id = "ingredient_diet";
+
+    var label = document.createElement('label');
+    label.innerHTML = " Item: ";
+    label.htmlFor = "item"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "item";
+    item_input.id = "item"+counter;
+    div.appendChild(item_input);
+    ingredients_field.appendChild(div);
+
+    var label = document.createElement('label');
+    label.innerHTML = " Quantity: ";
+    label.htmlFor = "quantity"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "quantity";
+    item_input.id = "quantity"+counter;
+    div.appendChild(item_input);
+    ingredients_field.appendChild(div);
+
+    var label = document.createElement('label');
+    label.innerHTML = " Unit of measurement: ";
+    label.htmlFor = "unit"
+    div.appendChild(label);
+    var item_input = document.createElement('input');
+    item_input.type = "text";
+    item_input.name = "unit";
+    item_input.id = "unit"+counter;
+    div.appendChild(item_input);
+    ingredients_field.appendChild(div);
+}
+
+$('#button').click(function() {
+  add_field();
+});
+
+</script>
 {% endblock %}

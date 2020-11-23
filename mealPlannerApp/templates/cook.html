@@ -6,18 +6,32 @@
 {% endblock %}
 
 {% block content %}
+<!-- {% if hide == 0 %} -->
 <form action="" method="post" id="recipe">
-    <fieldset>
-        <label for="cook name">Name: </label>
-        <input type="text" id="cook_name" name="cook_name" maxlength="75" placeholder="Martha Steward" autocomplete="off"  autofocus >
-        <label for="allergies">Allergies: </label>
-        <input type="text" id="allergies" name="allergies" maxlength="100" placeholder="shrimp">
-        <label for="dietary restrictions">Other dietary restrictions: </label>
-        <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegan">
-        <p>Your email allows us to send you the link to a meal plan you're signed upon. We won't share it with others.</p>
-        <label for="email">Email: </label>
-        <input type="email" id="email" name="email" maxlength="50" placeholder="masterchef@cooksrus.com">
-    </fieldset>
-    <p> <button type="submit">Submit</button> </p>
+<fieldset>
+    <li>
+    <label for="meal_plan">Select a meal plan to assign the cook to:</label>
+        <select id= "meal_plan" name= "meal_plan">
+          <option value="" selected="selected">None</option>
+          {% for x in mealplans_names %}
+          <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
+          {% endfor %}
+        </select>
+    </li>
+</fieldset>
+<!-- {% endif %} -->
+
+  <fieldset>
+      <label for="cook name">Name: </label>
+      <input type="text" id="cook_name" name="cook_name" maxlength="75" placeholder="Martha Steward" autocomplete="off"  autofocus >
+      <label for="allergies">Allergies: </label>
+      <input type="text" id="allergies" name="allergies" maxlength="100" placeholder="shrimp, wheat, etc">
+      <label for="dietary restrictions">Other dietary restrictions: </label>
+      <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegan, kosher, etc">
+      <p>Your email allows us to send you the link to a meal plan you're signed upon. We won't share it with others.</p>
+      <label for="email">Email: </label>
+      <input type="email" id="email" name="email" maxlength="50" placeholder="masterchef@cooksrus.com">
+  </fieldset>
+  <p> <button type="submit">Submit</button> </p>
 </form>
 {% endblock %}
