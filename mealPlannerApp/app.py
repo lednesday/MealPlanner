@@ -64,7 +64,9 @@ def recipe():
             ite = []
         print(tuple_list)
 
-
+        directions = request.form.get("step")
+        allergens = request.form.get("allergens")
+        special_diets = request.form.get("restrictions")
 
     return render_template("recipe.html", hide=0)
 
