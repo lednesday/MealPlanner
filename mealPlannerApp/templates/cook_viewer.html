@@ -35,7 +35,9 @@ Cook's name:
 List of allergies:
 {% for i in data.allergies %}
 <br>
+{% if data.allergies%}
   - {{i}}
+{% endif %}
 {% endfor %}
 
 <br>

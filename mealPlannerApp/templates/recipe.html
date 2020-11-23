@@ -15,12 +15,12 @@
               <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
               {% endfor %}
             </select>
-            
+
     <fieldset>
         <label for="recipe name">Recipe title: </label>
-        <input type="text" id="recipe_name" name="recipe_name" maxlength="50" placeholder="Magnificent Mac -n- Cheese" autocomplete="off"  autofocus >
+        <input type="text" id="recipe_name" name="recipe_name" maxlength="50" placeholder="Magnificent Mac -n- Cheese" autocomplete="off"  autofocus required >
         <label for="number served">Servings: </label>
-        <input type="number"id="yield" name="yield" maxlength="10" placeholder="4">
+        <input type="number"id="yield" name="yield" maxlength="10" placeholder="4" required>
     </fieldset>
     <p id="response"> </p>
 
@@ -29,14 +29,14 @@
       <!-- <div id="placeholder"> -->
         <div id="ingredient_diet">
               <label for="ingredient">Item: </label>
-              <input type="text" placeholder="shredded cheddar cheese" id="item" name="item">
+              <input type="text" placeholder="shredded cheddar cheese" id="item" name="item" required>
 
               <label for="quantity">Quantity: </label>
-              <input placeholder="2" id="quantity" name="quantity" type="number">
+              <input placeholder="2" id="quantity" name="quantity" type="number" required>
               <!-- <label for="unit">Unit of measurement: </label>
               <input type="text" placeholder="oz, cups, etc" id="unit" name="unit"> -->
               <label for="unit">Units: </label>
-              <input type='text' list="units" id="unit" name="unit" autocomplete="off"/>
+              <input type='text' list="units" id="unit" name="unit" autocomplete="off"/ required>
               <datalist id="units">
                   <option value="g">
                   <option value="kg">
@@ -59,7 +59,7 @@
     <fieldset>
         <legend>Directions</legend>
         <p>
-            <textarea id="step" name="step" rows="10" cols="100"></textarea>
+            <textarea id="step" name="step" rows="10" cols="100"></textarea required>
         </p>
     </fieldset>
 

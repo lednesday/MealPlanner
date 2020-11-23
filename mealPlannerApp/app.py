@@ -56,7 +56,6 @@ def cook():
         cook_restrictions = request.form.get("restrictions")
         cook_email = request.form.get("cook_email")
         meal_plan  = request.form.get('meal_plan', None)
-        print(return_dictionary_mongo_all(mealplanner))
         create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
                            cook_email, meal_plan, mealplanner)
 
@@ -84,7 +83,6 @@ def recipe():
             tuple_item = tuple(ite)
             ingredients.append(tuple_item)
             ite = []
-        # print(ingredients)cvgh
 
         directions = request.form.get("step")
         allergens = request.form.get("allergens")
@@ -155,7 +153,6 @@ def view_recipe():
         cook = request.form.get("name")
         data = return_dictionary_cooks(mealplanner
         , view, cook)
-        print(data)
         return render_template("cook_viewer.html", mealplans_names=mealplanners_names, data = data, hide=0)
 
     return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
@@ -173,7 +170,6 @@ def add_cook():
     meal  = request.args.get('meal', None)
     planner_name  = request.args.get('planner_name', None)
     cook = request.form.get("cook")
-    print(cook)
     if cook != "":
         cooks_in_database = get_cooks_mongo(mealplanner, planner_name, date, meal)
         if cook not in cooks_in_database:
@@ -225,7 +221,6 @@ def delete_cook():
 @app.route("/remove_mealplan", methods=["POST", "GET"])
 def remove_mealplan():
     planner_name  = request.args.get('planner_name', None)
-    print("aqui", planner_name)
     remove_plan(mealplanner, planner_name)
 
     return redirect(url_for('signup'))
@@ -276,9 +271,7 @@ def check_email():
 
     meal_plan = request.args.get("meal_plan", type=str)
     cook_email = request.args.get("email", type=str)
-    # print(cook_email)
     emails_already_used = get_emails_cooks(mealplanner, meal_plan)
-    # print(emails_already_used)
     if cook_email =="":
         rslt = {"response": "Zero"}
     elif cook_email in emails_already_used:
@@ -306,7 +299,6 @@ def count_inputs():
 
 @app.route("/_check_recipe")#function to check names. Connects to js in recipe add/
 def check_recipe():
-    print('hola')
     meal_plan = request.args.get("meal_plan", type=str)
     recipe_name = request.args.get("recipe_name", type=str)
     names = get_names_recipes(mealplanner, meal_plan)
@@ -339,11 +331,8 @@ def check_name():
 def view_recipes():
     meal_plan = request.args.get("meal_plan", type=str)
     names = drop_list_cooks(mealplanner, meal_plan)
-    print(meal_plan)
     rslt = {"response": names}
     return jsonify(result=rslt)
-
-
 
 
 
@@ -354,7 +343,6 @@ to edit but not able to see other links
 '''
 @app.route('/plan/<plan_name>')
 def landing_page(plan_name):
-    print("plan")
     list_mealplans = return_dictionary_mongo(mealplanner, plan_name)
     return render_template("signup.html", list=list_mealplans, hide=1)
 
