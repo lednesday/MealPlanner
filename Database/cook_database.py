@@ -6,13 +6,13 @@ from pymongo import MongoClient
 from cook_variables import * #for testing variables
 
 
-client = MongoClient("localhost", 27017) # connect to engine.
+client = MongoClient('mongodb+srv://new-user-31:new-user-31@cluster0.yev3v.mongodb.net/flask-mongodb-atlas?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE') # connect to engine.
 '''
 clean previous content of database
 '''
 # client.drop_database("cook")
-db = client["Project2"] # create database
-cook_database = db["cook"]
+db = client.Project2  # create database
+cook_database = db.cook
 # cook_database.drop()
 
 class Cook:

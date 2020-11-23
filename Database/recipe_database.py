@@ -5,14 +5,15 @@ import pymongo # modules
 from pymongo import MongoClient
 from recipes_variables import * # for testing variables
 
-client = MongoClient("localhost", 27017) # connect to engine.
+client = MongoClient('mongodb+srv://new-user-31:new-user-31@cluster0.yev3v.mongodb.net/flask-mongodb-atlas?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE')  # connect to engine.
 
-db = client["Project2"] # create database
-dish_database = db["Dish"] #create collection
+db = client.Project2  # create database
+dish_database = db.dish  # create collection
 '''
 clean previous content of database (only when necessary, otherwise commented out.)
 '''
 #dish_database.drop()
+
 
 class Dish:
     '''
@@ -20,7 +21,7 @@ class Dish:
     of ingredients, and a recipe.
     '''
 
-    def __init__(self, name:str):
+    def __init__(self, name: str):
         '''
         creates day but it can add meals and cooks later. Date is required
         '''

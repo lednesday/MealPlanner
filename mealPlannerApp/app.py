@@ -18,16 +18,16 @@ app = Flask(__name__)
 '''
 Connecting flask with MONGODB
 '''
-client = MongoClient("localhost", 27017) # connect to engine.
-db = client["Project2"] # create database
-mealplanner = db['Mealplanner']
-cook_database = db["cook"]
-recipe_database = db["Recipe"]
+client = MongoClient('mongodb+srv://new-user-31:new-user-31@cluster0.yev3v.mongodb.net/flask-mongodb-atlas?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE')  # connect to engine.
+db = client.Project2  # create database
+mealplanner = db.mealPlanner
+cook_database = db.cook
+recipe_database = db.recipe_database
 '''
 Secret Key
 Set's up secret key so flash messages can be displayed
 '''
-import configparser#import the key from secret file
+import configparser  #import the key from secret file
 config = configparser.ConfigParser()
 config.read("credentials.ini")
 # app.secret_key = config["DEFAULT"]["key_google"]
