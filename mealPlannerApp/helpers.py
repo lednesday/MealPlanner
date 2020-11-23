@@ -15,7 +15,7 @@ def date_range(start, end):
 
     return lista
 
-    
+
 '''
 ------------------------ DATABASE CLASSES -------------------------------
 add cooks to db (CLASSES)
@@ -73,7 +73,7 @@ def create_newplan(start_date: str, end_date:str , name_plan:str, list_meals:lis
 
 
 '''
-gets names of cooks, if the name of mealplanner is provided
+gets names of cooks, if the name of mealplanner is provided for droplist
 '''
 def get_names_recipes(collection, mealplan:str):
     temp = []
@@ -82,7 +82,7 @@ def get_names_recipes(collection, mealplan:str):
     return temp
 
 '''
-gets names of cooks, if the name of mealplanner is provided
+gets names of cooks, if the name of mealplanner is provided droplist
 '''
 def get_names_cooks(collection, mealplan:str):
     temp = []
@@ -171,7 +171,7 @@ def print_database(collection): #for debugging
         print()
 
 '''
-returns an specific mealplanner
+returns an specific mealplanner (right now it returns cooks and their info)
 '''
 def return_dictionary_cooks(collection, meal_planner_name:str , cook:str):
     title = {}
@@ -179,6 +179,16 @@ def return_dictionary_cooks(collection, meal_planner_name:str , cook:str):
         title = i
 
     return title['cooks'][cook]
+
+'''
+returns an specific mealplanner (right now it returns cooks and their info)
+'''
+def return_dictionary_recipes(collection, meal_planner_name:str , recipe:str):
+    title = {}
+    for i in collection.find({"meal_plan":meal_planner_name}):
+        title = i
+
+    return title['recipes'][recipe]
 
 '''
 returns an specific mealplanner

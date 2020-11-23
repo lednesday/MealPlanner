@@ -128,6 +128,8 @@ def signup():
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
     meal_plan  = request.args.get('meal_plan', None)
 
+    print(return_dictionary_recipes(mealplanner, "hola" , "eggs"))
+
     if request.method == "POST":
         meal_plan = request.form.get("meal_plan")
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
@@ -160,6 +162,11 @@ def view_recipe():
         return render_template("cook_viewer.html", mealplans_names=mealplanners_names, data = data, hide=0, meal_plan=view)
 
     return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
+
+
+
+
+
 
 
 
