@@ -49,12 +49,22 @@ def recipe():
         mealPlanName = request.form.get("meal_plan")
         recipe_name = request.form.get("recipe_name")
         servings = request.form.get("yield")
-        item1 = request.form.getlist("item")
-        item1.append(request.form.get("quantity"))
-        item1.append(request.form.get("measurement"))
-        tuplex = tuple(item1)
-        print(tuplex)
-        print(mealPlanName)
+        length = len(request.form.getlist("item"))
+        item = request.form.getlist("item")
+        quantity = (request.form.getlist("quantity"))
+        unit = (request.form.getlist("unit"))
+        ite = []
+        tuple_list = []
+        for i in range(0, length):
+            ite.append(item[i])
+            ite.append(quantity[i])
+            ite.append(unit[i])
+            tuple_item = tuple(ite)
+            tuple_list.append(tuple_item)
+            ite = []
+        print(tuple_list)
+
+
 
     return render_template("recipe.html", hide=0)
 

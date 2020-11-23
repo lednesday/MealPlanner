@@ -26,7 +26,7 @@
               <input type="text" placeholder="2" id="quantity" name="quantity">
 
               <label for="unit">Unit of measurement: </label>
-              <input type="text" placeholder="oz, cups, etc" id="measurement" name="unit">
+              <input type="text" placeholder="oz, cups, etc" id="unit" name="unit">
         </div>
       <!-- </div> -->
 
@@ -86,12 +86,12 @@ function add_field() {
 
     var label = document.createElement('label');
     label.innerHTML = " Unit of measurement: ";
-    label.htmlFor = "units"
+    label.htmlFor = "unit"
     div.appendChild(label);
     var item_input = document.createElement('input');
     item_input.type = "text";
-    item_input.name = "units";
-    item_input.id = "units"+counter;
+    item_input.name = "unit";
+    item_input.id = "unit"+counter;
     div.appendChild(item_input);
     ingredients_field.appendChild(div);
 }
