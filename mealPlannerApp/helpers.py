@@ -16,12 +16,11 @@ def create_insert_cook(name: str, allergies:str, restrictions:str, email:str, me
 Add dish recipe to db
 '''
 
-def create_insert_dish(name: str, recipe:str, ingredients:str, quantities:str, units:str, allergens:str, restrictions:str,mealplan:str, collection):
+def create_insert_dish(name: str, servings:int, ingredients:list, recipe:str, allergens:str, restrictions:str, mealplan:str, collection):
     temp = Dish(name)
-    temp.add_recipe(recipe)
+    temp.define_servings(servings)
     temp.add_ingredients(ingredients)
-    temp.define_quantities(quantities)
-    temp.define_units(units)
+    temp.add_recipe(recipe)
     temp.add_allergens(allergens)
     temp.add_restrictions(restrictions)
     insert_recipe_mongo(temp, mealplan, collection)

@@ -54,8 +54,6 @@ def cook():
         cook_restrictions = request.form.get("restrictions")
         cook_email = request.form.get("email")
         meal_plan  = request.form.get('meal_plan', None)
-        # print(cook_name, cook_allergies,cook_restrictions, cook_email, meal_plan)
-        # cook_mealplan = "mealplanner"
         print(return_dictionary_mongo_all(mealplanner))
         create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
                            cook_email, meal_plan, mealplanner)
@@ -76,19 +74,23 @@ def recipe():
         quantity = (request.form.getlist("quantity"))
         unit = (request.form.getlist("unit"))
         ite = []
-        tuple_list = []
+        ingredients = []
         for i in range(0, length):
             ite.append(item[i])
             ite.append(quantity[i])
             ite.append(unit[i])
             tuple_item = tuple(ite)
-            tuple_list.append(tuple_item)
+            ingredients.append(tuple_item)
             ite = []
-        print(tuple_list)
+        print(ingredients)
 
         directions = request.form.get("step")
         allergens = request.form.get("allergens")
         special_diets = request.form.get("restrictions")
+        meal_plan  = request.form.get('meal_plan', None)
+
+        create_insert_dish(recipe_name, servings, ingredients, directions, \
+        					allergens, special_diets, meal_plan, mealplanner)
 
     return render_template("recipe.html", mealplans_names=mealplanners_names, hide=0)
 

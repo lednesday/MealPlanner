@@ -123,9 +123,8 @@ class Dish:
         creates day but it can add meals and cooks later. Date is required
         '''
         self.__name = name
+        self.__servings = 0
         self.__ingredients = [] # list of ingredients
-        self.__quantities = [] # List of ingredient quantities: indexes match.
-        self.__units = [] # Units in which the quantities will be represented
         self.__recipe = ""
         self.__allergens = [] # list of allergens
         self.__restrictions = [] # Vegan, Gluten-Free, etc
@@ -136,35 +135,23 @@ class Dish:
         '''
         return self.__name
 
+    def define_servings(self, servings:int):
+        '''
+        defines the number of servings that the recipe allows for
+        '''
+        self.__servings = servings
+
     def add_recipe(self, recipe:str):
         '''
         Adds a recipe (in the appropriate format) to the dish
         '''
         self.__recipe = recipe
 
-    def add_ingredients(self, ingredients: str):
+    def add_ingredients(self, ingredients:list):
         '''
-        Adds an ingredient to the meal
+        Adds an ingredient (List of (item, quantity, unit) tuples)
         '''
-        temp = ingredients.split(", ")
-        for i in temp:
-            self.__ingredients.append(i)
-
-    def define_quantities(self, quantities:str):
-        '''
-        Defines the quantities of each ingredient to be used
-        '''
-        temp = quantities.split(", ")
-        for i in temp:
-            self.__quantities.append(i)
-
-    def define_units(self, units:str):
-        '''
-        Defines the units in which each ingredient is measured
-        '''
-        temp = units.split(", ")
-        for i in temp:
-            self.__units.append(i)
+        self.__ingredients = ingredients
 
 
     def add_allergens(self, allergens:str):
@@ -184,9 +171,9 @@ class Dish:
             self.__restrictions.append(i)
 
     def get_dictionary(self):
-        temp = {"title": self.__name,"recipe": self.__recipe, "ingredients": self.__ingredients, \
-                "quantities":self.__quantities, "units":self.__units, "allergens":self.__allergens, \
-                "restrictions":self.__restrictions}
+        temp = {"title": self.__name, "servings": self.__servings, "ingredients": self.__ingredients, \
+                "recipe": self.__recipe, "allergens":self.__allergens, "restrictions":self.__restrictions}
+        
         return temp
 
 
