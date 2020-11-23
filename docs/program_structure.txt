@@ -1,17 +1,58 @@
-# Program Structure
 
-The MealPlanner program is structured in the following way:
+--------------------------- Basic Program Structure ---------------------------
 
-The master structure is a MealPlanner.
+The MealPlaner app allows users to create Meal plans. The following is a description of each Meal Plan
 
-	Each Mealplanner has a list of Days.
+The master structure is a MealPlan.
+
+	Each Mealplan has a list of Days.
 
 		Each Day has a list of Meals.
 
 			Each Meal has two lists: A list of Cooks, and a list of Dishes.
 
-				A Cook is a person, identified by name,
+				A Cook is a person, identified by name, and contains that person's allergies and special diet,
 
-				A Dish consists of a list of ingredients, quantities, and its recipe.
+				A Dish is identified by its name, and consists of a list of ingredients, its recipe,
+				its allergens, and whether it satisfies a special diet. There is also a servings number,
+				which in future developments could be used to adjust the quantities of ingredients accordingly.
 
-MealPlanner, Day, Meal, Cook, and Dish are all objects.
+----------------------------------- Classes -----------------------------------
+
+The file entry.py contains five classes: MealPlan, Day, Meal, Cook, and Dish.
+
+These classes are used to create an object from information inputted on the webpage,
+which gets processed in app.py with the help of some functions in helpers.py.
+
+The objects are created, and then they are inserted into the MongoDB database.
+
+-------------------------------- MongoDB Format --------------------------------
+
+MongoDB stores objects in JSON format, which is similar to the Python dictionary.
+
+Following the structure described above, this is what a MealPlanner looks like in this format:
+
+
+
+------------------------------ File interactions ------------------------------
+
+IMPORTANT NOTE: Throughout the program, we tend to use Dish and Recipe interchangeably.
+There is a Dish object, but the template and the route are named "recipe." We
+apologize for this inconvenience, but hope that it will not cause too many headaches.
+
+The heart of the application resides in app.py, which runs on Flask.
+
+The classes in entry.py and the functions in helpers.py are extensively used throughout
+app.py
+
+The templates in the templates folders are user interface, and they display and take in data
+inputed by the user and other information. They work through app.py's routes.
+
+	The program starts at the index template, which could be seen as its homepage.
+
+	There are links at the top that will take you to each of the other templates.
+
+	Everything has a shared Mealplan database, created at the top of app.py
+
+Finally, the static/css directory contains formatting that the HTML templates use
+to make the webpages look neat and work.

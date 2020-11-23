@@ -1,4 +1,6 @@
 
+-------------------------------- Build process ---------------------------------
+
 The Meal Planner application is hosted on Heroku, and can be accessed with the following link:
 
 https://meal-planner-app1.herokuapp.com/
@@ -16,3 +18,9 @@ For developers who want to run the application on the repository, this is the pr
 The final product takes in data inputted from the webpages, and then stores it into the database.
 However, before we set that up, we had some dummy data inputted by running cook_database.py and recipe_database.py
 To test that data inputting works, use the create_insert_cook and create_insert_dish functions.
+
+------------------------------------ Heroku ------------------------------------
+
+The following is an explanation of how the application is set up in Heroku:
+
+

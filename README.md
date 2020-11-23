@@ -6,20 +6,26 @@ Antonio Silva Paucar, Lindsay Marean, Bria Gray, Max Aguirre
 
 ## Description
 
-This is a tool for planning communal meals.
+This is a tool for planning communal meals. The application was designed built with communal housing and hiking trips in mind.
 
-Each "Mealplan" consists of Days which will be planned for, and each day consists of Meals (Breakfast, Lunch, Dinner, etc).
+With the app, the user can create "meal plans," with which they can plan meals (Breakfast, Lunch, Snacks, Dinner) for any number of days they want.
 
-Each Meal is made up of Dishes to be served, and Cooks that will make the dishes.
+The current functionality of the application allows users to create "dishes" and cook profiles, which can then be set to each meal.
 
-The MealPlanner app is designed for users who might need to plan for a trip, or to plan for division of labor in a communal housing situation.
+Our application is hosted on Heroku, and can be accessed by going to https://meal-planner-app1.herokuapp.com/
+
+For information on how the application works, see "Program Structure and Build Process Summary" below
 
 ## Usage
 
-Users can create a MealPlan, in which they can add Days to plan for, Meals inside those days, and assigns Dishes and Cooks to each meal.
+(Lindsay, feel free to add things here. Detailed description, pictures, etc)
 
-Once a MealPlan is created, users can also modify the MealPlan, or delete it.
+## Program Structure and Build process Summary
 
-## Build process summary
+As mentioned above, the application is hosted on Heroku, and can be accessed by going to https://meal-planner-app1.herokuapp.com/
 
-(Work in progress)
+For a more detailed explanation of the application build process, see docs/build.txt
+
+For directory structure of the repository, see docs/directory_structure.txt
+
+For information on how the different parts of the progran work together, see docs/program_structure.txt
