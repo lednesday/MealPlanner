@@ -20,18 +20,24 @@
     </li>
 </fieldset>
 <!-- {% endif %} -->
+<p id="response"> </p>
 
   <fieldset>
       <label for="cook name">Name: </label>
-      <input type="text" id="cook_name" name="cook_name" maxlength="75" placeholder="Martha Steward" autocomplete="off"  autofocus >
+      <input type="text" id="cook_name" name="cook_name" maxlength="75" placeholder="Martha Steward" autocomplete="off"  autofocus required >
       <label for="allergies">Allergies: </label>
       <input type="text" id="allergies" name="allergies" maxlength="100" placeholder="shrimp, wheat, etc">
       <label for="dietary restrictions">Other dietary restrictions: </label>
       <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegan, kosher, etc">
       <p>Your email allows us to send you the link to a meal plan you're signed upon. We won't share it with others.</p>
-      <label for="email">Email: </label>
-      <input type="email" id="email" name="email" maxlength="50" placeholder="masterchef@cooksrus.com">
+      <label for="cook_email">Email: </label>
+      <input type="email" id="cook_email" name="cook_email" maxlength="50" placeholder="masterchef@cooksrus.com" required>
+      <p id="email_response"> </p>
   </fieldset>
-  <p> <button type="submit">Submit</button> </p>
+
+  <p> <button type="submit" id="button">Submit</button> </p>
 </form>
+
+
+
 {% endblock %}

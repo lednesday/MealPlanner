@@ -50,13 +50,69 @@
 
 
 <script>
-function disable() {//enable or disable submit
-    document.getElementById("button").disabled = true;
-}
-function enable() {
-    document.getElementById("button").disabled = false;
-}
 
+
+$("#cook_name").keyup(function(event) {//function to check if a name is already in the database
+   var cook_name = $("#cook_name").val();
+   var meal_plan = $("#meal_plan").val();
+   // console.log(meal_plan);
+   if (meal_plan!="")
+   {
+     var keycode = event.which;      // They key that just went up
+     $.getJSON( "/_check_cook",
+                {cook_name: cook_name,
+                meal_plan:meal_plan},
+                function(data) {
+                  rsval = data.result.response;
+                  if (rsval.localeCompare("Yes") == 0){
+                      $("#response").html("This name has been already taken. Choose another one");
+                      disable("button");
+                  }
+                  else if (rsval.localeCompare("Zero") == 0){
+                      $("#response").html("No name has been provided");
+                      disable("button");
+                  }
+                  else{
+                      $("#response").html("This name is available.");
+                      enable("button");
+                  }
+                }
+
+             );
+   }
+
+  });
+
+  $("#cook_email").keyup(function(event) {//function to check if a name is already in the database
+     var meal_plan = $("#meal_plan").val();
+     var email = $("#cook_email").val();  // Current content of the input field
+     if (meal_plan!="")
+     {
+       var keycode = event.which;      // They key that just went up
+       $.getJSON( "/_check_email",
+                  {meal_plan: meal_plan,
+                  email: email},
+                  function(data) {
+                    rsval = data.result.response;
+                    if (rsval.localeCompare("Yes") == 0){
+                        $("#email_response").html("This email address have been already used");
+                        disable("button");
+                        console.log("Yes");
+                    }
+                    else if (rsval.localeCompare("No") == 0){
+                        $("#email_response").html("")
+                        enable("button");
+                        console.log("No");
+
+                    }
+                  }
+
+               );
+     }
+
+    });
+
+//signup page, checks the name is not already in database
 $("#plan_name").keyup(function(event) {//function to check if a name is already in the database
    var txt = $("#plan_name").val();  // Current content of the input field
    var keycode = event.which;      // They key that just went up
@@ -66,16 +122,17 @@ $("#plan_name").keyup(function(event) {//function to check if a name is already 
                 rsval = data.result.response;
                 console.log("rsval: " + rsval);
                 if (rsval.localeCompare("Yes") == 0){
+                    console.log("Hola")
                     $("#response").html("This name has been already taken. Choose another one")
-                    disable()
+                    disable("button")
                 }
                 else if (rsval.localeCompare("Zero") == 0){
                     $("#response").html("No name has been provided")
-                    disable()
+                    disable("button")
                 }
                 else{
                     $("#response").html("This name is available.");
-                    enable()
+                    enable("button")
                 }
               }
 
@@ -131,12 +188,12 @@ function check_dates_order(){//checks that the start date is always before end d
     var start_date = $("#start_date").val();
     var end_date = $("#end_date").val();
     if (start_date > end_date){
-      disable();
+      disable("button");
       $("#response").html("The start date cannot be after the end date.")
     }
     else if (start_date < end_date){
       $("#response").html("")
-      enable();
+      enable("button");
     }
 };
 
@@ -158,13 +215,13 @@ function range_fields() {//gets start and end date and calculate how many days d
       );
   };
 
+//
   function check_date_today(){//gets today's date and add it as default in start and end date, disable submit (to avoid send empty meal names and creates one field.)
     var date_today = new Date();
     var year = date_today.getFullYear();
     var month = String(date_today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var day = String(date_today.getDate()).padStart(2, '0');
     date_today = year+'-'+ month+'-' + day;
-
 
     var element = document.getElementById('start_date');
 
@@ -174,7 +231,7 @@ function range_fields() {//gets start and end date and calculate how many days d
       document.getElementsByName("start_date")[0].setAttribute('min', date_today);//js prevent user to schedule a plan before today.
       document.getElementById('end_date').value = date_today;
       document.getElementsByName("end_date")[0].setAttribute('min', date_today);
-      disable();
+      disable("button");
       range_fields();
     }
   }
@@ -184,6 +241,15 @@ function range_fields() {//gets start and end date and calculate how many days d
       $('#newplan').submit();
     });
   });
+
+  //for enabling and disable submit
+  function disable(x) {//enable or disable submit
+      document.getElementById(x).disabled = true;
+  }
+  function enable(x) {
+      document.getElementById(x).disabled = false;
+  }
+
 
 </script>
 

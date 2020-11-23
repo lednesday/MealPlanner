@@ -14,15 +14,13 @@ instance of Flask
 '''
 app = Flask(__name__)
 
-
 '''
 Connecting flask with MONGODB
 '''
 client = MongoClient("localhost", 27017) # connect to engine.
 db = client["Project2"] # create database
 mealplanner = db['Mealplanner']
-# cook_database = db["cook"]
-# recipe_database = db["Recipe"]
+
 '''
 Secret Key
 Set's up secret key so flash messages can be displayed
@@ -52,7 +50,7 @@ def cook():
         cook_name = request.form.get("cook_name")
         cook_allergies = request.form.get("allergies")
         cook_restrictions = request.form.get("restrictions")
-        cook_email = request.form.get("email")
+        cook_email = request.form.get("cook_email")
         meal_plan  = request.form.get('meal_plan', None)
         print(return_dictionary_mongo_all(mealplanner))
         create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
@@ -173,6 +171,44 @@ def check_name():
 
     return jsonify(result=rslt)
 
+'''
+checks if a cook name is already in database
+'''
+@app.route("/_check_cook")#function to check names. Connects to js in newsplan/
+def check_cook():
+    meal_plan = request.args.get("meal_plan", type=str)
+    cook_name = request.args.get("cook_name", type=str)
+    names = get_names_cooks(mealplanner, meal_plan)
+
+    if cook_name == "":
+        rslt = {"response": "Zero"}
+    elif cook_name in names:
+        rslt = {"response": "Yes"}
+    else:
+        rslt = {"response": "No"}
+
+    return jsonify(result=rslt)
+
+'''
+checks if a cook name is already in database
+'''
+@app.route("/_check_email")#function to check names. Connects to js in newsplan/
+def check_email():
+
+    meal_plan = request.args.get("meal_plan", type=str)
+    cook_email = request.args.get("email", type=str)
+    print(cook_email)
+    emails_already_used = get_emails_cooks(mealplanner, meal_plan)
+    print(emails_already_used)
+    if cook_email =="":
+        rslt = {"response": "Zero"}
+    elif cook_email in emails_already_used:
+        rslt = {"response": "Yes"}
+    else:
+        rslt = {"response": "No"}
+
+    return jsonify(result=rslt)
+
 
 '''
 return an array with dates to generate fields in signup
@@ -251,6 +287,7 @@ def delete_cook():
 def remove_mealplan():
     planner_name  = request.args.get('planner_name', None)
     print("aqui", planner_name)
+    remove_plan(mealplanner, planner_name)
 
     return redirect(url_for('signup'))
 

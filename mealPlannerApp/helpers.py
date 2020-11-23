@@ -3,9 +3,24 @@ import pandas as pd
 from datetime import datetime
 
 '''
+gets names of cooks, if the name of mealplanner is provided
+'''
+def get_names_cooks(collection, mealplan:str):
+    temp = []
+    for i in return_dictionary_mongo(collection, mealplan)['cooks']:
+        temp.append(i)
+    return temp
+
+def get_emails_cooks(collection, mealplan:str):
+    temp = []
+    for i in return_dictionary_mongo(collection, mealplan)['cooks'].values():
+        temp.append(i['email'])
+    return temp
+
+'''
 delete meal planner
 '''
-def remove_mealplan(collection, mealplan:str):
+def remove_plan(collection, mealplan:str):
     print("hola")
     collection.remove({"meal_plan":mealplan})
 
@@ -103,6 +118,7 @@ def retrieve_data_index_list(collection): #return a list with index of tables ("
     return temp
 
 '''
+
 print database  (debug)
 '''
 def print_database(collection): #for debugging
