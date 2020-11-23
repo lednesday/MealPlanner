@@ -80,7 +80,7 @@ def recipe():
             tuple_item = tuple(ite)
             ingredients.append(tuple_item)
             ite = []
-        print(ingredients)
+        # print(ingredients)cvgh
 
         directions = request.form.get("step")
         allergens = request.form.get("allergens")
@@ -153,78 +153,6 @@ def landing_page(plan_name):
     return render_template("signup.html", list=list_mealplans, hide=1)
 
 
-'''
-checks if name is in database.
-TODO check for no spaces.
-'''
-@app.route("/_check_name")#function to check names. Connects to js in newsplan/
-def check_name():
-    name = request.args.get("text", type=str)
-    list_mealplan = retrieve_data_index_list(mealplanner)# checks names in the mealplan to check if exists.
-
-    if name == "":
-        rslt = {"response": "Zero"}
-    elif name in list_mealplan:
-        rslt = {"response": "Yes"}
-    else:
-        rslt = {"response": "No"}
-
-    return jsonify(result=rslt)
-
-'''
-checks if a cook name is already in database
-'''
-@app.route("/_check_cook")#function to check names. Connects to js in newsplan/
-def check_cook():
-    meal_plan = request.args.get("meal_plan", type=str)
-    cook_name = request.args.get("cook_name", type=str)
-    names = get_names_cooks(mealplanner, meal_plan)
-
-    if cook_name == "":
-        rslt = {"response": "Zero"}
-    elif cook_name in names:
-        rslt = {"response": "Yes"}
-    else:
-        rslt = {"response": "No"}
-
-    return jsonify(result=rslt)
-
-'''
-checks if a cook name is already in database
-'''
-@app.route("/_check_email")#function to check names. Connects to js in newsplan/
-def check_email():
-
-    meal_plan = request.args.get("meal_plan", type=str)
-    cook_email = request.args.get("email", type=str)
-    print(cook_email)
-    emails_already_used = get_emails_cooks(mealplanner, meal_plan)
-    print(emails_already_used)
-    if cook_email =="":
-        rslt = {"response": "Zero"}
-    elif cook_email in emails_already_used:
-        rslt = {"response": "Yes"}
-    else:
-        rslt = {"response": "No"}
-
-    return jsonify(result=rslt)
-
-
-'''
-return an array with dates to generate fields in signup
-'''
-@app.route("/_count_inputs", methods=["POST", "GET"])
-def count_inputs():
-    start_date = request.args.get("start", type=str)
-    end_date = request.args.get("end", type=str)
-    dates_range = date_range(start_date, end_date)
-    full_date = []
-    for i in dates_range:
-        full_date.append(datetime.datetime.strptime(i, '%Y-%m-%d').strftime('%A, %d %B of %Y'))
-
-    rslt = {"dates_range": full_date}
-
-    return jsonify(result=rslt)
 
 
 @app.route("/add_cook", methods=["POST", "GET"])
@@ -290,6 +218,97 @@ def remove_mealplan():
     remove_plan(mealplanner, planner_name)
 
     return redirect(url_for('signup'))
+
+
+'''
+------------------- JSON GET FUNCTIONS -------------------
+checks if name is in database.
+TODO check for no spaces.
+'''
+@app.route("/_check_name")#function to check names. Connects to js in newsplan/
+def check_name():
+    name = request.args.get("text", type=str)
+    list_mealplan = retrieve_data_index_list(mealplanner)# checks names in the mealplan to check if exists.
+
+    if name == "":
+        rslt = {"response": "Zero"}
+    elif name in list_mealplan:
+        rslt = {"response": "Yes"}
+    else:
+        rslt = {"response": "No"}
+
+    return jsonify(result=rslt)
+
+'''
+checks if a cook name is already in database
+'''
+@app.route("/_check_cook")#function to check names. Connects to js in newsplan/
+def check_cook():
+    meal_plan = request.args.get("meal_plan", type=str)
+    cook_name = request.args.get("cook_name", type=str)
+    names = get_names_cooks(mealplanner, meal_plan)
+
+    if cook_name == "":
+        rslt = {"response": "Zero"}
+    elif cook_name in names:
+        rslt = {"response": "Yes"}
+    else:
+        rslt = {"response": "No"}
+
+    return jsonify(result=rslt)
+
+'''
+checks if a cook name is already in database
+'''
+@app.route("/_check_email")#function to check names. Connects to js in newsplan/
+def check_email():
+
+    meal_plan = request.args.get("meal_plan", type=str)
+    cook_email = request.args.get("email", type=str)
+    # print(cook_email)
+    emails_already_used = get_emails_cooks(mealplanner, meal_plan)
+    # print(emails_already_used)
+    if cook_email =="":
+        rslt = {"response": "Zero"}
+    elif cook_email in emails_already_used:
+        rslt = {"response": "Yes"}
+    else:
+        rslt = {"response": "No"}
+
+    return jsonify(result=rslt)
+
+
+'''
+return an array with dates to generate fields in signup
+'''
+@app.route("/_count_inputs", methods=["POST", "GET"])
+def count_inputs():
+    start_date = request.args.get("start", type=str)
+    end_date = request.args.get("end", type=str)
+    dates_range = date_range(start_date, end_date)
+    full_date = []
+    for i in dates_range:
+        full_date.append(datetime.datetime.strptime(i, '%Y-%m-%d').strftime('%A, %d %B of %Y'))
+
+    rslt = {"dates_range": full_date}
+
+    return jsonify(result=rslt)
+
+@app.route("/_check_recipe")#function to check names. Connects to js in newsplan/
+def check_recipe():
+    print('hola')
+    meal_plan = request.args.get("meal_plan", type=str)
+    recipe_name = request.args.get("recipe_name", type=str)
+    names = get_names_recipes(mealplanner, meal_plan)
+
+    if recipe_name == "":
+        rslt = {"response": "Zero"}
+    elif recipe_name in names:
+        rslt = {"response": "Yes"}
+    else:
+        rslt = {"response": "No"}
+
+    return jsonify(result=rslt)
 
 if __name__ == "__main__":
     app.run(debug=True)

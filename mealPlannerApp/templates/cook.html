@@ -6,22 +6,20 @@
 {% endblock %}
 
 {% block content %}
-<!-- {% if hide == 0 %} -->
 <form action="" method="post" id="recipe">
 <fieldset>
-    <li>
-    <label for="meal_plan">Select a meal plan to assign the cook to:</label>
+
+    <label for="meal_plan">First, select a meal plan to assign the cook to:</label>
         <select id= "meal_plan" name= "meal_plan">
           <option value="" selected="selected">None</option>
           {% for x in mealplans_names %}
           <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
           {% endfor %}
         </select>
-    </li>
-</fieldset>
-<!-- {% endif %} -->
+
 <p id="response"> </p>
 
+<div id="generate"></div>
   <fieldset>
       <label for="cook name">Name: </label>
       <input type="text" id="cook_name" name="cook_name" maxlength="75" placeholder="Martha Steward" autocomplete="off"  autofocus required >
@@ -38,6 +36,12 @@
   <p> <button type="submit" id="button">Submit</button> </p>
 </form>
 
+
+
+<script>
+
+
+</script>
 
 
 {% endblock %}

@@ -51,6 +51,51 @@
 
 <script>
 
+$("#recipe_name").keyup(function(event) {//function to check if a name is already in the database
+   var meal_plan = $("#meal_plan").val();
+   var recipe_name = $("#recipe_name").val();
+   if (meal_plan!="")
+   {
+     var keycode = event.which;      // They key that just went up
+     $.getJSON( "/_check_recipe",
+                {recipe_name: recipe_name,
+                meal_plan:meal_plan},
+                function(data) {
+                  rsval = data.result.response;
+                  if (rsval.localeCompare("Yes") == 0){
+                      $("#response").html("This name has been already taken. Choose another one");
+                      disable("button_submit");
+                  }
+                  else if (rsval.localeCompare("Zero") == 0){
+                      $("#response").html("No name has been provided");
+                      disable("button_submit");
+                  }
+                  else{
+                      $("#response").html("This name is available.");
+                      enable("button_submit");
+                  }
+                }
+
+             );
+   }
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 $("#cook_name").keyup(function(event) {//function to check if a name is already in the database
    var cook_name = $("#cook_name").val();

@@ -2,6 +2,17 @@ from entry import *
 import pandas as pd
 from datetime import datetime
 
+
+
+'''
+gets names of cooks, if the name of mealplanner is provided
+'''
+def get_names_recipes(collection, mealplan:str):
+    temp = []
+    for i in return_dictionary_mongo(collection, mealplan)['recipes']:
+        temp.append(i)
+    return temp
+
 '''
 gets names of cooks, if the name of mealplanner is provided
 '''
