@@ -113,12 +113,12 @@ def signup():
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
-        drop_list_remove_already(mealplanner,meal_plan)
+        # drop_list_remove_already(mealplanner,meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
     elif meal_plan != None:#for redirect from delete and add dish cook
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
-        drop_list_remove_already(mealplanner,meal_plan)
+        # drop_list_remove_already(mealplanner,meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
 
@@ -227,6 +227,13 @@ def delete_cook():
     meal  = request.args.get('meal', None)
     delete_cook_mongo(mealplanner, planner_name, date, meal, cook_delete)
     return redirect(url_for('signup', meal_plan = planner_name))
+
+@app.route("/remove_meal_plan", methods=["POST", "GET"])
+def remove_meal_plan():
+    # args from website
+    planner_name  = request.args.get('planner_name', None)
+    remove_mealplan(mealplanner, planner_name)
+    return redirect(url_for('signup'))
 
 if __name__ == "__main__":
     app.run(debug=True)

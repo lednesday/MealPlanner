@@ -14,25 +14,28 @@
 
 {% if hide == 0 %}
 <form  action="" method="post" id="newplan">
-<li>
-    <label for="meal_plan">Meal plans:</label>
-    <select id= "meal_plan" name= "meal_plan">
-          <option value="" selected="selected">None</option>
-      {% for x in mealplans_names %}
-          <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
-      {% endfor %}
-    </select>
-</li>
-
-
+  <li>
+      <label for="meal_plan">Meal plans:</label>
+      <select id= "meal_plan" name= "meal_plan">
+            <option value="" selected="selected">None</option>
+        {% for x in mealplans_names %}
+            <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
+        {% endfor %}
+      </select>
+  </li>
 </form>
 {% endif %}
 
 {% if list %}
+<form action="{{ url_for( 'remove_meal_plan',  planner_name = list.meal_plan) }}" method="POST" style="float: right;">
+      <button type ="submit" >Delete meal plan</button>
+</form>
+
 <div class="days">
-  {% for message in get_flashed_messages() %}
-      <p>{{ message }}</p>
-  {% endfor %}
+    {% for message in get_flashed_messages() %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
     {% for day, day_dict in list.date.items() %}
     <div class="oneday">
       <div class="dateheading">{{ day }}</div>
