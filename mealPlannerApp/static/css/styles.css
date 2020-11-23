@@ -77,6 +77,10 @@ header h1, header h2 {
 
 /* body section ----------------------------------- */
 
+form li {
+    list-style-type: none;
+}
+
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: #f4e8c1ff;
