@@ -7,7 +7,6 @@
 {% block content %}
 
 <form action="" method="post" id="recipe_view">
-
       <label for="view">Select the meal plan where the cook's info was registered</label>
       <select id= "view" name= "view">
             <option value="" selected="selected">None</option>
@@ -24,10 +23,34 @@
       <button type ="submit" id="submit_cook">send</button>
 </form>
 
+{% if data %}
+Name:
+{{data.name}}
+<br>
+
+List of allergies:
+{% for i in data.allergies %}
+  - {{i}}
+<br>
+{% endfor %}
+
+
+Diet restrictions:
+{% for i in data.restrictions %}
+  - {{i}}
+<br>
+{% endfor %}
+<br>
+E-mail:
+{{data.email}}
+{% endif %}
+
+
+
+
+
 
 <script>
-
-
   function add_drop_list(array){
 
     var element = document.getElementById('name');
@@ -40,10 +63,6 @@
     element.appendChild(option);
 
  };
-
-
-
-
  $('#view').change(function() {
    var meal_plan = $("#view").val();
    if (meal_plan!="")

@@ -136,6 +136,17 @@ def print_database(collection): #for debugging
     for day in collection.find():
         print(day)
         print()
+
+'''
+returns an specific mealplanner
+'''
+def return_dictionary_cooks(collection, meal_planner_name:str , cook:str):
+    title = {}
+    for i in collection.find({"meal_plan":meal_planner_name}):
+        title = i
+
+    return title['cooks'][cook]
+
 '''
 returns an specific mealplanner
 '''

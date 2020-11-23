@@ -153,7 +153,10 @@ def view_recipe():
     if request.method == "POST":
         view = request.form.get("view")
         cook = request.form.get("name")
-        print(view, cook)
+        data = return_dictionary_cooks(mealplanner
+        , view, cook)
+        print(data)
+        return render_template("cook_viewer.html", mealplans_names=mealplanners_names, data = data, hide=0)
 
     return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
 

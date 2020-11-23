@@ -115,7 +115,7 @@ $("#cook_name").keyup(function(event) {
   });
 
 //function to check if a name is already in the databas cooks mails
-  $("#cook_email").keyup(function(event) {e
+  $("#cook_email").keyup(function(event) {
      var meal_plan = $("#meal_plan").val();
      var email = $("#cook_email").val();  // Current content of the input field
      if (meal_plan!="")
@@ -215,9 +215,6 @@ $("#plan_name").keyup(function(event) {//function to check if a name is already 
       }
  };
 
-
-
-
 function check_dates_order(){//checks that the start date is always before end date. Otherwise, it disable submit button.
     var start_date = $("#start_date").val();
     var end_date = $("#end_date").val();
@@ -233,15 +230,6 @@ function check_dates_order(){//checks that the start date is always before end d
 
 $("#start_date").change(range_fields);//events that check if user change dates
 $("#end_date").change(range_fields);
-
-
-
-
-
-
-
-
-
 
 function range_fields() {//gets start and end date and calculate how many days difference and print the same number of fields.
     var start_date = $("#start_date").val();
@@ -300,7 +288,6 @@ function range_fields() {//gets start and end date and calculate how many days d
   function enable(x) {
       document.getElementById(x).disabled = false;
   }
-
 
 </script>
 
