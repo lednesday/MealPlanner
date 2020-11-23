@@ -115,7 +115,6 @@ def newplan():
                 meal_plan = create_newplan(start_date, end_date , plan_name, checked)
 
                 dates = date_range(start_date, end_date)# returns a list with all the dates bewtween start and end date.
-
                 if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
                     return render_template("newplan.html")
                 else:
@@ -135,6 +134,7 @@ def signup():
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
+
     elif meal_plan != None:#for redirect from delete and add dish cook
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
@@ -151,9 +151,12 @@ def view_recipe():
     if request.method == "POST":
         view = request.form.get("view")
         cook = request.form.get("name")
-        data = return_dictionary_cooks(mealplanner
-        , view, cook)
-        print(view)
+        if cook == None or view == None or cook == "" or view == "":
+            flash("Check if you have checked a meal plan and a cook's name. ")
+            return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
+
+        data = return_dictionary_cooks(mealplanner, view, cook)
+
         return render_template("cook_viewer.html", mealplans_names=mealplanners_names, data = data, hide=0, meal_plan=view)
 
     return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
@@ -163,18 +166,19 @@ def view_recipe():
 '''
 ----------------- Routes that serve functions. I.e. delete cook, add cook, delete meal plan, etc -----------------
 '''
-
+#remove cook from the database (used by cook_viewer.html)
 @app.route("/remove_cook", methods=["POST", "GET"])
 def remove_cook():
 
     planner_name  = request.args.get('planner_name', None)
     cook = request.args.get("cook")
-    print(cook)
-    delete_cook_database_mongo(mealplanner, planner_name, cook)
+    if cook != None or planner_name != None:
+        print("hola")
+        delete_cook_database_mongo(mealplanner, planner_name, cook)
 
     return redirect(url_for('view_recipe', meal_plan = planner_name))
 
-
+#add cook to the mealplanner to schedule a shift
 @app.route("/add_cook", methods=["POST", "GET"])
 def add_cook():
 
@@ -192,7 +196,7 @@ def add_cook():
     one_mealplanner = return_dictionary_mongo(mealplanner, planner_name)
     return redirect(url_for('signup', meal_plan = planner_name))
 
-
+#add a dish to one meal/day
 @app.route("/add_dish", methods=["POST", "GET"])
 def add_dish():
     planner_name  = request.args.get('planner_name', None)
@@ -210,9 +214,11 @@ def add_dish():
     one_mealplanner = return_dictionary_mongo(mealplanner, planner_name)
     return redirect(url_for('signup', meal_plan = planner_name))
 
+
+
+
 @app.route("/delete_dish", methods=["POST", "GET"])
 def delete_dish():
-    # args from website
     dish_delete  = request.args.get('dish_delete', None)
     planner_name  = request.args.get('planner_name', None)
     date  = request.args.get('date', None)
@@ -220,9 +226,10 @@ def delete_dish():
     delete_dish_mongo(mealplanner, planner_name, date, meal, dish_delete)
     return redirect(url_for('signup', meal_plan = planner_name))
 
+
+#delete cook from meal shift
 @app.route("/delete_cook", methods=["POST", "GET"])
 def delete_cook():
-    # args from website
     cook_delete  = request.args.get('cook_delete', None)
     planner_name  = request.args.get('planner_name', None)
     date  = request.args.get('date', None)
@@ -230,6 +237,7 @@ def delete_cook():
     delete_cook_mongo(mealplanner, planner_name, date, meal, cook_delete)
     return redirect(url_for('signup', meal_plan = planner_name))
 
+#remove entire mealplan
 @app.route("/remove_mealplan", methods=["POST", "GET"])
 def remove_mealplan():
     planner_name  = request.args.get('planner_name', None)

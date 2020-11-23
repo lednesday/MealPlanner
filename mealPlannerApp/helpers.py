@@ -2,39 +2,22 @@ from entry import *
 import pandas as pd
 from datetime import datetime
 
+'''
+Date range functions: Provide a start date and a end date and it will return  a list of strings with all the dates.
+'''
+def date_range(start, end):
+    temp_range = pd.date_range(start=start, end=end) # return a datetimeindex
+    date_rng = temp_range.date
 
-'''
-gets names of cooks, if the name of mealplanner is provided
-'''
-def get_names_recipes(collection, mealplan:str):
-    temp = []
-    for i in return_dictionary_mongo(collection, mealplan)['recipes']:
-        temp.append(i)
-    return temp
+    lista = []
+    for i in date_rng:
+        lista.append(i.strftime('%Y-%m-%d'))
 
-'''
-gets names of cooks, if the name of mealplanner is provided
-'''
-def get_names_cooks(collection, mealplan:str):
-    temp = []
-    for i in return_dictionary_mongo(collection, mealplan)['cooks']:
-        temp.append(i)
-    return temp
+    return lista
 
-def get_emails_cooks(collection, mealplan:str):
-    temp = []
-    for i in return_dictionary_mongo(collection, mealplan)['cooks'].values():
-        temp.append(i['email'])
-    return temp
-
+    
 '''
-delete meal planner
-'''
-def remove_plan(collection, mealplan:str):
-    print("hola")
-    collection.remove({"meal_plan":mealplan})
-
-'''
+------------------------ DATABASE CLASSES -------------------------------
 add cooks to db (CLASSES)
 '''
 def create_insert_cook(name: str, allergies:str, restrictions:str, email:str, mealplan:str, collection):
@@ -57,19 +40,6 @@ def create_insert_dish(name: str, servings:int, ingredients:list, recipe:str, al
     temp.add_restrictions(restrictions)
     insert_recipe_mongo(temp, mealplan, collection)
 
-
-'''
-Date range functions: Provide a start date and a end date and it will return  a list of strings with all the dates.
-'''
-def date_range(start, end):
-    temp_range = pd.date_range(start=start, end=end) # return a datetimeindex
-    date_rng = temp_range.date
-
-    lista = []
-    for i in date_rng:
-        lista.append(i.strftime('%Y-%m-%d'))
-
-    return lista
 
 '''
 newplan functions following the format of the website
@@ -95,6 +65,54 @@ def create_newplan(start_date: str, end_date:str , name_plan:str, list_meals:lis
 
     return mp
 
+
+
+
+
+
+
+
+'''
+gets names of cooks, if the name of mealplanner is provided
+'''
+def get_names_recipes(collection, mealplan:str):
+    temp = []
+    for i in return_dictionary_mongo(collection, mealplan)['recipes']:
+        temp.append(i)
+    return temp
+
+'''
+gets names of cooks, if the name of mealplanner is provided
+'''
+def get_names_cooks(collection, mealplan:str):
+    temp = []
+    for i in return_dictionary_mongo(collection, mealplan)['cooks']:
+        temp.append(i)
+    return temp
+
+'''
+gets emails of cooks, if the name of mealplanner is provided
+'''
+def get_emails_cooks(collection, mealplan:str):
+    temp = []
+    for i in return_dictionary_mongo(collection, mealplan)['cooks'].values():
+        temp.append(i['email'])
+    return temp
+
+
+'''
+delete meal planner
+'''
+def remove_plan(collection, mealplan:str):
+    print("hola")
+    collection.remove({"meal_plan":mealplan})
+
+
+
+
+
+
+
 '''
 Main function to insert documents to meal_planner
 '''
@@ -110,7 +128,7 @@ def insert_entry_mongo(object, collection, type:str): # enter and object (Day(),
 insert cook to meal_planner
 '''
 def delete_cook_database_mongo(collection, plan:str, cook:str): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title)
-    collection.update_one({"meal_plan":plan}, {'$unset': {"cooks."+cook:{}}})   
+    collection.update_one({"meal_plan":plan}, {'$unset': {"cooks."+cook:{}}})
 
 
 

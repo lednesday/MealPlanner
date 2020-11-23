@@ -6,6 +6,10 @@
 
 {% block content %}
 
+{% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+{% endfor %}
+
 <form action="" method="post" id="recipe_view">
       <label for="view">Select the meal plan where the cook's info was registered</label>
       <select id= "view" name= "view">
@@ -22,6 +26,7 @@
 
       <button type ="submit" id="submit_cook">send</button>
 </form>
+
 
 {% if data %}
 <form action="{{ url_for( 'remove_cook',  planner_name = meal_plan, cook=data.name) }}" method="POST" style="float: right;">
@@ -85,11 +90,11 @@ E-mail:
       }
 
     }
-    else{
-      var option = document.createElement('option');
-      option.value = "None";
-      option.innerHTML = "None";
-    }
+    // else{
+    //   var option = document.createElement('option');
+    //   option.value = "None";
+    //   option.innerHTML = "None";
+    // }
 
     element.appendChild(option);
 
