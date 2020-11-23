@@ -3,6 +3,13 @@ import pandas as pd
 from datetime import datetime
 
 '''
+delete meal planner
+'''
+def remove_mealplan(collection, mealplan:str):
+    print("hola")
+    collection.remove({"meal_plan":mealplan})
+
+'''
 add cooks to db
 '''
 def create_insert_cook(name: str, allergies:str, restrictions:str, email:str, mealplan:str, collection):

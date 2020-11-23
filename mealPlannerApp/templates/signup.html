@@ -29,6 +29,10 @@
 {% endif %}
 
 {% if list %}
+<form action="{{ url_for( 'remove_mealplan',  planner_name = list.meal_plan) }}" method="POST" style="float: right;">
+      <button type ="submit" >Delete meal plan</button>
+</form>
+
 <div class="days">
   {% for message in get_flashed_messages() %}
       <p>{{ message }}</p>
