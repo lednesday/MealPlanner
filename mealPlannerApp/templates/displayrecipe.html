@@ -18,7 +18,11 @@
 <p class="directions">Directions:</p>
 <p>{{ recipe.recipe }}</p>
 
-<p class="recipeinfo">Allergens: {{ recipe.allergens }}</p>
+<p class="recipeinfo">Allergens: 
+{% for allergen in recipe.allergens %}
+<li>{{ allergen }}</li>
+{% endfor %}
+</p>
 <p class="recipeinfo">Dietary restrictions: {{ recipe.restrictions }}</p>
 
 {% endblock %}
