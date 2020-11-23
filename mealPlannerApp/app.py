@@ -65,13 +65,32 @@ def cook():
 @app.route("/recipe", methods=["POST", "GET"])
 def recipe():
 
+    mealplanners_names = return_dictionary_mongo_all(mealplanner)
+
     if request.method == "POST":
-        dish_name = request.form.get("recipe_name")
-        #dish_ingredients =
+        mealPlanName = request.form.get("meal_plan")
+        recipe_name = request.form.get("recipe_name")
+        servings = request.form.get("yield")
+        length = len(request.form.getlist("item"))
+        item = request.form.getlist("item")
+        quantity = (request.form.getlist("quantity"))
+        unit = (request.form.getlist("unit"))
+        ite = []
+        tuple_list = []
+        for i in range(0, length):
+            ite.append(item[i])
+            ite.append(quantity[i])
+            ite.append(unit[i])
+            tuple_item = tuple(ite)
+            tuple_list.append(tuple_item)
+            ite = []
+        print(tuple_list)
 
-        dish_allergens = request.form.get("")
+        directions = request.form.get("step")
+        allergens = request.form.get("allergens")
+        special_diets = request.form.get("restrictions")
 
-    return render_template("recipe.html", hide = 0)
+    return render_template("recipe.html", mealplans_names=mealplanners_names, hide=0)
 
 @app.route("/newplan", methods=["POST", "GET"])
 def newplan():
@@ -113,12 +132,12 @@ def signup():
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
-        drop_list_remove_already(mealplanner,meal_plan)
+        #drop_list_remove_already(mealplanner,meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
     elif meal_plan != None:#for redirect from delete and add dish cook
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
-        drop_list_remove_already(mealplanner,meal_plan)
+        #drop_list_remove_already(mealplanner,meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
         return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
 

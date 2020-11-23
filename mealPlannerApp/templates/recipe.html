@@ -7,6 +7,18 @@
 {% block content %}
 <form action="" method="post" id="recipe">
     <fieldset>
+        <li>
+        <label for="meal_plan">Select a meal plan to assign the dish to:</label>
+            <select id= "meal_plan" name= "meal_plan">
+              <option value="" selected="selected">None</option>
+              {% for x in mealplans_names %}
+              <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
+              {% endfor %}
+            </select>
+        </li>
+    </fieldset>
+
+    <fieldset>
         <label for="recipe name">Recipe title: </label>
         <input type="text" id="recipe_name" name="recipe_name" maxlength="50" placeholder="Magnificent Mac -n- Cheese" autocomplete="off"  autofocus >
         <label for="number served">Servings: </label>
@@ -24,7 +36,7 @@
               <input type="text" placeholder="2" id="quantity" name="quantity">
 
               <label for="unit">Unit of measurement: </label>
-              <input type="text" placeholder="oz, cups, etc" id="measurement" name="unit">
+              <input type="text" placeholder="oz, cups, etc" id="unit" name="unit">
         </div>
       <!-- </div> -->
 
@@ -39,11 +51,15 @@
         </p>
     </fieldset>
 
-    <fieldset>
-        <label for="allergens">Allergens: </label>
-        <input type="text" id="allergens" name="allergens" maxlength="50" placeholder="peanuts, eggs, etc">
-        <label for="special diet">Special diets: </label>
-        <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegetarian, gluten-free, etc">
+    <fieldset id="restrictions_field">
+        <div id="special_diet">
+            <legend>Enter Several Restrictions Separated by a Comma: </legend>
+            <label for="allergens">Allergens: </label>
+            <input type="text" id="allergens" name="allergens" maxlength="50" placeholder="peanuts, eggs, etc">
+            <label for="special diet">Special diets: </label>
+            <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegetarian, gluten-free, etc">
+        </div>
+        <button type ="submit" >Submit Recipe</button>
     </fieldset>
 
 </form>
@@ -57,7 +73,7 @@ function add_field() {
     div.id = "ingredient_diet";
 
     var label = document.createElement('label');
-    label.innerHTML = "Item: ";
+    label.innerHTML = " Item: ";
     label.htmlFor = "item"
     div.appendChild(label);
     var item_input = document.createElement('input');
@@ -80,12 +96,12 @@ function add_field() {
 
     var label = document.createElement('label');
     label.innerHTML = " Unit of measurement: ";
-    label.htmlFor = "units"
+    label.htmlFor = "unit"
     div.appendChild(label);
     var item_input = document.createElement('input');
     item_input.type = "text";
-    item_input.name = "units";
-    item_input.id = "units"+counter;
+    item_input.name = "unit";
+    item_input.id = "unit"+counter;
     div.appendChild(item_input);
     ingredients_field.appendChild(div);
 }
