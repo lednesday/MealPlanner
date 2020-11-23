@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>Enter a recipe</h1>
+<h1>Cook's information viewer</h1>
 {% endblock %}
 
 {% block content %}
@@ -24,24 +24,34 @@
 </form>
 
 {% if data %}
-Name:
+
+<br>
+Cook's name:
 {{data.name}}
 <br>
+<br>
+
 
 List of allergies:
 {% for i in data.allergies %}
-  - {{i}}
 <br>
+  - {{i}}
 {% endfor %}
 
+<br>
+<br>
 
 Diet restrictions:
 {% for i in data.restrictions %}
-  - {{i}}
 <br>
+  - {{i}}
 {% endfor %}
 <br>
+<br>
+
 E-mail:
+<br>
+
 {{data.email}}
 {% endif %}
 
@@ -51,15 +61,30 @@ E-mail:
 
 
 <script>
-  function add_drop_list(array){
 
+  function add_drop_list(array){
     var element = document.getElementById('name');
-    for (i = 0; i < array.length; i++) {
-      var option = document.createElement('option');
-      option.value = array[i];
-      option.innerHTML = array[i];
-      element.appendChild(option);
+
+    while (element.hasChildNodes()) {
+       element.removeChild(element.lastChild);
     }
+
+    if (array.length > 0){
+
+      for (i = 0; i < array.length; i++) {
+        var option = document.createElement('option');
+        option.value = array[i];
+        option.innerHTML = array[i];
+        element.appendChild(option);
+      }
+
+    }
+    else{
+      var option = document.createElement('option');
+      option.value = "None";
+      option.innerHTML = "None";
+    }
+
     element.appendChild(option);
 
  };
