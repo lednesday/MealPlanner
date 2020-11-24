@@ -53,7 +53,7 @@
       <!-- </div> -->
 
     </fieldset>
-    <button type="button" id="button" value="Add Row">Add Ingredients</button>
+    <button type="button" id="button_add_field_recipe" value="Add Row">Add Ingredients</button>
 
 
     <fieldset>
@@ -78,51 +78,5 @@
 </form>
 
 <script>
-
-var counter = 0;//save the number of fields
-function add_field() {
-    counter++;
-
-    var div = document.createElement ("div");
-    div.id = "ingredient_diet";
-
-    var label = document.createElement('label');
-    label.innerHTML = " Item: ";
-    label.htmlFor = "item"
-    div.appendChild(label);
-    var item_input = document.createElement('input');
-    item_input.type = "text";
-    item_input.name = "item";
-    item_input.id = "item"+counter;
-    div.appendChild(item_input);
-    ingredients_field.appendChild(div);
-
-    var label = document.createElement('label');
-    label.innerHTML = " Quantity: ";
-    label.htmlFor = "quantity"
-    div.appendChild(label);
-    var item_input = document.createElement('input');
-    item_input.type = "text";
-    item_input.name = "quantity";
-    item_input.id = "quantity"+counter;
-    div.appendChild(item_input);
-    ingredients_field.appendChild(div);
-
-    var label = document.createElement('label');
-    label.innerHTML = " Units: ";
-    label.htmlFor = "unit"
-    div.appendChild(label);
-    var item_input = document.createElement('input');
-    item_input.type = "text";
-    item_input.name = "unit";
-    item_input.id = "unit"+counter;
-    div.appendChild(item_input);
-    ingredients_field.appendChild(div);
-}
-
-$('#button').click(function() {
-  add_field();
-});
-
 </script>
 {% endblock %}

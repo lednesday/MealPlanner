@@ -28,8 +28,8 @@ Set's up secret key so flash messages can be displayed
 import configparser#import the key from secret file
 config = configparser.ConfigParser()
 config.read("credentials.ini")
-# app.secret_key = config["DEFAULT"]["key_google"]
-app.secret_key = "Holaaaaa"
+app.secret_key = config["DEFAULT"]["KEY_FLASH"]
+
 
 
 '''
@@ -63,7 +63,7 @@ def cook():
         if cook_restrictions == "":
             cook_restrictions = "No cook restrictions registered."
 
-        print(cook_name, cook_allergies, cook_restrictions, cook_email)
+
         create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
                            cook_email, meal_plan, mealplanner)
 
@@ -113,8 +113,8 @@ def show_recipe():
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
 
     if request.method == "POST":
-        meal_plan = request.form.get("recipe_mealplan")
-        recipe_name = request.form.get("name_recipe_droplist")
+        meal_plan = request.form.get("select_recipe_mealplan_display")
+        recipe_name = request.form.get("select_name_recipe_droplist")
 
         if recipe_name == None or meal_plan == None or recipe_name == "" or meal_plan == "" or recipe_name == "No records found":
             flash("Check if you have selected a meal plan and a recipe's name. ")
@@ -130,8 +130,8 @@ def show_cook():
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
 
     if request.method == "POST":
-        meal_plan = request.form.get("cook_mealplan")
-        cook = request.form.get("cook_name")
+        meal_plan = request.form.get("select_mealplan_viewer")
+        cook = request.form.get("select_generate_cooks")
 
         if cook == None or meal_plan == None or cook == "" or meal_plan == "" or cook == "No records found":
             flash("Check if you have selected a meal plan and a cook's name. ")

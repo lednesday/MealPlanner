@@ -14,9 +14,9 @@
 {% endfor %}
 
 <form action="" method="post" id="recipe_view">
-      <label for="recipe_mealplan">Select the meal plan that the recipe is associated with </label>
+      <label for="select_recipe_mealplan_display">Select the meal plan that the recipe is associated with </label>
       <!-- recipe_meal connects with add drop list js -->
-      <select id= "recipe_mealplan" name= "recipe_mealplan">
+      <select id= "select_recipe_mealplan_display" name= "select_recipe_mealplan_display">
             <option value="" selected="selected">None</option>
             {% for x in mealplans_names %}
             <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
@@ -24,9 +24,9 @@
       </select>
 
       <br>
-      <label for="name_recipe_droplist">Select recipe: </label>
+      <label for="select_name_recipe_droplist">Select recipe: </label>
 
-      <select id= "name_recipe_droplist" name= "name_recipe_droplist">
+      <select id= "select_name_recipe_droplist" name= "select_name_recipe_droplist">
       </select>
 
       <button type ="submit" id="submit_cook">send</button>
@@ -34,7 +34,7 @@
 
 
 {% if recipe %}
-<form action="{{ url_for( 'remove_dish',  planner_name = meal_plan, dish = recipe.title) }}" method="POST" style="float: right;" onsubmit="return confirm('Do you really want to submit the form?');" name="delete_recipe">
+<form action="{{ url_for( 'remove_dish',  planner_name = meal_plan, dish = recipe.title) }}" method="POST" style="float: right;" onsubmit="return confirm('Do you really want to delete this recipe?');" name="delete_recipe">
       <button type ="submit" >Delete cook's info</button>
 </form>
 
@@ -67,50 +67,5 @@
 {% endif %}
 
 
-
-<script>
-
-  function add_drop_list(array){
-    var element = document.getElementById('name_recipe_droplist');
-
-    while (element.hasChildNodes()) {
-       element.removeChild(element.lastChild);
-    }
-
-    if (array.length > 0){
-
-      for (i = 0; i < array.length; i++) {
-        var option = document.createElement('option');
-        option.value = array[i];
-        option.innerHTML = array[i];
-        element.appendChild(option);
-      }
-
-    }
-    element.appendChild(option);
- };
-
-
- $('#recipe_mealplan').change(function() {
-   var meal_plan = $("#recipe_mealplan").val();
-   if(meal_plan != "")
-   {
-     $.getJSON( "/_view_recipes",
-                {
-                meal_plan:meal_plan},
-                function(data) {
-                  rsval = data.result.response;
-                  if (rsval.length == 0){
-                    rsval = ["No records found"]
-                  }
-                  console.log(rsval);
-                  add_drop_list(rsval)
-                }
-             );
-   }
-
- });
-
- </script>
 
 {% endblock %}
