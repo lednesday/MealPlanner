@@ -7,7 +7,7 @@
 {% block content %}
 <form action="" method="post" id="recipe">
     <fieldset>
-        <li>
+
         <label for="meal_plan">Select a meal plan to assign the dish to:</label>
             <select id= "meal_plan" name= "meal_plan">
               <option value="" selected="selected">None</option>
@@ -15,28 +15,40 @@
               <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
               {% endfor %}
             </select>
-        </li>
-    </fieldset>
 
     <fieldset>
         <label for="recipe name">Recipe title: </label>
-        <input type="text" id="recipe_name" name="recipe_name" maxlength="50" placeholder="Magnificent Mac -n- Cheese" autocomplete="off"  autofocus >
+        <input type="text" id="recipe_name" name="recipe_name" maxlength="50" placeholder="Magnificent Mac -n- Cheese" autocomplete="off"  autofocus required >
         <label for="number served">Servings: </label>
-        <input type="text" id="yield" name="yield" maxlength="10" placeholder="4">
+        <input type="number"id="yield" name="yield" maxlength="10" placeholder="4" required>
     </fieldset>
+    <p id="response"> </p>
 
     <fieldset id="ingredients_field">
       <legend>Ingredients</legend>
       <!-- <div id="placeholder"> -->
         <div id="ingredient_diet">
               <label for="ingredient">Item: </label>
-              <input type="text" placeholder="shredded cheddar cheese" id="item" name="item">
+              <input type="text" placeholder="shredded cheddar cheese" id="item" name="item" required>
 
               <label for="quantity">Quantity: </label>
-              <input type="text" placeholder="2" id="quantity" name="quantity">
-
-              <label for="unit">Unit of measurement: </label>
-              <input type="text" placeholder="oz, cups, etc" id="unit" name="unit">
+              <input placeholder="2" id="quantity" name="quantity" type="number" required>
+              <!-- <label for="unit">Unit of measurement: </label>
+              <input type="text" placeholder="oz, cups, etc" id="unit" name="unit"> -->
+              <label for="unit">Units: </label>
+              <input type='text' list="units" id="unit" name="unit" autocomplete="off"/ required>
+              <datalist id="units">
+                  <option value="g">
+                  <option value="kg">
+                  <option value="lb">
+                  <option value="L">
+                  <option value="c">
+                  <option value="oz">
+                  <option value="pt">
+                  <option value="tsp">
+                  <option value="Tbsp">
+                  <option value="mg">
+              </datalist>
         </div>
       <!-- </div> -->
 
@@ -47,7 +59,7 @@
     <fieldset>
         <legend>Directions</legend>
         <p>
-            <textarea id="step" name="step" rows="10" cols="100"></textarea>
+            <textarea id="step" name="step" rows="10" cols="100"></textarea required>
         </p>
     </fieldset>
 
@@ -59,12 +71,14 @@
             <label for="special diet">Special diets: </label>
             <input type="text" id="restrictions" name="restrictions" maxlength="100" placeholder="vegetarian, gluten-free, etc">
         </div>
-        <button type ="submit" >Submit Recipe</button>
+        <button type ="submit" id="button_submit" >Submit Recipe</button>
     </fieldset>
+  </fieldset>
 
 </form>
 
 <script>
+
 var counter = 0;//save the number of fields
 function add_field() {
     counter++;
@@ -95,7 +109,7 @@ function add_field() {
     ingredients_field.appendChild(div);
 
     var label = document.createElement('label');
-    label.innerHTML = " Unit of measurement: ";
+    label.innerHTML = " Units: ";
     label.htmlFor = "unit"
     div.appendChild(label);
     var item_input = document.createElement('input');

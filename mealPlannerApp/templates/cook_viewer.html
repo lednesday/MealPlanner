@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>Cook's information viewer</h1>
+{% endblock %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+{% endfor %}
+
+<form action="" method="post" id="recipe_view">
+      <label for="view">Select the meal plan where the cook's info was registered</label>
+      <select id= "view" name= "view">
+            <option value="" selected="selected">None</option>
+            {% for x in mealplans_names %}
+            <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
+            {% endfor %}
+      </select>
+      <br>
+      <label for="name">Select cook:</label>
+      <select id= "name" name= "name">
+
+      </select>
+
+      <button type ="submit" id="submit_cook">send</button>
+</form>
+
+
+{% if data %}
+<form action="{{ url_for( 'remove_cook',  planner_name = meal_plan, cook=data.name) }}" method="POST" style="float: right;">
+      <button type ="submit" >Delete cook's info</button>
+</form>
+
+
+<br>
+Cook's name:
+{{data.name}}
+<br>
+<br>
+
+
+List of allergies:
+{% for i in data.allergies %}
+<br>
+{% if data.allergies%}
+  - {{i}}
+{% endif %}
+{% endfor %}
+
+<br>
+<br>
+
+Diet restrictions:
+{% for i in data.restrictions %}
+<br>
+  - {{i}}
+{% endfor %}
+<br>
+<br>
+
+E-mail:
+<br>
+
+{{data.email}}
+{% endif %}
+
+
+
+
+
+
+<script>
+
+  function add_drop_list(array){
+    var element = document.getElementById('name');
+
+    while (element.hasChildNodes()) {
+       element.removeChild(element.lastChild);
+    }
+
+    if (array.length > 0){
+
+      for (i = 0; i < array.length; i++) {
+        var option = document.createElement('option');
+        option.value = array[i];
+        option.innerHTML = array[i];
+        element.appendChild(option);
+      }
+
+    }
+    // else{
+    //   var option = document.createElement('option');
+    //   option.value = "None";
+    //   option.innerHTML = "None";
+    // }
+
+    element.appendChild(option);
+
+ };
+ $('#view').change(function() {
+   var meal_plan = $("#view").val();
+   if (meal_plan!="")
+   console.log(meal_plan);
+   {
+     $.getJSON( "/_view_recipes",
+                {
+                meal_plan:meal_plan},
+                function(data) {
+                  rsval = data.result.response;
+                  add_drop_list(rsval)
+                }
+             );
+   }
+ });
+
+ </script>
+
+
+
+
+
+{% endblock %}
