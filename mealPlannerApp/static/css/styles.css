@@ -106,6 +106,12 @@ body {
     border-radius: 5px;
 }
 
+legend {
+    background-color: #ffc100ff;
+    padding: 3px;
+    border-radius: 5px;
+}
+
 .checkboxes {
     list-style-type: none;}
 

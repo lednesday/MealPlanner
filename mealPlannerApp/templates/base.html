@@ -243,11 +243,11 @@ $("#plan_name").keyup(function(event) {//function to check if a name is already 
           var fieldset = document.createElement ("fieldset");
           fieldset.setAttribute('class','box'+i);
           var legend = document.createElement ("legend");
-          legend.innerHTML = "Select the meals you'll be sharing for " + list_range[i];
+          legend.innerHTML = "Select the meals you'll be sharing on " + list_range[i];
           var ul = document.createElement('ul')
           ul.setAttribute('class','checkbox');
 
-          meals = ['Breakfast','Lunch','Snack','Dinner'];
+          meals = ['Breakfast','Lunch','Snacks','Dinner'];
           document.getElementById('container').appendChild(ul);
           var j = 0
           meals.forEach(fun_add);
