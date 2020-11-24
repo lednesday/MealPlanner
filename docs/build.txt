@@ -23,4 +23,15 @@ To test that data inputting works, use the create_insert_cook and create_insert_
 
 The following is an explanation of how the application is set up in Heroku:
 
+The application is connected to Heroku through our GitHub. In order for it to be able to be deployed on Heroku it has a Procfile and a requirements file. The 
+Procfile contains the build pack, we are using web, and the requirements file contains all of the dependencies that our app will need. In addition to these our app 
+is running on gunicorn. 
+
+Since mLab is no longer on Heroku we are using Mongodb Atlas for our database. This URI is defined in the config section of Heroku in order to keep it private. It 
+will be refered to as a variable in our code.
+
+Once all of this was set up and our GitHub was connected it was pushed to Heroku and deployed. 
+
+
+
 
