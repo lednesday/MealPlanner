@@ -7,17 +7,34 @@ https://meal-planner-app1.herokuapp.com/
 
 For developers who want to run the application on the repository, this is the process to build the application and run it on the Flask dev server:
 
-1: Clone the repository onto your computer
-2: On the main branch, go to the mealPlannerApp directory, which is where the application code is stored.
-3: Run "pip/pip3 install -r requirements.txt" on bash in the mealPlannerApp directory
-4: Create a Python environment by running "Python3 -m venv env"
-5: Activate the Python environment by running "source env/bin/activate"
-6: Type flask run to start running the application on Flask
-7: Follow the link provided by Flask to open the application.
+	1: Clone the repository onto your computer
 
-The final product takes in data inputted from the webpages, and then stores it into the database.
-However, before we set that up, we had some dummy data inputted by running cook_database.py and recipe_database.py
-To test that data inputting works, use the create_insert_cook and create_insert_dish functions.
+	1.5: Some of us think that it's convenient to copy all the repository files to a local directory in your
+	computer, to not make unintended changes or pushes to the repository (Such as the env directory created later)
+
+	2: On the main branch, go to the mealPlannerApp directory, which is where the application code is stored.
+
+	3: Run "pip/pip3 install -r requirements.txt" on the terminal in the mealPlannerApp directory
+
+	Note: If you do not want to install the modules directly on your computer and would prefer doing so in the
+	Python environment, do Step 3 after Step 5
+
+	4: Create a Python environment by running "python3 -m venv env"
+
+	5: Activate the Python environment by running "source env/bin/activate"
+
+	5.5: If you chose to install the requirements in the Python environment, do it now.
+
+	6: Type flask run to start running the application on Flask
+
+	7: Follow the link provided by Flask to open the application.
+
+	8: To quit Flask from the terminal, type Ctrl + C.
+
+	9: To quit the Python environment, type "deactivate"
+
+NOTE: Some of these commands and procedures might be different on different machines.
+	  The way they are written here is how we've run the application on Ubuntu 20.04.
 
 ------------------------------------ Heroku ------------------------------------
 
