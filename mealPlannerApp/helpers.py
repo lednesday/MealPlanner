@@ -104,11 +104,7 @@ def get_emails_cooks(collection, mealplan:str):
 delete meal planner
 '''
 def remove_plan(collection, mealplan:str):
-    print("hola")
     collection.remove({"meal_plan":mealplan})
-
-
-
 
 
 
@@ -125,10 +121,16 @@ def insert_entry_mongo(object, collection, type:str): # enter and object (Day(),
         return False #id returned (may need it later) returns 1 if exists and it fails to add.
 
 '''
-insert cook to meal_planner
+delete cook from meal_planner
 '''
 def delete_cook_database_mongo(collection, plan:str, cook:str): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title)
-    collection.update_one({"meal_plan":plan}, {'$unset': {"cooks."+cook:{}}})
+    collection.update_one({"meal_plan":plan}, { '$unset': { "cooks."+cook:{} }})
+'''
+delete dish from meal_planner
+'''
+def delete_dish_database_mongo(collection, plan:str, dish:str): # enter and object (Day(), Dish(), Cook() or mealplan() and a type (str) (date, Name, Title)
+    collection.update_one({"meal_plan":plan}, { '$unset': { "recipes."+dish:{} }})
+
 
 
 
@@ -181,7 +183,7 @@ def return_dictionary_cooks(collection, meal_planner_name:str , cook:str):
     return title['cooks'][cook]
 
 '''
-returns an specific mealplanner (right now it returns cooks and their info)
+returns an specific mealplanner (right now it returns recipes and their info)
 '''
 def return_dictionary_recipes(collection, meal_planner_name:str , recipe:str):
     title = {}

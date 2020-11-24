@@ -41,10 +41,12 @@ clean previous content of database(comment out when no needed for testing)
 -------------------------------------- Routes to serve pages in template/ --------------------------------------
 '''
 
+#index
 @app.route("/", methods=["POST", "GET"])
 def index():
     return render_template("index.html", hide=0)
 
+#insert cooks page
 @app.route("/cook", methods=["POST", "GET"])
 def cook():
 
@@ -61,6 +63,7 @@ def cook():
 
     return render_template("cook.html", mealplans_names=mealplanners_names, hide = 0)
 
+#insert recipe page
 @app.route("/recipe", methods=["POST", "GET"])
 def recipe():
 
@@ -77,17 +80,22 @@ def recipe():
         ite = []
         ingredients = []
         for i in range(0, length):
-            ite.append(item[i])
-            ite.append(quantity[i])
-            ite.append(unit[i])
-            tuple_item = tuple(ite)
-            ingredients.append(tuple_item)
-            ite = []
+            if item[i] != "":
+                ite.append(item[i])
+                ite.append(quantity[i])
+                ite.append(unit[i])
+                tuple_item = tuple(ite)
+                ingredients.append(tuple_item)
+                ite = []
 
         directions = request.form.get("step")
         allergens = request.form.get("allergens")
         special_diets = request.form.get("restrictions")
         meal_plan  = request.form.get('meal_plan', None)
+        if allergens == "":
+            allergens = "No allergen registered."
+        if special_diets == "":
+            special_diets = "No special diet registered."
 
         create_insert_dish(recipe_name, servings, ingredients, directions, \
         					allergens, special_diets, meal_plan, mealplanner)
@@ -96,8 +104,38 @@ def recipe():
 
 @app.route("/show_recipe", methods=["POST", "GET"])
 def show_recipe():
+    mealplanners_names = return_dictionary_mongo_all(mealplanner)
 
-    return render_template("displayrecipe.html", hide=0)
+    if request.method == "POST":
+        meal_plan = request.form.get("view")
+        recipe_name = request.form.get("name")
+
+        if recipe_name == None or meal_plan == None or recipe_name == "" or meal_plan == "":
+            flash("Check if you have checked a meal plan and a recipe's name. ")
+            return render_template("displayrecipe.html", mealplans_names=mealplanners_names, hide=0)
+
+        data = return_dictionary_recipes(mealplanner, meal_plan , recipe_name)
+        return render_template("displayrecipe.html", mealplans_names=mealplanners_names, recipe = data, hide=0, meal_plan=meal_plan)
+
+    return render_template("displayrecipe.html", hide=0, mealplans_names=mealplanners_names)
+
+@app.route("/show_cook", methods=["POST", "GET"])
+def show_cook():
+    mealplanners_names = return_dictionary_mongo_all(mealplanner)
+
+    if request.method == "POST":
+        meal_plan = request.form.get("view")
+        cook = request.form.get("name")
+
+        if cook == None or meal_plan == None or cook == "" or meal_plan == "":
+            flash("Check if you have checked a meal plan and a cook's name. ")
+            return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
+
+        data = return_dictionary_cooks(mealplanner, meal_plan, cook)
+
+        return render_template("cook_viewer.html", mealplans_names=mealplanners_names, data = data, hide=0, meal_plan=meal_plan)
+
+    return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
 
 
 @app.route("/newplan", methods=["POST", "GET"])
@@ -134,8 +172,6 @@ def signup():
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
     meal_plan  = request.args.get('meal_plan', None)
 
-    # print(return_dictionary_recipes(mealplanner, "hola" , "eggs"))
-
     if request.method == "POST":
         meal_plan = request.form.get("meal_plan")
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
@@ -152,44 +188,11 @@ def signup():
     return render_template("signup.html", mealplans_names=mealplanners_names, hide = 0)
 
 
-@app.route("/view_recipe", methods=["POST", "GET"])
-def view_recipe():
-    mealplanners_names = return_dictionary_mongo_all(mealplanner)
-
-    if request.method == "POST":
-        view = request.form.get("view")
-        cook = request.form.get("name")
-        if cook == None or view == None or cook == "" or view == "":
-            flash("Check if you have checked a meal plan and a cook's name. ")
-            return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
-
-        data = return_dictionary_cooks(mealplanner, view, cook)
-
-        return render_template("cook_viewer.html", mealplans_names=mealplanners_names, data = data, hide=0, meal_plan=view)
-
-    return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
-
-
-
-
-
-
-
 
 '''
 ----------------- Routes that serve functions. I.e. delete cook, add cook, delete meal plan, etc -----------------
 '''
-#remove cook from the database (used by cook_viewer.html)
-@app.route("/remove_cook", methods=["POST", "GET"])
-def remove_cook():
 
-    planner_name  = request.args.get('planner_name', None)
-    cook = request.args.get("cook")
-    if cook != None or planner_name != None:
-        print("hola")
-        delete_cook_database_mongo(mealplanner, planner_name, cook)
-
-    return redirect(url_for('view_recipe', meal_plan = planner_name))
 
 #add cook to the mealplanner to schedule a shift
 @app.route("/add_cook", methods=["POST", "GET"])
@@ -209,7 +212,7 @@ def add_cook():
     one_mealplanner = return_dictionary_mongo(mealplanner, planner_name)
     return redirect(url_for('signup', meal_plan = planner_name))
 
-#add a dish to one meal/day
+#add a dish to one meal/dayin signup
 @app.route("/add_dish", methods=["POST", "GET"])
 def add_dish():
     planner_name  = request.args.get('planner_name', None)
@@ -228,8 +231,7 @@ def add_dish():
     return redirect(url_for('signup', meal_plan = planner_name))
 
 
-
-
+#delete_dish from the signup page
 @app.route("/delete_dish", methods=["POST", "GET"])
 def delete_dish():
     dish_delete  = request.args.get('dish_delete', None)
@@ -240,7 +242,7 @@ def delete_dish():
     return redirect(url_for('signup', meal_plan = planner_name))
 
 
-#delete cook from meal shift
+#delete cook from meal shift in signup
 @app.route("/delete_cook", methods=["POST", "GET"])
 def delete_cook():
     cook_delete  = request.args.get('cook_delete', None)
@@ -250,7 +252,11 @@ def delete_cook():
     delete_cook_mongo(mealplanner, planner_name, date, meal, cook_delete)
     return redirect(url_for('signup', meal_plan = planner_name))
 
-#remove entire mealplan
+
+'''
+Top bottons to delete data from the database
+'''
+#remove entire mealplan from signup
 @app.route("/remove_mealplan", methods=["POST", "GET"])
 def remove_mealplan():
     planner_name  = request.args.get('planner_name', None)
@@ -258,6 +264,30 @@ def remove_mealplan():
 
     return redirect(url_for('signup'))
 
+#remove cook from the database (used by cook_viewer.html)
+@app.route("/remove_cook", methods=["POST", "GET"])
+def remove_cook():
+
+    planner_name  = request.args.get('planner_name', None)
+    cook = request.args.get("cook")
+    if cook != None or planner_name != None:
+        print("hola")
+        delete_cook_database_mongo(mealplanner, planner_name, cook)
+
+    return redirect(url_for('show_cook', meal_plan = planner_name))
+
+#remove cook from the database (used by dish_viewer.html)
+@app.route("/remove_dish", methods=["POST", "GET"])
+def remove_dish():
+
+    planner_name  = request.args.get('planner_name', None)
+    # print(planner_name)
+    dish = request.args.get("dish")
+    # print(dish)
+    if dish != None or planner_name != None:
+        delete_dish_database_mongo(mealplanner, planner_name, dish)
+
+    return redirect(url_for('show_recipe', meal_plan = planner_name))
 
 '''
 -------------------------------------- JSON GET FUNCTIONS --------------------------------------
@@ -347,12 +377,24 @@ def check_name():
     return jsonify(result=rslt)
 
 
-@app.route("/_view_recipes")#visualize recipes. send names
-def view_recipes():
+@app.route("/_view_cooks")#visualize recipes. send names
+def view_cooks():
     meal_plan = request.args.get("meal_plan", type=str)
     names = drop_list_cooks(mealplanner, meal_plan)
     rslt = {"response": names}
     return jsonify(result=rslt)
+
+@app.route("/_view_recipes")#visualize recipes. send names
+def view_recipes():
+    meal_plan = request.args.get("meal_plan", type=str)
+    names = drop_list_recipes(mealplanner, meal_plan)
+    rslt = {"response": names}
+    return jsonify(result=rslt)
+
+
+
+
+
 
 '''
 experiment. Send link by email for users to add cooks and dishes. Users should be available

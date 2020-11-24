@@ -90,11 +90,7 @@ E-mail:
       }
 
     }
-    // else{
-    //   var option = document.createElement('option');
-    //   option.value = "None";
-    //   option.innerHTML = "None";
-    // }
+
 
     element.appendChild(option);
 
@@ -104,7 +100,7 @@ E-mail:
    if (meal_plan!="")
    console.log(meal_plan);
    {
-     $.getJSON( "/_view_recipes",
+     $.getJSON( "/_view_cooks",
                 {
                 meal_plan:meal_plan},
                 function(data) {

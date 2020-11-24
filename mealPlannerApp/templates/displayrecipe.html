@@ -2,7 +2,9 @@
 
 {% block header %}
 <h1>Recipe display</h1>
+{% if recipe %}
 <h2>Title: {{ recipe.title }}</h2>
+{%endif%}
 {% endblock %}
 
 {% block content %}
@@ -12,6 +14,8 @@
 {% endfor %}
 
 <form action="" method="post" id="recipe_view">
+
+
       <label for="view">Select the meal plan that the recipe is associated with </label>
       <select id= "view" name= "view">
             <option value="" selected="selected">None</option>
@@ -29,9 +33,9 @@
 </form>
 
 
-{% if data %}
-<form action="{{ url_for( 'remove_recipe',  planner_name = meal_plan, recipe=recipe.title) }}" method="POST" style="float: right;">
-      <button type ="submit" >Delete this recipe</button>
+{% if recipe %}
+<form action="{{ url_for( 'remove_dish',  planner_name = meal_plan, dish = recipe.title) }}" method="POST" style="float: right;">
+      <button type ="submit" >Delete cook's info</button>
 </form>
 
 <p>Serves: {{ recipe.servings }}</p>
@@ -39,20 +43,29 @@
 <p class="ingredients">Ingredients:</p>
 <ul class="ingredients">
 {% for ingredient in recipe.ingredients %}
-<li>{{ ingredient[1] }}{{ ingredient[2] }}{{ ingredient[0] }}</li>
+<li>{{ ingredient[1] }} {{ ingredient[2] }} of {{ ingredient[0] }}</li>
 {% endfor %}
 </ul>
 
 <p class="directions">Directions:</p>
 <p>{{ recipe.recipe }}</p>
 
-<p class="recipeinfo">Allergens: 
+<p class="recipeinfo">Allergens:
+
+
 {% for allergen in recipe.allergens %}
 <li>{{ allergen }}</li>
 {% endfor %}
 </p>
-<p class="recipeinfo">Dietary restrictions: {{ recipe.restrictions }}</p>
+
+<p class="recipeinfo">Dietary restrictions:
+
+{% for x in recipe.restrictions%}
+<li>{{ x }}</li>
+{% endfor %}
+</p>
 {% endif %}
+
 
 
 <script>
@@ -74,7 +87,7 @@
       }
 
     }
- 
+
 
     element.appendChild(option);
 
