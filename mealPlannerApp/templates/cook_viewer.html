@@ -11,16 +11,16 @@
 {% endfor %}
 
 <form action="" method="post" id="recipe_view">
-      <label for="cook_mealplan">Select the meal plan where the cook's info was registered</label>
-      <select id= "cook_mealplan" name= "cook_mealplan">
+      <label for="select_mealplan_viewer">Select the meal plan where the cook's info was registered</label>
+      <select id= "select_mealplan_viewer" name= "select_mealplan_viewer">
             <option value="" selected="selected">None</option>
             {% for x in mealplans_names %}
             <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
             {% endfor %}
       </select>
       <br>
-      <label for="cook_name">Select cook:</label>
-      <select id= "cook_name" name= "cook_name">
+      <label for="select_generate_cooks">Select cook:</label>
+      <select id= "select_generate_cooks" name= "select_generate_cooks">
       </select>
 
       <button type ="submit" id="submit_cook">send</button>
@@ -28,7 +28,7 @@
 
 
 {% if data %}
-<form action="{{ url_for( 'remove_cook',  planner_name = meal_plan, cook=data.name) }}" method="POST" onsubmit="return confirm('Do you really want to submit the form?');" style="float: right;">
+<form action="{{ url_for( 'remove_cook',  planner_name = meal_plan, cook=data.name) }}" method="POST" onsubmit="return confirm('Do you really want to delete the cook's information?');" style="float: right;">
       <button type ="submit" >Delete cook's info</button>
 </form>
 
@@ -59,53 +59,7 @@ Diet restrictions:
 <br>
 <br>
 
-E-mail:
-<br>
-
-{{data.email}}
 {% endif %}
-
-<script>
-
-///////////////////// CODES JS FOR cook_viewer.HTML //////////////////////
-
-  function add_drop_list(array){
-    var element = document.getElementById('cook_name');
-    while (element.hasChildNodes()) {
-       element.removeChild(element.lastChild);
-    }
-
-    if (array.length > 0){
-      for (i = 0; i < array.length; i++) {
-        var option = document.createElement('option');
-        option.value = array[i];
-        option.innerHTML = array[i];
-        element.appendChild(option);
-      }
-    }
-    element.appendChild(option);
- };
-
- $('#cook_mealplan').change(function() {
-   var meal_plan = $("#cook_mealplan").val();
-   console.log(meal_plan);
-   if (meal_plan != "")
-   {
-     $.getJSON( "/_view_cooks",
-                {
-                meal_plan:meal_plan},
-                function(data) {
-                  rsval = data.result.response;
-                  if (rsval.length == 0){
-                    rsval = ["No records found"]
-                  }
-                  add_drop_list(rsval)
-                }
-             );
-   }
- });
-
- </script>
 
 
 {% endblock %}

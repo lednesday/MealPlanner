@@ -1,60 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="description" content="MealPlanner web app">
-    <!-- need meta for display -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% if title %}
-    <title>{{title}}</title>
-    {% else %}
-    <title>MealPlanner</title>
-    {% endif %}
-    <!-- This is a magical incantation for a font set -->
-    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:500|Open+Sans&display=swap" rel="stylesheet">
-    <!-- relative link to css styles -->
-    <link rel="stylesheet" href="../static/css/styles.css">
-    <!-- <script src="../static/js/togglehide.js"></script> -->
-    <script type="text/javascript"
-         src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
-    </script>
-
-</head>
-
-<body onload="check_date_today()" onload="adquire_data()">
-
-    <main>
-        <header>
-            {% if hide == 0 %}
-            <div class="nav">
-                <ul>
-                    <li><a href="{{url_for('index') }}">Return to home</a></li>
-                    <li><a href="{{url_for('newplan') }}">Create a meal plan</a></li>
-                    <li><a href="{{url_for('signup') }}">Sign up on a meal plan</a></li>
-                    <li><a href="{{url_for('recipe') }}">Enter recipe</a></li>
-                    <li><a href="{{url_for('cook') }}">Enter cook</a></li>
-                    <li><a href="{{url_for('show_cook') }}">View cooks</a></li>
-                    <li><a href="{{url_for('show_recipe') }}">View a recipe</a></li>
-
-                </ul>
-            </div>
-            {% endif %}
-
-            {% block header %}
-            {% endblock %}
-
-
-        </header>
-        {% block content %}
-        {% endblock %}
-    </main>
-</body>
-
-
-<script>
-
-/////////////////////recipe.html javascrip (recipe to add recipes)///////////////////////////////////
+///////////////////////recipe.html javascrip (recipe to add recipes)///////////////////////////////////
 var counter_recipe_html = 0;//save the number of fields
 function add_field_recipehtml() {
     counter_recipe_html++;
@@ -194,39 +139,21 @@ $("#plan_name").keyup(function(event) {//function to check if a name is already 
                 if (rsval.localeCompare("Yes") == 0){
                     console.log("Hola")
                     $("#response").html("This name has been already taken. Choose another one")
-                    disable("button_send")
+                    disable("button")
                 }
                 else if (rsval.localeCompare("Zero") == 0){
                     $("#response").html("No name has been provided")
-                    disable("button_send")
+                    disable("button")
                 }
                 else{
                     $("#response").html("This name is available.");
-                    if (check_dates_order_submit()){
-                      enable("button_send")
-                    }else{
-                      disable("button_send")
-                      $("#response").html("Please, check the dates. The start date needs to be before than the end date.");
-                    }
+                    enable("button")
                 }
               }
 
            );
   });
 
-
-  function check_dates_order_submit(){//checks that the start date is always before end date. Otherwise, it disable submit button.
-      var start_date = $("#start_date").val();
-      var end_date = $("#end_date").val();
-      if (start_date > end_date){
-        return false;
-      }
-      else if (start_date < end_date){
-        return true;
-      }else{
-        return true;
-      }
-  };
 
   //add fields. list ranges is a list of dates where we need to select meals.
     function addFields(list_range){
@@ -277,16 +204,14 @@ $("#plan_name").keyup(function(event) {//function to check if a name is already 
       var start_date = $("#start_date").val();
       var end_date = $("#end_date").val();
       if (start_date > end_date){
-        disable("button_send");
+        disable("button");
         $("#response").html("The start date cannot be after the end date.")
       }
       else if (start_date < end_date){
         $("#response").html("")
-        enable("button_send");
+        enable("button");
       }
   };
-
-
 
   $("#start_date").change(range_fields);//events that check if user change dates
   $("#end_date").change(range_fields);
@@ -322,7 +247,7 @@ $("#plan_name").keyup(function(event) {//function to check if a name is already 
         document.getElementsByName("start_date")[0].setAttribute('min', date_today);//js prevent user to schedule a plan before today.
         document.getElementById('end_date').value = date_today;
         document.getElementsByName("end_date")[0].setAttribute('min', date_today);
-        disable("button_send");
+        disable("button");
         range_fields();
       }
     }
@@ -382,15 +307,15 @@ $("#cook_name").keyup(function(event) {
                   rsval = data.result.response;
                   if (rsval.localeCompare("Yes") == 0){
                       $("#response").html("This name has been already taken. Choose another one");
-                      disable("button_submit_cook");
+                      disable("button");
                   }
                   else if (rsval.localeCompare("Zero") == 0){
                       $("#response").html("No name has been provided");
-                      disable("button_submit_cook");
+                      disable("button");
                   }
                   else{
                       $("#response").html("This name is available.");
-                      enable("button_submit_cook");
+                      enable("button");
                   }
                 }
 
@@ -400,31 +325,37 @@ $("#cook_name").keyup(function(event) {
   });
 
 //function to check if a name is already in the databas cooks mails
-  // $("#cook_email").keyup(function(event) {
-  //    var meal_plan = $("#meal_plan").val();
-  //    var email = $("#cook_email").val();  // Current content of the input field
-  //    if (meal_plan!="")
-  //    {
-  //      var keycode = event.which;      // They key that just went up
-  //      $.getJSON( "/_check_email",
-  //                 {meal_plan: meal_plan,
-  //                 email: email},
-  //                 function(data) {
-  //                   rsval = data.result.response;
-  //                   if (rsval.localeCompare("Yes") == 0){
-  //                       $("#email_response").html("This email address have been already used");
-  //                       disable("button_submit");
-  //                   }
-  //                   else if (rsval.localeCompare("No") == 0){
-  //                       $("#email_response").html("")
-  //                       enable("button_submit");
-  //                   }
-  //                 }
-  //
-  //              );
-  //    }
-  //
-  //   });
+  $("#cook_email").keyup(function(event) {
+     var meal_plan = $("#meal_plan").val();
+     var email = $("#cook_email").val();  // Current content of the input field
+     if (meal_plan!="")
+     {
+       var keycode = event.which;      // They key that just went up
+       $.getJSON( "/_check_email",
+                  {meal_plan: meal_plan,
+                  email: email},
+                  function(data) {
+                    rsval = data.result.response;
+                    if (rsval.localeCompare("Yes") == 0){
+                        $("#email_response").html("This email address have been already used");
+                        disable("button");
+                        console.log("Yes");
+                    }
+                    else if (rsval.localeCompare("No") == 0){
+                        $("#email_response").html("")
+                        enable("button");
+                        console.log("No");
+
+                    }
+                  }
+
+               );
+     }
+
+    });
+
+
+
 
 // signup triggers event when selected one meal plan.
   $(document).ready(function(){
@@ -447,8 +378,3 @@ $("#cook_name").keyup(function(event) {
   function enable(x) {
       document.getElementById(x).disabled = false;
   }
-
-
-</script>
-
-</html>

@@ -29,7 +29,7 @@
 {% endif %}
 
 {% if list %}
-<form action="{{ url_for( 'remove_mealplan',  planner_name = list.meal_plan) }}" onsubmit="return confirm('Do you really want to submit the form?');" method="POST" style="float: right;">
+<form action="{{ url_for( 'remove_mealplan',  planner_name = list.meal_plan) }}" onsubmit="return confirm('Do you really want to delete this meal plan?');" method="POST" style="float: right;">
       <button type ="submit" >Delete meal plan</button>
 </form>
 
@@ -67,8 +67,10 @@
                       <option value="{{x}}">{{x}}</option>
                       {% endfor %}
                     </datalist>
+
                     <button type ="submit" id="submit_cook">Add cook</button>
                 </li>
+                <p><a href="{{ url_for('cook') }}">Register a new cook</a></p>
 
               </form>
             </li>
@@ -100,6 +102,8 @@
                   </datalist>
                   <button type ="submit" id="submit_cook">Add menu item</button>
               </li>
+              <p><a href="{{ url_for('recipe') }}">Register a new recipe</a></p>
+
             </form>
           </li>
         </div>

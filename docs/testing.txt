@@ -1,0 +1,13 @@
+
+This file describes how to test the application without needing to run it in Heroku.
+
+Developers can build the application on their local machines as described in build.txt,
+and work with it in that local environment to test it. The following is a checklist of 
+things that a developer can try to do to make sure things are running smoothly:
+
+  (Lindsay, this is where your checklist would go. Make sure it's indented like this)
+  
+Furthermore, there is a test file (insert test file name and location) which can be run
+to make sure the database is working correctly. Feel free to take a look at it. 
+
+  (Describe what it does)
