@@ -48,6 +48,18 @@
         </header>
         {% block content %}
         {% endblock %}
+
+
+        <a href="{{ url_for('popup', recipe = 'aa', mealplan ='fd') }}" onclick="return popitup('{{ url_for('popup', recipe = 'aa', mealplan ='fd') }}')">Link for review</a>
+
+
+      <script>
+          function popitup(url) {
+              newwindow=window.open(url,'name','height=400,width=500');
+              if (window.focus) {newwindow.focus()}
+              return false;
+          }
+      </script>
     </main>
 </body>
 

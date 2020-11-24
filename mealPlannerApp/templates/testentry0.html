@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>Simple form for manually adding event info</h1>
+{% endblock %}
+
+{% block content %}
+<!-- action should be location (URL) where the form's collected data should be sent when it is submitted -->
+<!-- default when action="" is the current URL -->
+<form action="" method="post">
+    <!-- SECRET_KEY variable must be defined in the Flask configuration for next line to work -->
+
+    <ul class="checkboxes">
+        <li>
+            <label for="date">Date: </label>
+            <!-- <input type="text" id="date" name="date"> -->
+
+            <input type="date" id="date" name="date"
+                   value={{date}}
+                   disabled>
+        </li>
+        <li>
+
+            <label for="meal1">Meal: </label>
+            <input type="text" id="meal" name="meal"
+                   value={{meal}}
+                   disabled>
+            <!-- <select id="meal1" name="meal">
+              <option value="" selected="selected">None</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+            </select> -->
+        </li>
+        <li>
+
+            <label for="cook1">Cook:</label>
+            <select id= "cook1" name= "cook1">
+              <option value="" selected="selected">None</option>
+              {% for x in names %}
+                <option value="{{x}}">{{x}}</option>
+              {% endfor %}
+            </select>
+
+        </li>
+
+        <li>
+          <label for="dish1-1">Dish:</label>
+          <select id= "dish1-1" name="dish1-1">
+            <option value="" SELECTED="selected">None</option>
+
+            {% for x in dishes %}
+              <option value="{{x}}">{{x}}</option>
+            {% endfor %}
+          </select>
+
+        </li>
+        <li>
+          <label for="dish1-2">Dish:</label>
+          <select id="dish1-2" name="dish1-2">
+            <option value="" selected="selected">None</option>
+            {% for x in dishes %}
+            <option value="{{x}}">{{x}}</option>
+            {% endfor %}
+          </select>
+
+        </li>
+
+        <li class="button">
+            <button type="submit">Add day</button>
+        </li>
+
+        <li class="button">
+            <!-- Mozilla says this is bad UX practice -->
+            <button type="reset">Clear form</button>
+        </li>
+
+        <li class="button">
+            <button type ="submit" name ="display" formmethod="post" formaction="/display" id="display" value="Display">Display</button>
+        </li>
+    </ul>
+</form>
+{% endblock %}

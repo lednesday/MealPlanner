@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>click demo</title>
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+
+  {% if recipe %}
+
+  <p>Serves: {{ recipe.servings }}</p>
+  <p class="ingredients">Ingredients:</p>
+  <ul class="ingredients">
+  {% for ingredient in recipe.ingredients %}
+  <li>{{ ingredient[1] }} {{ ingredient[2] }} of {{ ingredient[0] }}</li>
+  {% endfor %}
+  </ul>
+
+  <p class="directions">Directions:</p>
+  <p>{{ recipe.recipe }}</p>
+
+  <p class="recipeinfo">Allergens:
+
+
+  {% for allergen in recipe.allergens %}
+  <li>{{ allergen }}</li>
+  {% endfor %}
+  </p>
+
+  <p class="recipeinfo">Dietary restrictions:
+
+  {% for x in recipe.restrictions%}
+  <li>{{ x }}</li>
+  {% endfor %}
+  </p>
+  {% endif %}
+
+
+
+</body>
+</html>

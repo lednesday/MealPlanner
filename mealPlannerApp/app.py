@@ -41,6 +41,17 @@ clean previous content of database(comment out when no needed for testing)
 -------------------------------------- Routes to serve pages in template/ --------------------------------------
 '''
 
+@app.route("/popup", methods=["POST", "GET"])
+def popup():
+
+    recipe  = request.args.get('recipe', None)
+    mealplan  = request.args.get('mealplan', None)
+    print(recipe, mealplan)
+    data = return_dictionary_recipes(mealplanner, mealplan , recipe)
+    print(data)
+
+    return render_template("popup.html", hide=0, recipe=data)
+
 #index
 @app.route("/", methods=["POST", "GET"])
 def index():
