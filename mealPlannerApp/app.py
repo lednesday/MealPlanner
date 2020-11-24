@@ -380,30 +380,52 @@ def check_name():
 @app.route("/_view_cooks")#visualize recipes. send names
 def view_cooks():
     meal_plan = request.args.get("meal_plan", type=str)
-    names = drop_list_cooks(mealplanner, meal_plan)
+    print("aquii",meal_plan)
+
+    if meal_plan != "":
+        names = drop_list_cooks(mealplanner, meal_plan)
+    else:
+        names = []
+
     rslt = {"response": names}
     return jsonify(result=rslt)
+
+
 
 @app.route("/_view_recipes")#visualize recipes. send names
 def view_recipes():
     meal_plan = request.args.get("meal_plan", type=str)
-    names = drop_list_recipes(mealplanner, meal_plan)
+    print(meal_plan)
+    if meal_plan != "":
+        names = drop_list_recipes(mealplanner, meal_plan)
+    else:
+        names = []
     rslt = {"response": names}
+
     return jsonify(result=rslt)
 
 
-
-
-
-
 '''
-experiment. Send link by email for users to add cooks and dishes. Users should be available
+experimental. Send link by email for users to add cooks and dishes. Users should be available
 to edit but not able to see other links
 '''
 @app.route('/plan/<plan_name>')
 def landing_page(plan_name):
     list_mealplans = return_dictionary_mongo(mealplanner, plan_name)
     return render_template("signup.html", list=list_mealplans, hide=1)
+
+
+'''
+Not found and error handlers
+'''
+#it needs to turn off debug mode to be showeds
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template("500.html", error=request.url) , 500
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template("404.html", error=request.url) , 404
 
 
 if __name__ == "__main__":

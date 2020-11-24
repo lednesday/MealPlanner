@@ -26,7 +26,6 @@
       <br>
       <label for="name">Select recipe: </label>
       <select id= "name" name= "name">
-
       </select>
 
       <button type ="submit" id="submit_cook">send</button>
@@ -34,7 +33,7 @@
 
 
 {% if recipe %}
-<form action="{{ url_for( 'remove_dish',  planner_name = meal_plan, dish = recipe.title) }}" method="POST" style="float: right;">
+<form action="{{ url_for( 'remove_dish',  planner_name = meal_plan, dish = recipe.title) }}" method="POST" style="float: right;" name="delete_recipe">
       <button type ="submit" >Delete cook's info</button>
 </form>
 
@@ -70,6 +69,18 @@
 
 <script>
 
+// $('#delete_recipe').change(function() {
+//
+//   var answer = window.confirm("Save data?");
+//
+//   if (answer) {
+//       console.log("yes")
+//   }
+//   else {
+//     console.log("no")
+//   }
+// });
+
   function add_drop_list(array){
     var element = document.getElementById('name');
 
@@ -87,15 +98,13 @@
       }
 
     }
-
-
     element.appendChild(option);
-
  };
+
+
  $('#view').change(function() {
    var meal_plan = $("#view").val();
-   if (meal_plan!="")
-   console.log(meal_plan);
+   if(meal_plan != "")
    {
      $.getJSON( "/_view_recipes",
                 {
@@ -106,6 +115,7 @@
                 }
              );
    }
+
  });
 
  </script>
