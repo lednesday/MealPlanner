@@ -43,7 +43,7 @@ clean previous content of database(comment out when no needed for testing)
 
 @app.route("/", methods=["POST", "GET"])
 def index():
-    return render_template("index.html", hide = 0)
+    return render_template("index.html", hide=0)
 
 @app.route("/cook", methods=["POST", "GET"])
 def cook():
@@ -93,6 +93,12 @@ def recipe():
         					allergens, special_diets, meal_plan, mealplanner)
 
     return render_template("recipe.html", mealplans_names=mealplanners_names, hide=0)
+
+@app.route("/show_recipe", methods=["POST", "GET"])
+def show_recipe():
+
+    return render_template("displayrecipe.html", hide=0)
+
 
 @app.route("/newplan", methods=["POST", "GET"])
 def newplan():
