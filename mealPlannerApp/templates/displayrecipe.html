@@ -14,18 +14,19 @@
 {% endfor %}
 
 <form action="" method="post" id="recipe_view">
-
-
-      <label for="view">Select the meal plan that the recipe is associated with </label>
-      <select id= "view" name= "view">
+      <label for="recipe_mealplan">Select the meal plan that the recipe is associated with </label>
+      <!-- recipe_meal connects with add drop list js -->
+      <select id= "recipe_mealplan" name= "recipe_mealplan">
             <option value="" selected="selected">None</option>
             {% for x in mealplans_names %}
             <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
             {% endfor %}
       </select>
+
       <br>
-      <label for="name">Select recipe: </label>
-      <select id= "name" name= "name">
+      <label for="name_recipe_droplist">Select recipe: </label>
+
+      <select id= "name_recipe_droplist" name= "name_recipe_droplist">
       </select>
 
       <button type ="submit" id="submit_cook">send</button>
@@ -69,20 +70,8 @@
 
 <script>
 
-// $('#delete_recipe').change(function() {
-//
-//   var answer = window.confirm("Save data?");
-//
-//   if (answer) {
-//       console.log("yes")
-//   }
-//   else {
-//     console.log("no")
-//   }
-// });
-
   function add_drop_list(array){
-    var element = document.getElementById('name');
+    var element = document.getElementById('name_recipe_droplist');
 
     while (element.hasChildNodes()) {
        element.removeChild(element.lastChild);
@@ -102,8 +91,8 @@
  };
 
 
- $('#view').change(function() {
-   var meal_plan = $("#view").val();
+ $('#recipe_mealplan').change(function() {
+   var meal_plan = $("#recipe_mealplan").val();
    if(meal_plan != "")
    {
      $.getJSON( "/_view_recipes",
@@ -111,6 +100,10 @@
                 meal_plan:meal_plan},
                 function(data) {
                   rsval = data.result.response;
+                  if (rsval.length == 0){
+                    rsval = ["No records found"]
+                  }
+                  console.log(rsval);
                   add_drop_list(rsval)
                 }
              );

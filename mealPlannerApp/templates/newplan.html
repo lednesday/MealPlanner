@@ -6,9 +6,7 @@
 
 {% block content %}
 
-{% for message in get_flashed_messages() %}
-    <p>{{ message }}</p>
-{% endfor %}
+
 
 <form  action="" method="post" id="newplan">
     <label for="plan name">Meal plan name</label>
@@ -26,8 +24,15 @@
         </p>
     </fieldset>
     <p> <button id="button" type="submit">Submit</button> </p>
+
+    {% for message in get_flashed_messages() %}
+        <p><b>{{ message }}</b></p>
+    {% endfor %}
+
     <div id="container"/>
 </form>
+
+
 
 
 <script>
