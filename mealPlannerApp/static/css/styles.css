@@ -142,4 +142,13 @@ em {
     font-weight: 600;
 }
 
+footer {
+    font-family: Optima, sans-serif;
+    border-radius: 5px;
+    padding: 10px;
+    border-style: solid;
+    border-width: medium;
+    border-color: #ca6680ff;
+}
+
 
