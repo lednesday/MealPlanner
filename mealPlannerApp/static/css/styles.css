@@ -6,13 +6,15 @@
  /*
 CSS
 /* CSS HEX */
-/* --blue-sapphire: #065a82ff; header flair 
+/* --blue-sapphire: #065a82ff; header flair
 --black-coffee: #2a1a1fff; main text
 --persimmon: #E55812; top banners
 --mikado-yellow: #ffc100ff; mid-level banners
 --lemon-meringue: #f4e8c1ff; general background
 --forest-green-crayola: #63a375ff; buttons
---cinnamon-satin: #ca6680ff; flair */ 
+--cinnamon-satin: #ca6680ff; border flair 
+--english-violet: #564256; visited */ 
+
  */
 
  /* global settings ------------------------- */
@@ -25,7 +27,9 @@ CSS
     box-sizing: inherit;
   }
 
- a:visited {}
+ a:visited {
+     color: #564256;
+ }
 
 head {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -98,7 +102,7 @@ body {
 
 .midbanner {
     background-color: #ffc100ff;
-    padding: 5px;
+    padding: 3px;
     border-radius: 5px;
 }
 
@@ -145,10 +149,14 @@ em {
 footer {
     font-family: Optima, sans-serif;
     border-radius: 5px;
-    padding: 10px;
+    padding: 3px;
     border-style: solid;
     border-width: medium;
     border-color: #ca6680ff;
+}
+
+footer li {
+    list-style-type: none;
 }
 
 
