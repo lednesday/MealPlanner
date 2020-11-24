@@ -29,7 +29,7 @@
 {% endif %}
 
 {% if list %}
-<form action="{{ url_for( 'remove_mealplan',  planner_name = list.meal_plan) }}" method="POST" style="float: right;">
+<form action="{{ url_for( 'remove_mealplan',  planner_name = list.meal_plan) }}" onsubmit="return confirm('Do you really want to submit the form?');" method="POST" style="float: right;">
       <button type ="submit" >Delete meal plan</button>
 </form>
 

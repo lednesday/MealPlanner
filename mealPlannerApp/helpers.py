@@ -58,6 +58,8 @@ def create_newplan(start_date: str, end_date:str , name_plan:str, list_meals:lis
 
     j = 0
     for i in list_meals:
+        if len(i) == 0:
+            return 1
         for k in i:
             day_created[j].add_meal(Meal(k))
         mp.add_day(day_created[j])

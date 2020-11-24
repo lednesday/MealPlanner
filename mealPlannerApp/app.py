@@ -58,6 +58,10 @@ def cook():
         cook_restrictions = request.form.get("restrictions")
         cook_email = request.form.get("cook_email")
         meal_plan  = request.form.get('meal_plan', None)
+        if cook_allergies == "":
+            allergens = "No allergies registered."
+        if cook_restrictions == "":
+            cook_restrictions = "No cook restrictions registered."
         create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
                            cook_email, meal_plan, mealplanner)
 
@@ -111,7 +115,7 @@ def show_recipe():
         recipe_name = request.form.get("name")
 
         if recipe_name == None or meal_plan == None or recipe_name == "" or meal_plan == "":
-            flash("Check if you have checked a meal plan and a recipe's name. ")
+            flash("Check if you have selected a meal plan and a recipe's name. ")
             return render_template("displayrecipe.html", mealplans_names=mealplanners_names, hide=0)
 
         data = return_dictionary_recipes(mealplanner, meal_plan , recipe_name)
@@ -128,7 +132,7 @@ def show_cook():
         cook = request.form.get("name")
 
         if cook == None or meal_plan == None or cook == "" or meal_plan == "":
-            flash("Check if you have checked a meal plan and a cook's name. ")
+            flash("Check if you have selected a meal plan and a cook's name. ")
             return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
 
         data = return_dictionary_cooks(mealplanner, meal_plan, cook)
@@ -157,6 +161,9 @@ def newplan():
                     checked.append(request.form.getlist(temp))
 
                 meal_plan = create_newplan(start_date, end_date , plan_name, checked)
+                if meal_plan == 1:#if one day has no meals selected, it returns 1 and exit without storing any data
+                    flash("You need to check at least one box for each day.")
+                    return render_template("newplan.html", hide = 0)
 
                 dates = date_range(start_date, end_date)# returns a list with all the dates bewtween start and end date.
                 if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
@@ -271,7 +278,6 @@ def remove_cook():
     planner_name  = request.args.get('planner_name', None)
     cook = request.args.get("cook")
     if cook != None or planner_name != None:
-        print("hola")
         delete_cook_database_mongo(mealplanner, planner_name, cook)
 
     return redirect(url_for('show_cook', meal_plan = planner_name))
@@ -281,9 +287,7 @@ def remove_cook():
 def remove_dish():
 
     planner_name  = request.args.get('planner_name', None)
-    # print(planner_name)
     dish = request.args.get("dish")
-    # print(dish)
     if dish != None or planner_name != None:
         delete_dish_database_mongo(mealplanner, planner_name, dish)
 
@@ -380,7 +384,6 @@ def check_name():
 @app.route("/_view_cooks")#visualize recipes. send names
 def view_cooks():
     meal_plan = request.args.get("meal_plan", type=str)
-    print("aquii",meal_plan)
 
     if meal_plan != "":
         names = drop_list_cooks(mealplanner, meal_plan)
@@ -395,7 +398,6 @@ def view_cooks():
 @app.route("/_view_recipes")#visualize recipes. send names
 def view_recipes():
     meal_plan = request.args.get("meal_plan", type=str)
-    print(meal_plan)
     if meal_plan != "":
         names = drop_list_recipes(mealplanner, meal_plan)
     else:
