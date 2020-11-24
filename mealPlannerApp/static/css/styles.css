@@ -12,7 +12,7 @@ CSS
 --mikado-yellow: #ffc100ff; mid-level banners
 --lemon-meringue: #f4e8c1ff; general background
 --forest-green-crayola: #63a375ff; buttons
---cinnamon-satin: #ca6680ff; visited */ 
+--cinnamon-satin: #ca6680ff; flair */ 
  */
 
  /* global settings ------------------------- */
@@ -25,9 +25,7 @@ CSS
     box-sizing: inherit;
   }
 
- a:visited {
-     color: #ca6680ff;
- }
+ a:visited {}
 
 head {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -37,16 +35,17 @@ head {
 
 header {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background: #f4e8c1ff;
+    background: #065a82ff;
     border-radius: 5px;
     padding: 10px;
     border-style: solid;
     border-width: thick;
-    border-color: #065a82ff;
+    border-color: #ca6680ff;
 }
 
 header h1 {
-    font-weight: 900;}
+    font-weight: 900;
+}
 
 header h2 {
     font-weight: 200;
@@ -55,19 +54,22 @@ header h2 {
 header h1, header h2 {
     padding: 5px;
     border-radius: 5px;
-    background: #63a375ff;
+    background: #ffc100ff;
 }
 
 .nav {
-    font-style: italic;
+    padding: 2px;
+    border-radius: 5px;
+    background: #63a375ff;
+    font-family: Gill Sans, sans-serif
 }
-
 
 .nav li {
     list-style-type: none;
     margin: 0;
     display: inline;
 }
+
 
 .nav a {
     /* makes click target larger */
