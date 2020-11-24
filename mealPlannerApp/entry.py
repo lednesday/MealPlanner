@@ -158,7 +158,7 @@ class Dish:
         '''
         Adds an allergen to the dish. is probably okay as a string.
         '''
-        temp = allergens.split(", ")
+        temp = allergens.split(",")
         for i in temp:
             self.__allergens.append(i)
 
@@ -166,14 +166,14 @@ class Dish:
         '''
         Adds a restriction to the dish. is probably okay as a string.
         '''
-        temp = restrictions.split(", ")
+        temp = restrictions.split(",")
         for i in temp:
             self.__restrictions.append(i)
 
     def get_dictionary(self):
         temp = {"title": self.__name, "servings": self.__servings, "ingredients": self.__ingredients, \
                 "recipe": self.__recipe, "allergens":self.__allergens, "restrictions":self.__restrictions}
-        
+
         return temp
 
 
@@ -206,7 +206,7 @@ class Cook:
         '''
         add allergies to the cook, in the format: "elem1, elem2, ..."
         '''
-        temp = allergies.split(", ")
+        temp = allergies.split(",")
         for i in temp:
             self.__allergies.append(i)
 
@@ -214,7 +214,7 @@ class Cook:
         '''
         add dietary restrictions to the cook, in the format: "elem1, elem2, ..."
         '''
-        temp = info.split(", ")
+        temp = info.split(",")
         for i in temp:
             self.__restrictions.append(i)
 

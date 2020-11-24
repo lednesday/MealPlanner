@@ -59,9 +59,11 @@ def cook():
         cook_email = request.form.get("cook_email")
         meal_plan  = request.form.get('meal_plan', None)
         if cook_allergies == "":
-            allergens = "No allergies registered."
+            cook_allergies = "No allergies registered."
         if cook_restrictions == "":
             cook_restrictions = "No cook restrictions registered."
+
+        print(cook_name, cook_allergies, cook_restrictions, cook_email)
         create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
                            cook_email, meal_plan, mealplanner)
 
@@ -111,10 +113,10 @@ def show_recipe():
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
 
     if request.method == "POST":
-        meal_plan = request.form.get("view")
-        recipe_name = request.form.get("name")
+        meal_plan = request.form.get("recipe_mealplan")
+        recipe_name = request.form.get("name_recipe_droplist")
 
-        if recipe_name == None or meal_plan == None or recipe_name == "" or meal_plan == "":
+        if recipe_name == None or meal_plan == None or recipe_name == "" or meal_plan == "" or recipe_name == "No records found":
             flash("Check if you have selected a meal plan and a recipe's name. ")
             return render_template("displayrecipe.html", mealplans_names=mealplanners_names, hide=0)
 
@@ -128,10 +130,10 @@ def show_cook():
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
 
     if request.method == "POST":
-        meal_plan = request.form.get("view")
-        cook = request.form.get("name")
+        meal_plan = request.form.get("cook_mealplan")
+        cook = request.form.get("cook_name")
 
-        if cook == None or meal_plan == None or cook == "" or meal_plan == "":
+        if cook == None or meal_plan == None or cook == "" or meal_plan == "" or cook == "No records found":
             flash("Check if you have selected a meal plan and a cook's name. ")
             return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
 
@@ -385,12 +387,9 @@ def check_name():
 def view_cooks():
     meal_plan = request.args.get("meal_plan", type=str)
 
-    if meal_plan != "":
-        names = drop_list_cooks(mealplanner, meal_plan)
-    else:
-        names = []
-
+    names = drop_list_cooks(mealplanner, meal_plan)
     rslt = {"response": names}
+
     return jsonify(result=rslt)
 
 
@@ -398,10 +397,8 @@ def view_cooks():
 @app.route("/_view_recipes")#visualize recipes. send names
 def view_recipes():
     meal_plan = request.args.get("meal_plan", type=str)
-    if meal_plan != "":
-        names = drop_list_recipes(mealplanner, meal_plan)
-    else:
-        names = []
+    names = drop_list_recipes(mealplanner, meal_plan)
+
     rslt = {"response": names}
 
     return jsonify(result=rslt)

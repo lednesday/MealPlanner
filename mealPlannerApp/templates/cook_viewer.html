@@ -11,17 +11,16 @@
 {% endfor %}
 
 <form action="" method="post" id="recipe_view">
-      <label for="view">Select the meal plan where the cook's info was registered</label>
-      <select id= "view" name= "view">
+      <label for="cook_mealplan">Select the meal plan where the cook's info was registered</label>
+      <select id= "cook_mealplan" name= "cook_mealplan">
             <option value="" selected="selected">None</option>
             {% for x in mealplans_names %}
             <option value="{{x.meal_plan}}">{{x.meal_plan}}</option>
             {% endfor %}
       </select>
       <br>
-      <label for="name">Select cook:</label>
-      <select id= "name" name= "name">
-
+      <label for="cook_name">Select cook:</label>
+      <select id= "cook_name" name= "cook_name">
       </select>
 
       <button type ="submit" id="submit_cook">send</button>
@@ -66,15 +65,12 @@ E-mail:
 {{data.email}}
 {% endif %}
 
-
-
-
-
-
 <script>
 
+///////////////////// CODES JS FOR cook_viewer.HTML //////////////////////
+
   function add_drop_list(array){
-    var element = document.getElementById('name');
+    var element = document.getElementById('cook_name');
     while (element.hasChildNodes()) {
        element.removeChild(element.lastChild);
     }
@@ -87,14 +83,12 @@ E-mail:
         element.appendChild(option);
       }
     }
-
     element.appendChild(option);
-
  };
 
- $('#view').change(function() {
-   var meal_plan = $("#view").val();
-
+ $('#cook_mealplan').change(function() {
+   var meal_plan = $("#cook_mealplan").val();
+   console.log(meal_plan);
    if (meal_plan != "")
    {
      $.getJSON( "/_view_cooks",
@@ -102,6 +96,9 @@ E-mail:
                 meal_plan:meal_plan},
                 function(data) {
                   rsval = data.result.response;
+                  if (rsval.length == 0){
+                    rsval = ["No records found"]
+                  }
                   add_drop_list(rsval)
                 }
              );
@@ -109,9 +106,6 @@ E-mail:
  });
 
  </script>
-
-
-
 
 
 {% endblock %}
