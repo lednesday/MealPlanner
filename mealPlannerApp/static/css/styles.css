@@ -152,6 +152,12 @@ em {
     font-weight: 600;
 }
 
+.instructions li{
+    line-height: 2;
+    margin-right: 20px;
+}
+
+
 footer {
     font-family: Optima, sans-serif;
     border-radius: 5px;
