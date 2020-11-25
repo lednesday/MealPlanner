@@ -35,20 +35,20 @@
 
 {% if recipe %}
 <form action="{{ url_for( 'remove_dish',  planner_name = meal_plan, dish = recipe.title) }}" method="POST" style="float: right;" onsubmit="return confirm('Do you really want to delete this recipe?');" name="delete_recipe">
-      <button type ="submit" >Delete cook's info</button>
+      <button type ="submit" >Delete recipe</button>
 </form>
 
-<p>Serves: {{ recipe.servings }}</p>
+<p class="recipeinfo">Serves: {{ recipe.servings }}</p>
 
-<p class="ingredients">Ingredients:</p>
+<p class="recipelabel">Ingredients:</p>
 <ul class="ingredients">
 {% for ingredient in recipe.ingredients %}
-<li>{{ ingredient[1] }} {{ ingredient[2] }} of {{ ingredient[0] }}</li>
+<li>{{ ingredient[1] }} {{ ingredient[2] }} {{ ingredient[0] }}</li>
 {% endfor %}
 </ul>
 
-<p class="directions">Directions:</p>
-<p>{{ recipe.recipe }}</p>
+<p class="recipelabel">Directions:</p>
+<p class="recipedirections">{{ recipe.recipe }}</p>
 
 <p class="recipeinfo">Allergens:
 

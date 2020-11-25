@@ -143,9 +143,32 @@ h1, h2, h3 {
     list-style-type: none;
 }
 
+.recipeinfo {
+    font-style: oblique;
+    list-style-type: none;
+    margin: 0;
+    display: inline;
+}
+
+.recipelabel {
+    text-transform: uppercase;
+    background-color: #E55812;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.recipedirections {
+    border-radius: 5px;
+    padding: 3px;
+    border-style: solid;
+    border-color: #ca6680ff;
+}
+
 button {
     background-color: #63a375ff;
     border-radius: 5px;
+    border-radius: 5px;
+    padding: 3px;
 }
 
 em {
