@@ -14,16 +14,16 @@
 
 {% block content %}
 <div class="instructions">
+<h2>Using the MealPlanner tool is easy!</h2>
     <ul>
-
-
-        <li>Step 1: The planner <a href="{{url_for('newplan') }}">sets up a new mealplan using our template.</a></li>
-        <li>Step 2: The cooks <a href="{{url_for('signup') }}">sign up for the meals they'll be responsible for,</a> and indicate
-            what they'll be cooking.</li>
-        <li>Coming soon: Browse recipes, adjust ingredients for group size, and generate shopping lists and recipe
-            sheets.</li>
+        <li>Step 1: Set up a <a href="{{url_for('newplan') }}">new mealplan using our template</a>.</li>
+        <li>Step 2: If you want to build a pool of cooks and/or recipes to populate your meal plan with, you can <a href="{{url_for('cook') }}">add cooks</a> and <a href="{{url_for('recipe') }}">add recipes</a> to your plan.</li>
+        <li>Step 3: Now the cooks in your group can <a href="{{url_for('signup') }}">sign up</a> to cook meals and select or add the menu items for each meal.</li>
+        <li>Need to delete something? No problem! You can <a href="{{url_for('signup') }}">delete a mealplan on the signup page</a>, <a href="{{url_for('show_cook') }}">view and/or delete cook information here</a>, and <a href="{{url_for('show_recipe') }}">view and/or delete recipe information here</a>.</li>
+        <li>Need more help? <a href="https://github.com/lednesday/MealPlanner/blob/main/docs/User_guide.pdf">Access our full user's guide here</a>.</li>
     </ul>
 </div>
+
 <footer class="about">
 
     <p><em>About us:</em></p>
