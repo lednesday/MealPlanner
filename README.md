@@ -18,7 +18,11 @@ For information on how the application works, see "Program Structure and Build P
 
 ## Usage
 
-(Lindsay, feel free to add things here. Detailed description, pictures, etc)
+For a detailed user's guide with screenshots, see docs/User_guide.pdf. 
+
+Briefly, there are two types of users, a planner and a cook. A planner builds a mealplan template ("Create a meal plan") by naming a plan, selecting start and end dates, and selecting needed meals for each date. The planner may optionally populate the plan with cooks and recipes to be assigned to different meals. A cook signs up ("Sign up on a meal plan") by selecting the mealplan, and then scrolling to a particular meal. Menu items and cooks can be added either with a pulldown option (for prepopulated cooks and recipes) or with text entry. Users can also view cook information and a formatted display of entered recipes.
+
+In the future, we'd like to add password-protected user profiles, emailing a mealplan's customized URL to a planner, the ability to import recipes from other sites with compatible APIs, the ability to adjust ingredient amounts for group size, shopping list generation, and recipe sheets. 
 
 ## Program Structure and Build process Summary
 
