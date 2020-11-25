@@ -145,6 +145,9 @@ h1, h2, h3 {
 
 .recipeinfo {
     font-style: oblique;
+}
+
+.recipeinfo li {
     list-style-type: none;
     margin: 0;
     display: inline;
