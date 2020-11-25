@@ -31,7 +31,6 @@ config.read("credentials.ini")
 app.secret_key = config["DEFAULT"]["KEY_FLASH"]
 
 
-
 '''
 clean previous content of database(comment out when no needed for testing)
 '''
@@ -40,6 +39,19 @@ clean previous content of database(comment out when no needed for testing)
 '''
 -------------------------------------- Routes to serve pages in template/ --------------------------------------
 '''
+
+@app.route("/popup", methods=["POST", "GET"])
+def popup():
+
+    recipe  = request.args.get('recipe', None)
+    mealplan  = request.args.get('mealplan', None)
+
+    try:
+        data = return_dictionary_recipes(mealplanner, mealplan , recipe)
+    except:
+        return render_template("popup.html", recipe = [])
+
+    return render_template("popup.html", recipe=data)
 
 #index
 @app.route("/", methods=["POST", "GET"])
@@ -112,7 +124,7 @@ def recipe():
         else:
             flash("Please, select a meal planner before inserting a new recipe")
 
-    return render_template("recipe.html", mealplans_names=mealplanners_names, hide=0)
+    return render_template("recipe.html", mealplans_names=mealplanners_names)
 
 @app.route("/show_recipe", methods=["POST", "GET"])
 def show_recipe():
@@ -124,12 +136,12 @@ def show_recipe():
 
         if recipe_name == None or meal_plan == None or recipe_name == "" or meal_plan == "" or recipe_name == "No records found":
             flash("Check if you have selected a meal plan and a recipe's name. ")
-            return render_template("displayrecipe.html", mealplans_names=mealplanners_names, hide=0)
+            return render_template("displayrecipe.html", mealplans_names=mealplanners_names)
 
         data = return_dictionary_recipes(mealplanner, meal_plan , recipe_name)
-        return render_template("displayrecipe.html", mealplans_names=mealplanners_names, recipe = data, hide=0, meal_plan=meal_plan)
+        return render_template("displayrecipe.html", mealplans_names=mealplanners_names, recipe = data,  meal_plan=meal_plan)
 
-    return render_template("displayrecipe.html", hide=0, mealplans_names=mealplanners_names)
+    return render_template("displayrecipe.html",  mealplans_names=mealplanners_names)
 
 @app.route("/show_cook", methods=["POST", "GET"])
 def show_cook():
@@ -141,13 +153,13 @@ def show_cook():
 
         if cook == None or meal_plan == None or cook == "" or meal_plan == "" or cook == "No records found":
             flash("Check if you have selected a meal plan and a cook's name. ")
-            return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
+            return render_template("cook_viewer.html", mealplans_names=mealplanners_names)
 
         data = return_dictionary_cooks(mealplanner, meal_plan, cook)
 
-        return render_template("cook_viewer.html", mealplans_names=mealplanners_names, data = data, hide=0, meal_plan=meal_plan)
+        return render_template("cook_viewer.html", mealplans_names=mealplanners_names, data = data,  meal_plan=meal_plan)
 
-    return render_template("cook_viewer.html", mealplans_names=mealplanners_names, hide=0)
+    return render_template("cook_viewer.html", mealplans_names=mealplanners_names)
 
 
 @app.route("/newplan", methods=["POST", "GET"])
@@ -171,7 +183,7 @@ def newplan():
                 meal_plan = create_newplan(start_date, end_date , plan_name, checked)
                 if meal_plan == 1:#if one day has no meals selected, it returns 1 and exit without storing any data
                     flash("You need to check at least one box for each day.")
-                    return render_template("newplan.html", hide = 0)
+                    return render_template("newplan.html")
 
                 dates = date_range(start_date, end_date)# returns a list with all the dates bewtween start and end date.
                 if insert_entry_mongo(meal_plan, mealplanner, "meal_plan") == True:
@@ -180,7 +192,7 @@ def newplan():
                     flash("New plan was added! ")
                 return redirect(url_for("index"))
 
-    return render_template("newplan.html", hide = 0)
+    return render_template("newplan.html")
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
@@ -192,22 +204,19 @@ def signup():
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
-        return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
+        return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names,  names = list_cooks, dishes = list_dishes)
 
     elif meal_plan != None:#for redirect from delete and add dish cook
         list_cooks = drop_list_cooks(mealplanner, meal_plan)
         list_dishes = drop_list_recipes(mealplanner, meal_plan)
         one_mealplanner = return_dictionary_mongo(mealplanner, meal_plan)
-        return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names, hide = 0, names = list_cooks, dishes = list_dishes)
+        return render_template("signup.html", list=one_mealplanner, mealplans_names=mealplanners_names,  names = list_cooks, dishes = list_dishes)
 
-    return render_template("signup.html", mealplans_names=mealplanners_names, hide = 0)
-
-
+    return render_template("signup.html", mealplans_names=mealplanners_names)
 
 '''
 ----------------- Routes that serve functions. I.e. delete cook, add cook, delete meal plan, etc -----------------
 '''
-
 
 #add cook to the mealplanner to schedule a shift
 @app.route("/add_cook", methods=["POST", "GET"])
@@ -266,7 +275,6 @@ def delete_cook():
     meal  = request.args.get('meal', None)
     delete_cook_mongo(mealplanner, planner_name, date, meal, cook_delete)
     return redirect(url_for('signup', meal_plan = planner_name))
-
 
 '''
 Top bottons to delete data from the database

@@ -12,7 +12,7 @@
 
 {% block content %}
 
-{% if hide == 0 %}
+
 <form  action="" method="post" id="newplan">
 <li>
     <label for="meal_plan">Meal plans:</label>
@@ -26,7 +26,7 @@
 
 
 </form>
-{% endif %}
+
 
 {% if list %}
 <form action="{{ url_for( 'remove_mealplan',  planner_name = list.meal_plan) }}" onsubmit="return confirm('Do you really want to delete this meal plan?');" method="POST" style="float: right;">
@@ -50,6 +50,8 @@
             <li>
             <form action="{{ url_for( 'delete_cook', cook_delete = cook, date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
               <li class="button">
+
+
                   {{ cook }}
                   <button type ="submit" >Delete</button>
               </li>
@@ -84,11 +86,13 @@
 
           <form action="{{ url_for( 'delete_dish', dish_delete = dish, date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">
             <li class="button">
-              {{ dish }}
+
+                  <a href="{{ url_for('popup', recipe = dish, mealplan =list.meal_plan) }}" onclick="return recipe_popup('{{ url_for('popup', recipe = dish, mealplan =list.meal_plan) }}')">{{ dish }}</a>
               <button type ="submit">Delete</button>
             </li>
           </form>
           </li>
+
           {% endfor %}
           <li>
             <form action="{{ url_for( 'add_dish', date = day, meal = meal, planner_name = list.meal_plan) }}" method="POST">

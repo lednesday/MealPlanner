@@ -10,6 +10,7 @@
 
 
   {% if recipe %}
+  <h2>Title: {{ recipe.title }}</h2>
 
   <p>Serves: {{ recipe.servings }}</p>
   <p class="ingredients">Ingredients:</p>
@@ -36,6 +37,9 @@
   <li>{{ x }}</li>
   {% endfor %}
   </p>
+  {% else %}
+  Not here:
+  If you want to add a recipe. Please, go to this link: <li><a href="{{url_for('recipe') }}">Add recipe</a></li>
   {% endif %}
 
 
