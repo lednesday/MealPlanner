@@ -53,21 +53,24 @@ def cook():
     mealplanners_names = return_dictionary_mongo_all(mealplanner)
 
     if request.method == "POST":
-        cook_name = request.form.get("cook_name")
-        cook_allergies = request.form.get("allergies")
-        cook_restrictions = request.form.get("restrictions")
-        cook_email = request.form.get("cook_email")
         meal_plan  = request.form.get('meal_plan', None)
-        if cook_allergies == "":
-            cook_allergies = "No allergies registered."
-        if cook_restrictions == "":
-            cook_restrictions = "No cook restrictions registered."
 
+        if meal_plan != "":
+            cook_name = request.form.get("cook_name")
+            cook_allergies = request.form.get("allergies")
+            cook_restrictions = request.form.get("restrictions")
+            cook_email = request.form.get("cook_email")
 
-        create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
-                           cook_email, meal_plan, mealplanner)
+            if cook_allergies == "":
+                cook_allergies = "No allergies registered."
+            if cook_restrictions == "":
+                cook_restrictions = "No cook restrictions registered."
+            create_insert_cook(cook_name, cook_allergies, cook_restrictions, \
+                               cook_email, meal_plan, mealplanner)
+        else:
+            flash("Please, select one meal plan before submitting a new cook")
 
-    return render_template("cook.html", mealplans_names=mealplanners_names, hide = 0)
+    return render_template("cook.html", mealplans_names=mealplanners_names)
 
 #insert recipe page
 @app.route("/recipe", methods=["POST", "GET"])
@@ -77,34 +80,37 @@ def recipe():
 
     if request.method == "POST":
         mealPlanName = request.form.get("meal_plan")
-        recipe_name = request.form.get("recipe_name")
-        servings = request.form.get("yield")
-        length = len(request.form.getlist("item"))
-        item = request.form.getlist("item")
-        quantity = (request.form.getlist("quantity"))
-        unit = (request.form.getlist("unit"))
-        ite = []
-        ingredients = []
-        for i in range(0, length):
-            if item[i] != "":
-                ite.append(item[i])
-                ite.append(quantity[i])
-                ite.append(unit[i])
-                tuple_item = tuple(ite)
-                ingredients.append(tuple_item)
-                ite = []
+        if mealPlanName != "":
+            recipe_name = request.form.get("recipe_name")
+            servings = request.form.get("yield")
+            length = len(request.form.getlist("item"))
+            item = request.form.getlist("item")
+            quantity = (request.form.getlist("quantity"))
+            unit = (request.form.getlist("unit"))
+            ite = []
+            ingredients = []
+            for i in range(0, length):
+                if item[i] != "":
+                    ite.append(item[i])
+                    ite.append(quantity[i])
+                    ite.append(unit[i])
+                    tuple_item = tuple(ite)
+                    ingredients.append(tuple_item)
+                    ite = []
 
-        directions = request.form.get("step")
-        allergens = request.form.get("allergens")
-        special_diets = request.form.get("restrictions")
-        meal_plan  = request.form.get('meal_plan', None)
-        if allergens == "":
-            allergens = "No allergen registered."
-        if special_diets == "":
-            special_diets = "No special diet registered."
+            directions = request.form.get("step")
+            allergens = request.form.get("allergens")
+            special_diets = request.form.get("restrictions")
+            meal_plan  = request.form.get('meal_plan', None)
+            if allergens == "":
+                allergens = "No allergen registered."
+            if special_diets == "":
+                special_diets = "No special diet registered."
 
-        create_insert_dish(recipe_name, servings, ingredients, directions, \
-        					allergens, special_diets, meal_plan, mealplanner)
+            create_insert_dish(recipe_name, servings, ingredients, directions, \
+            					allergens, special_diets, meal_plan, mealplanner)
+        else:
+            flash("Please, select a meal planner before inserting a new recipe")
 
     return render_template("recipe.html", mealplans_names=mealplanners_names, hide=0)
 

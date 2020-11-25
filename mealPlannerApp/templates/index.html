@@ -3,9 +3,7 @@
 {% block header %}
 <h1>MealPlanner Home</h1>
 
-{% for message in get_flashed_messages() %}
-    <p>{{ message }}</p>
-{% endfor %}
+
 
 <h3>The MealPlanner is your online resources for planning shared meals.
     Perfect for river trips, getaways at a beach house, or communal living.
@@ -13,6 +11,10 @@
 {% endblock %}
 
 {% block content %}
+{% for message in get_flashed_messages() %}
+    <p><b>{{ message }}</b></p>
+{% endfor %}
+
 <div class="instructions">
 <h2>Using the MealPlanner tool is easy!</h2>
     <ul>
@@ -27,8 +29,8 @@
 <footer class="about">
 
     <p><em>About us:</em></p>
-    <p>Created as a project for <a href="https://classes.cs.uoregon.edu/20F/cis422/schedule.php">CIS 422, Software Methodology 1</a>, 
-    taught in fall 2020 by <a href="https://ix.cs.uoregon.edu/~michal/">Michal Young</a> at the 
+    <p>Created as a project for <a href="https://classes.cs.uoregon.edu/20F/cis422/schedule.php">CIS 422, Software Methodology 1</a>,
+    taught in fall 2020 by <a href="https://ix.cs.uoregon.edu/~michal/">Michal Young</a> at the
     <a href="https://cs.uoregon.edu/">University of Oregon.</a></p>
     <p><em>Created by</em></p>
     <ul>
