@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>click demo</title>
+  <title>Recipe for {{ recipe.title }}  </title>
 
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
+
+
 <body style="background-color: #f4e8c1ff;">
 
 
@@ -38,10 +40,21 @@
   {% endfor %}
   </p>
   {% else %}
-  Not here:
-  If you want to add a recipe. Please, go to this link: <li><a href="{{url_for('recipe') }}">Add recipe</a></li>
+  The recipe has not been entered.<br>
+  If you want to add a recipe. Please, go to this link:
+  <button onclick="open_add_recipe();" style =  "background-color: #63a375ff; border-radius: 5px; border-radius: 5px;  padding: 3px;">Add recipe</button>
+
   {% endif %}
 
+
+  <script>
+  function open_add_recipe() {
+    window1=window.open("{{url_for('recipe') }}",'','width=1600,height=1100');
+    window1.moveTo(40, 0);
+    window.close();
+
+  };
+  </script>
 
 
 </body>
