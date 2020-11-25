@@ -5,7 +5,24 @@ Developers can build the application on their local machines as described in bui
 and work with it in that local environment to test it. The following is a checklist of 
 things that a developer can try to do to make sure things are running smoothly:
 
-  (Lindsay, this is where your checklist would go. Make sure it's indented like this)
+  The home page should load, with a navigation bar at top, brief instructions for using the program in the middle, and an About us section at the bottom
+  Click on Create a meal plan in the navigation bar. 
+  Enter a name for your test meal plan, select a range of at least two dates, select a variety of different meals, and click Submit.
+  Click on Enter a recipe in the nav bar. Your mealplan should appear as an option in the first pull-down field. Select your test mealplan, and enter a recipe title and number of servings. Enter at least three ingredients with quantities and units. Enter some text for directions. Enter some comma-separated items for allergies and dietary restrictions. Click Submit recipe. 
+  Click on Enter a cook in the nav bar. Select your test mealplan, and enter a name, allergies, dietary restrictions, and a test email (this is merely stored in our database). Click Submit.
+  Click on Sign up on a meal plan in the nav bar. Select your test mealplan from the pulldown field. Choose a meal and verify that the cook and recipe you entered are available as pulldown options next to Cooks and Dishes respectively. Click on Add cook and Add menu item and verify that each has been added to the meal (you will have to scroll back down to the meal).
+  Type another cook's name in the Cooks field and add it. Verify that it was added.
+  Type another menu item in the Dishes field and verify that it was added.
+  Click on the recipe that you had selected from the pulldown menu to verify that it will display in a popup window.
+  Click on the title of the menu item that you entered by typing. A popup window should appear inviting you to enter the recipe. Click on Add recipe and verify that a new window opens up with the Add a recipe page.
+  Select View cooks in the nav bar, select your test mealplan, and verify that the cook you entered is there.
+  Select View recipes in the nav bar, selection your test mealplan, and verify that the recipe you entered is displayed there.
+  Return to Sign up on a meal plan and scroll down to the cooks and dishes that you entered. Delete the cook and recipe whose information you displayed previously.
+  Return to View cooks and verify that the cook you entered has been deleted.
+  Return to View a recipe and verify that the recipe you entered has been deleted.
+  Go back to Create a meal plan and create another meal plan.
+  Go to Sign up on a meal plan, select one of your plans, and then delete it using the Delete meal plan button.
+  Close the window, re-open, and verify that one meal plan exists but the other is deleted.
   
 Furthermore, there is a test file in the testing directory which can be run to make
 sure the database is working correctly. Feel free to take a look at it.
