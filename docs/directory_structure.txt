@@ -3,9 +3,6 @@
 
 The application repository is currently organized as follows:
 
-Database (Possibly obsolete): This directory contains the Cook and Dish classes,
-and anything that they need for them to exist in the MongoDB database.
-
 ### mealPlannerApp:
 
 This is the main directory of the application, which contains:
@@ -35,3 +32,9 @@ repository README file.
 	directory_structure.txt: You are here!
 
 	program_structure.txt: Explains how the program is organized.
+	
+### testing:
+
+This is the directory where testing files are. There is a copy of entry.py and 
+helpers.py. By running the test file(s) in there, you can verify whether the 
+creation and insertion works properly with the database.

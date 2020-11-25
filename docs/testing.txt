@@ -7,7 +7,5 @@ things that a developer can try to do to make sure things are running smoothly:
 
   (Lindsay, this is where your checklist would go. Make sure it's indented like this)
   
-Furthermore, there is a test file (insert test file name and location) which can be run
-to make sure the database is working correctly. Feel free to take a look at it. 
-
-  (Describe what it does)
+Furthermore, there is a test file in the testing directory which can be run to make
+sure the database is working correctly. Feel free to take a look at it.

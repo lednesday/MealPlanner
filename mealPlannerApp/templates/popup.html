@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  {% if recipe %}
   <title>Recipe for {{ recipe.title }}  </title>
-
+  {%else%}
+  <title>The recipe has not been entered </title>
+  {%endif%}
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 
@@ -41,7 +44,7 @@
   </p>
   {% else %}
   The recipe has not been entered.<br>
-  If you want to add a recipe. Please, go to this link:
+  If you want to add a recipe. Please, press here
   <button onclick="open_add_recipe();" style =  "background-color: #63a375ff; border-radius: 5px; border-radius: 5px;  padding: 3px;">Add recipe</button>
 
   {% endif %}
